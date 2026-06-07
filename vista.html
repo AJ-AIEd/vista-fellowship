@@ -27,6 +27,9 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;background:var(--cream);co
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(15,34,54,0.97);backdrop-filter:blur(16px);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:1px solid rgba(255,255,255,0.05)}
 .nav-brand{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;cursor:pointer}
+.nav-back{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s;white-space:nowrap}
+.nav-back:hover{color:var(--gold)}
+@media(max-width:640px){nav{padding:0 16px}.nav-right{gap:0}}
 .nav-right{display:flex;align-items:center;gap:8px}
 .nav-tab{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.07em;padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;text-transform:uppercase}
 .nav-tab:hover{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7)}
@@ -388,7 +391,7 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
 
 <!-- NAV -->
 <nav>
-  <div style="display:flex;align-items:center;gap:16px"><a href="/" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s" onmouseover="this.style.color='#C4861A'" onmouseout="this.style.color='rgba(255,255,255,.35)'">← Hub</a><div class="nav-brand" onclick="showView('launch')" data-k="nav_brand">VISTA</div></div>
+  <div style="display:flex;align-items:center;gap:16px"><a href="/" class="nav-back">← Hub</a><div class="nav-brand" onclick="showView('launch')" data-k="nav_brand">VISTA</div></div>
   <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
     <div class="nav-lang" id="langToggle" onclick="toggleLang()" data-k="lang_toggle">🇪🇸 Español</div>
     <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
