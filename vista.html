@@ -354,7 +354,34 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
 .toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#fff;padding:13px 18px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.07em;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:380px;line-height:1.4}
 .toast.show{transform:translateY(0);opacity:1}
 
-@media print{nav,.prog,footer,.path-btn,.nav-save,.nav-pdf,.pb-copy,.llm-buttons,.btn-sub,.btn-draft-sm,.upload-btn-ui{display:none}.step-block,.dd-section{opacity:1!important;transform:none!important;page-break-inside:avoid}body{background:#fff}}
+/* ── MOBILE NAV — bottom tab bar ── */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(15,34,54,0.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08);height:56px;align-items:stretch}
+.bn-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.4);cursor:pointer;transition:color .2s;padding:4px 2px;border:none;background:transparent}
+.bn-tab.active{color:var(--gold)}
+.bn-tab svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.bn-save{display:flex;align-items:center;justify-content:center;padding:0 14px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--navy);cursor:pointer;min-width:54px;border:none;flex-shrink:0}
+@media(max-width:640px){
+  .bottom-nav{display:flex}
+  .nav-tab,.nav-pdf,.nav-save,.nav-divider{display:none}
+  body{padding-bottom:56px}
+}
+
+/* ── PRINT ── */
+@media print{
+  nav,.prog,footer,.path-btn,.nav-save,.nav-pdf,.pb-copy,.llm-buttons,.btn-sub,.btn-draft-sm,.upload-btn-ui,.bottom-nav,.nav-lang,.launch-cta,.path-card{display:none!important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff!important;color:#000!important;padding-bottom:0}
+  .view{display:block!important}
+  #view-launch,#view-deepdive,#view-final,#view-refs{display:none!important}
+  .step-block,.dd-section{opacity:1!important;transform:none!important;page-break-inside:avoid}
+  .step-block{margin-bottom:24pt}
+  .audit-header,.step-num,.dec-box,.prompt-box,.submit-bar,.dd-header,.sail-hd,.upload-btn-ui{background:#f0f0f0!important;color:#000!important}
+  .sc-collapsed .sc-grid{display:grid!important}
+  .sc-arrow{display:none}
+  input,textarea,select{border:1px solid #999!important;background:#fff!important}
+  h2,h3{font-size:14pt}
+  body,p,li{font-size:11pt}
+}
 </style>
 </head>
 <body>
@@ -364,17 +391,38 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
   <div style="display:flex;align-items:center;gap:16px"><a href="/" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s" onmouseover="this.style.color='#C4861A'" onmouseout="this.style.color='rgba(255,255,255,.35)'">← Hub</a><div class="nav-brand" onclick="showView('launch')" data-k="nav_brand">VISTA</div></div>
   <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
     <div class="nav-lang" id="langToggle" onclick="toggleLang()" data-k="lang_toggle">🇪🇸 Español</div>
-    <div style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
+    <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
     <div class="nav-tab" id="navInitial" onclick="showView('initial')" data-k="nav_initial">Initial Audit</div>
     <div class="nav-tab" id="navDeep" onclick="showView('deepdive')" data-k="nav_deepdive">AI Stress-Test</div>
     <div class="nav-tab" id="navFinal" onclick="showView('final')" data-k="nav_final">Final Audit</div>
     <div class="nav-tab" id="navRefs" onclick="showView('refs')" data-k="nav_refs">References</div>
-    <div style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
+    <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
     <button class="nav-pdf" onclick="window.print()" data-k="nav_pdf">PDF</button>
     <button class="nav-save" onclick="saveDraft()" data-k="nav_save">Save Draft</button>
   </div>
 </nav>
 <div class="prog"><div class="prog-fill" id="pf"></div></div>
+
+<!-- MOBILE BOTTOM NAV -->
+<div class="bottom-nav" id="bottomNav">
+  <button class="bn-tab" id="bnInitial" onclick="showView('initial')">
+    <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+    Audit
+  </button>
+  <button class="bn-tab" id="bnDeep" onclick="showView('deepdive')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+    Stress-Test
+  </button>
+  <button class="bn-tab" id="bnFinal" onclick="showView('final')">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    Final
+  </button>
+  <button class="bn-tab" id="bnRefs" onclick="showView('refs')">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Refs
+  </button>
+  <button class="bn-save" onclick="saveDraft()">Save</button>
+</div>
 
 <!-- ═══════════════════════════════════════════════════ LAUNCH VIEW ═══ -->
 <div class="view active" id="view-launch">
@@ -1389,11 +1437,11 @@ function showView(name) {
   currentView = name;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  if (name === 'initial') document.getElementById('navInitial').classList.add('active');
-  if (name === 'deepdive') document.getElementById('navDeep').classList.add('active');
-  if (name === 'final') { document.getElementById('navFinal').classList.add('active'); rebuildFinal(); }
-  if (name === 'refs') { document.getElementById('navRefs').classList.add('active'); rebuildRefs(); }
+  document.querySelectorAll('.nav-tab,.bn-tab').forEach(t => t.classList.remove('active'));
+  if (name === 'initial') { document.getElementById('navInitial').classList.add('active'); document.getElementById('bnInitial')?.classList.add('active'); }
+  if (name === 'deepdive') { document.getElementById('navDeep').classList.add('active'); document.getElementById('bnDeep')?.classList.add('active'); }
+  if (name === 'final') { document.getElementById('navFinal').classList.add('active'); document.getElementById('bnFinal')?.classList.add('active'); rebuildFinal(); }
+  if (name === 'refs') { document.getElementById('navRefs').classList.add('active'); document.getElementById('bnRefs')?.classList.add('active'); rebuildRefs(); }
   window.scrollTo(0,0);
 }
 
