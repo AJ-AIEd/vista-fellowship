@@ -1,3 +1,14 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/docs/:file", "destination": "/public/docs/:file" }
+  ],
+  "headers": [
+    {
+      "source": "/docs/(.*)",
+      "headers": [
+        { "key": "Content-Disposition", "value": "attachment" }
+      ]
+    }
+  ]
 }
