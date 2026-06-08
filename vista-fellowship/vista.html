@@ -27,6 +27,9 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;background:var(--cream);co
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(15,34,54,0.97);backdrop-filter:blur(16px);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;border-bottom:1px solid rgba(255,255,255,0.05)}
 .nav-brand{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;cursor:pointer}
+.nav-back{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s;white-space:nowrap}
+.nav-back:hover{color:var(--gold)}
+@media(max-width:640px){nav{padding:0 16px}.nav-right{gap:0}}
 .nav-right{display:flex;align-items:center;gap:8px}
 .nav-tab{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.07em;padding:5px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;text-transform:uppercase}
 .nav-tab:hover{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7)}
@@ -210,7 +213,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(15,34,54,0.9
 .slp{font-size:12px;color:var(--text);line-height:1.5}
 .sail-justify{margin-top:14px}
 .sj-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--navy);text-transform:uppercase;margin-bottom:6px;display:block}
-.sj-area{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--text);background:var(--paper);resize:vertical;min-height:64px;outline:none;transition:all .2s;line-height:1.5}
+.sj-area{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:300;color:var(--text);background:var(--paper);resize:vertical;min-height:96px;outline:none;transition:all .2s;line-height:1.5}
 .sj-area:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,107,122,.08)}
 .sj-area::placeholder{color:#c0b8b0}
 
@@ -354,27 +357,75 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
 .toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#fff;padding:13px 18px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.07em;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:380px;line-height:1.4}
 .toast.show{transform:translateY(0);opacity:1}
 
-@media print{nav,.prog,footer,.path-btn,.nav-save,.nav-pdf,.pb-copy,.llm-buttons,.btn-sub,.btn-draft-sm,.upload-btn-ui{display:none}.step-block,.dd-section{opacity:1!important;transform:none!important;page-break-inside:avoid}body{background:#fff}}
+/* ── MOBILE NAV — bottom tab bar ── */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(15,34,54,0.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08);height:56px;align-items:stretch}
+.bn-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.4);cursor:pointer;transition:color .2s;padding:4px 2px;border:none;background:transparent}
+.bn-tab.active{color:var(--gold)}
+.bn-tab svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.bn-save{display:flex;align-items:center;justify-content:center;padding:0 14px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--navy);cursor:pointer;min-width:54px;border:none;flex-shrink:0}
+@media(max-width:640px){
+  .bottom-nav{display:flex}
+  .nav-tab,.nav-pdf,.nav-save,.nav-divider{display:none}
+  body{padding-bottom:56px}
+}
+
+/* ── PRINT ── */
+@media print{
+  nav,.prog,footer,.path-btn,.nav-save,.nav-pdf,.pb-copy,.llm-buttons,.btn-sub,.btn-draft-sm,.upload-btn-ui,.bottom-nav,.nav-lang,.launch-cta,.path-card{display:none!important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff!important;color:#000!important;padding-bottom:0}
+  .view{display:block!important}
+  #view-launch,#view-deepdive,#view-final,#view-refs{display:none!important}
+  .step-block,.dd-section{opacity:1!important;transform:none!important;page-break-inside:avoid}
+  .step-block{margin-bottom:24pt}
+  .audit-header,.step-num,.dec-box,.prompt-box,.submit-bar,.dd-header,.sail-hd,.upload-btn-ui{background:#f0f0f0!important;color:#000!important}
+  .sc-collapsed .sc-grid{display:grid!important}
+  .sc-arrow{display:none}
+  input,textarea,select{border:1px solid #999!important;background:#fff!important}
+  h2,h3{font-size:14pt}
+  body,p,li{font-size:11pt}
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div style="display:flex;align-items:center;gap:16px"><a href="/" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s" onmouseover="this.style.color='#C4861A'" onmouseout="this.style.color='rgba(255,255,255,.35)'">← Hub</a><div class="nav-brand" onclick="showView('launch')" data-k="nav_brand">VISTA</div></div>
+  <div style="display:flex;align-items:center;gap:16px"><a href="/" class="nav-back">← Hub</a><div class="nav-brand" onclick="showView('launch')" data-k="nav_brand">VISTA</div></div>
   <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
     <div class="nav-lang" id="langToggle" onclick="toggleLang()" data-k="lang_toggle">🇪🇸 Español</div>
-    <div style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
+    <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
     <div class="nav-tab" id="navInitial" onclick="showView('initial')" data-k="nav_initial">Initial Audit</div>
     <div class="nav-tab" id="navDeep" onclick="showView('deepdive')" data-k="nav_deepdive">AI Stress-Test</div>
     <div class="nav-tab" id="navFinal" onclick="showView('final')" data-k="nav_final">Final Audit</div>
     <div class="nav-tab" id="navRefs" onclick="showView('refs')" data-k="nav_refs">References</div>
-    <div style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
-    <button class="nav-pdf" onclick="window.print()" data-k="nav_pdf">PDF</button>
+    <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
+    <button class="nav-pdf" onclick="window.open('/vista-print','_blank')" data-k="nav_pdf">PDF</button>
     <button class="nav-save" onclick="saveDraft()" data-k="nav_save">Save Draft</button>
   </div>
 </nav>
 <div class="prog"><div class="prog-fill" id="pf"></div></div>
+
+<!-- MOBILE BOTTOM NAV -->
+<div class="bottom-nav" id="bottomNav">
+  <button class="bn-tab" id="bnInitial" onclick="showView('initial')">
+    <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+    Audit
+  </button>
+  <button class="bn-tab" id="bnDeep" onclick="showView('deepdive')">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+    Stress-Test
+  </button>
+  <button class="bn-tab" id="bnFinal" onclick="showView('final')">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    Final
+  </button>
+  <button class="bn-tab" id="bnRefs" onclick="showView('refs')">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Refs
+  </button>
+  <button class="bn-save" onclick="saveDraft()">Save</button>
+</div>
 
 <!-- ═══════════════════════════════════════════════════ LAUNCH VIEW ═══ -->
 <div class="view active" id="view-launch">
@@ -1389,11 +1440,11 @@ function showView(name) {
   currentView = name;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  if (name === 'initial') document.getElementById('navInitial').classList.add('active');
-  if (name === 'deepdive') document.getElementById('navDeep').classList.add('active');
-  if (name === 'final') { document.getElementById('navFinal').classList.add('active'); rebuildFinal(); }
-  if (name === 'refs') { document.getElementById('navRefs').classList.add('active'); rebuildRefs(); }
+  document.querySelectorAll('.nav-tab,.bn-tab').forEach(t => t.classList.remove('active'));
+  if (name === 'initial') { document.getElementById('navInitial').classList.add('active'); document.getElementById('bnInitial')?.classList.add('active'); }
+  if (name === 'deepdive') { document.getElementById('navDeep').classList.add('active'); document.getElementById('bnDeep')?.classList.add('active'); }
+  if (name === 'final') { document.getElementById('navFinal').classList.add('active'); document.getElementById('bnFinal')?.classList.add('active'); rebuildFinal(); }
+  if (name === 'refs') { document.getElementById('navRefs').classList.add('active'); document.getElementById('bnRefs')?.classList.add('active'); rebuildRefs(); }
   window.scrollTo(0,0);
 }
 
@@ -2214,7 +2265,7 @@ function rebuildDeepDive() {
   const m1 = makeDDSection(ES?'Paso 1 \u00b7 \u00bfQu\u00e9 puede hacer la IA con tu tarea?':'Step 1 \u00b7 What can AI do with your task?', ES?'Descubre qu\u00e9 produce realmente una IA cuando se enfrenta a tu tarea \u2014 en tu materia, con tu contenido.':'Find out what AI actually produces when it meets your task \u2014 in your subject, with your content.');
   const you1 = document.createElement('div');
   you1.style.cssText='background:var(--lgold);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px';
-  you1.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px">${ES?'\u270d\ufe0f T\u00fa primero \u2014 sin IA':'\u270d\ufe0f You first \u2014 no AI yet'}</div><div style="font-size:13.5px;color:var(--navy);font-weight:500;line-height:1.5;margin-bottom:10px">${ES?'Antes de abrir la IA: \u00bfqu\u00e9 esperas que haga bien, y d\u00f3nde crees que se quedar\u00e1 corta en tu materia?':'Before you open AI: what do you expect it to do well, and where do you think it\u2019ll fall short in your subject?'}</div><textarea class="rf-area" id="ddYou1" placeholder="${ES?'Tu predicci\u00f3n honesta. La compararemos con lo que realmente pase.':'Your honest prediction. We\u2019ll compare it to what actually happens.'}"></textarea>`;
+  you1.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px">${ES?'\u270d\ufe0f T\u00fa primero \u2014 sin IA':'\u270d\ufe0f You first \u2014 no AI yet'}</div><div style="font-size:13.5px;color:var(--navy);font-weight:500;line-height:1.5;margin-bottom:10px">${ES?'Antes de abrir la IA: \u00bfqu\u00e9 esperas que haga bien, y d\u00f3nde crees que se quedar\u00e1 corta en tu materia?':'Before you open AI: what do you expect it to do well, and where do you think it\u2019ll fall short in your subject?'}</div><textarea class="rf-area" id="ddYou1" style="width:100%;min-height:140px" placeholder="${ES?'Tu predicci\u00f3n honesta. La compararemos con lo que realmente pase.':'Your honest prediction. We\u2019ll compare it to what actually happens.'}"></textarea>`;
   m1.appendChild(you1);
   const ai1 = document.createElement('div');
   ai1.style.cssText='background:var(--light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px';
@@ -2238,7 +2289,7 @@ function rebuildDeepDive() {
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'Hazlo otra vez pero como un estudiante con prisa que solo quiere terminar. \u00bfQu\u00e9 cambia?':'Do it again but as a rushed student who just wants it done. What changes?'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m1.appendChild(it1);
   const f1=document.createElement('div'); f1.className='rfb';
-  f1.innerHTML=`<div class="rf-label">${ES?'Anota: \u00bfacert\u00f3 tu predicci\u00f3n? \u00bfQu\u00e9 hizo la IA de forma convincente, y qu\u00e9 no pudo?':'Note: was your prediction right? What did AI do convincingly, and what couldn\u2019t it?'}</div><textarea class="rf-area" id="dd1" placeholder="${ES?'S\u00e9 espec\u00edfico sobre tu materia.':'Be specific to your subject.'}"></textarea>`;
+  f1.innerHTML=`<div class="rf-label">${ES?'Anota: \u00bfacert\u00f3 tu predicci\u00f3n? \u00bfQu\u00e9 hizo la IA de forma convincente, y qu\u00e9 no pudo?':'Note: was your prediction right? What did AI do convincingly, and what couldn\u2019t it?'}</div><textarea class="rf-area" id="dd1" style="min-height:120px" placeholder="${ES?'S\u00e9 espec\u00edfico sobre tu materia.':'Be specific to your subject.'}"></textarea>`;
   m1.appendChild(f1);
   body.appendChild(m1);
 
@@ -2261,7 +2312,7 @@ function rebuildDeepDive() {
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'\u00bfQu\u00e9 perspectivas o voces faltan en tu respuesta? \u00bfA qui\u00e9n deja fuera?':'What perspectives or voices are missing from your answer? Who does it leave out?'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m2.appendChild(ai2);
   const f2=document.createElement('div'); f2.className='rfb';
-  f2.innerHTML=`<div class="rf-label">${ES?'Anota: \u00bfqu\u00e9 le falt\u00f3 \u2014 el contexto, el matiz, el razonamiento que t\u00fa esperas?':'Note: what did it miss \u2014 the context, nuance, or reasoning you expect?'}</div><textarea class="rf-area" id="dd2" placeholder="${ES?'Lo que un experto ve que falta.':'What an expert sees is missing.'}"></textarea>`;
+  f2.innerHTML=`<div class="rf-label">${ES?'Anota: \u00bfqu\u00e9 le falt\u00f3 \u2014 el contexto, el matiz, el razonamiento que t\u00fa esperas?':'Note: what did it miss \u2014 the context, nuance, or reasoning you expect?'}</div><textarea class="rf-area" id="dd2" style="min-height:120px" placeholder="${ES?'Lo que un experto ve que falta.':'What an expert sees is missing.'}"></textarea>`;
   m2.appendChild(f2);
   body.appendChild(m2);
 
@@ -2282,7 +2333,7 @@ function rebuildDeepDive() {
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'Mis estudiantes son [describe: nivel, edad, contexto]. Mu\u00e9strame tres formas distintas en que podr\u00edan usar IA en esta tarea: una superficial, una razonable y una muy astuta.':'My students are [describe: level, age, context]. Show me three different ways they might use AI on this task: one shallow, one reasonable, one very clever.'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m3.appendChild(ai3);
   const f3=document.createElement('div'); f3.className='rfb';
-  f3.innerHTML=`<div class="rf-label">${ES?'Anota: en TU sal\u00f3n, \u00bfd\u00f3nde es realmente vulnerable esta tarea?':'Note: in YOUR room, where is this task genuinely vulnerable?'}</div><textarea class="rf-area" id="dd3" placeholder="${ES?'Conecta lo que viste con tus estudiantes reales.':'Connect what you saw to your real students.'}"></textarea>`;
+  f3.innerHTML=`<div class="rf-label">${ES?'Anota: en TU sal\u00f3n, \u00bfd\u00f3nde es realmente vulnerable esta tarea?':'Note: in YOUR room, where is this task genuinely vulnerable?'}</div><textarea class="rf-area" id="dd3" style="min-height:120px" placeholder="${ES?'Conecta lo que viste con tus estudiantes reales.':'Connect what you saw to your real students.'}"></textarea>`;
   m3.appendChild(f3);
   body.appendChild(m3);
 
@@ -2301,7 +2352,7 @@ function rebuildDeepDive() {
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'De esas tres, \u00bfcu\u00e1l da la evidencia m\u00e1s clara de que el estudiante pens\u00f3 de verdad \u2014 y cu\u00e1l es m\u00e1s f\u00e1cil de calificar para m\u00ed?':'Of those three, which gives the clearest evidence the student actually thought \u2014 and which is easiest for me to grade?'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m4.appendChild(ai4);
   const f4=document.createElement('div'); f4.className='rfb';
-  f4.innerHTML=`<div class="rf-label">${ES?'Tu decisi\u00f3n de rediseño \u2014 esto es lo que llevas a tu pr\u00f3xima versi\u00f3n de la tarea:':'Your redesign decision \u2014 this is what you carry into your next version of the task:'}</div><textarea class="rf-area" id="dd4" placeholder="${ES?'Una decisi\u00f3n concreta que surge de los cuatro pasos.':'One concrete decision that comes from the four steps.'}"></textarea>`;
+  f4.innerHTML=`<div class="rf-label">${ES?'Tu decisi\u00f3n de rediseño \u2014 esto es lo que llevas a tu pr\u00f3xima versi\u00f3n de la tarea:':'Your redesign decision \u2014 this is what you carry into your next version of the task:'}</div><textarea class="rf-area" id="dd4" style="min-height:120px" placeholder="${ES?'Una decisi\u00f3n concreta que surge de los cuatro pasos.':'One concrete decision that comes from the four steps.'}"></textarea>`;
   m4.appendChild(f4);
   body.appendChild(m4);
 

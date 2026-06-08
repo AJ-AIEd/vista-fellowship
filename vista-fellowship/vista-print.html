@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VISTA Protocol — Paper Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F2236;--teal:#1A6B7A;--gold:#C4861A;--purple:#5C1A6B;
+  --red:#9B2335;--text:#1A1F2E;--muted:#5A6470;--border:#C8C0B6;
+  --cream:#F7F2EB;--paper:#FDFAF6;--light:#E8F4F6;
+}
+html{font-size:11pt}
+body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);background:#fff;max-width:780px;margin:0 auto;padding:32px}
+
+/* ── PRINT NAV ── */
+.print-nav{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--navy);border-radius:8px;margin-bottom:32px}
+.print-nav-brand{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:#fff}
+.print-nav-brand span{color:var(--gold)}
+.print-nav-note{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.print-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:4px;cursor:pointer}
+.print-btn:hover{opacity:.85}
+@media print{.print-nav{display:none}}
+
+/* ── HEADER ── */
+.doc-header{border:2px solid var(--navy);border-radius:10px;padding:24px 28px;margin-bottom:28px}
+.doc-title{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--navy);line-height:1}
+.doc-sub{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-top:4px;margin-bottom:20px}
+.fields-row{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field-label{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.field-line{border:none;border-bottom:1.5px solid var(--border);width:100%;height:22px;font-family:'DM Sans',sans-serif;font-size:11pt;background:transparent;outline:none;color:var(--text)}
+
+/* ── DIAGNOSTIC QUESTION ── */
+.dq-box{background:var(--navy);border-radius:10px;padding:20px 24px;margin-bottom:28px;text-align:center}
+.dq-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.dq-q{font-family:'Fraunces',serif;font-size:16px;font-style:italic;color:#fff;line-height:1.45}
+
+/* ── SECTIONS ── */
+.section{margin-bottom:28px;page-break-inside:avoid}
+.section-head{display:flex;align-items:baseline;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--navy)}
+.section-badge{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:var(--navy);color:#fff;white-space:nowrap}
+.section-title{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:var(--navy)}
+.section-sub{font-size:10pt;color:var(--muted);margin-bottom:12px;line-height:1.5}
+
+/* ── WRITE FIELDS ── */
+.write-block{margin-bottom:14px}
+.write-label{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:5px}
+.write-hint{font-size:9pt;color:var(--muted);font-style:italic;margin-bottom:5px;line-height:1.4}
+.write-lines{display:flex;flex-direction:column;gap:8px}
+.write-line{border:none;border-bottom:1px solid var(--border);height:20px;width:100%}
+.write-box{border:1.5px solid var(--border);border-radius:6px;width:100%;min-height:60px;background:var(--paper)}
+
+/* ── CLASSIFIER ── */
+.classifier-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.classifier-card{border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+.classifier-card.wide{grid-column:1/-1}
+.cc-check{width:16px;height:16px;border:1.5px solid var(--border);border-radius:3px;flex-shrink:0;margin-top:2px}
+.cc-body{}
+.cc-tag{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;padding:2px 6px;border-radius:2px;margin-bottom:4px;display:inline-block}
+.tp{background:#E8F4F6;color:var(--teal)}
+.tc{background:#FBF4E8;color:var(--gold)}
+.te{background:rgba(92,26,107,.08);color:var(--purple)}
+.tr{background:rgba(26,107,71,.08);color:#1A6B47}
+.tb{background:rgba(155,35,53,.08);color:var(--red)}
+.cc-name{font-family:'Fraunces',serif;font-size:12px;font-weight:600;color:var(--navy);margin-bottom:2px}
+.cc-desc{font-size:9pt;color:var(--muted);line-height:1.4}
+.cc-ex{font-size:8.5pt;color:var(--muted);font-style:italic;margin-top:2px}
+
+/* ── OFFLOAD RATING ── */
+.rating-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:8px}
+.rating-card{border:1.5px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+.rating-circle{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);margin:0 auto 6px;font-size:14px;display:flex;align-items:center;justify-content:center}
+.rating-label{font-family:'Fraunces',serif;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.rating-desc{font-size:8.5pt;color:var(--muted);line-height:1.35}
+
+/* ── SAIL TABLE ── */
+.sail-table{width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:12px}
+.sail-table th{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;background:var(--navy);color:#fff;padding:7px 10px;text-align:left}
+.sail-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.4}
+.sail-table tr:last-child td{border-bottom:none}
+.sail-table tr:nth-child(even) td{background:var(--cream)}
+.sail-level{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;text-align:center}
+.sail-select-col{width:36px;text-align:center}
+.sail-select-circle{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border);margin:0 auto}
+
+/* ── STRESS-TEST STEPS ── */
+.dd-step{border:1.5px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden}
+.dd-step-head{background:var(--navy);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.dd-step-num{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.dd-step-title{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:#fff}
+.dd-step-body{padding:14px 16px}
+.dd-step-sub{font-size:9.5pt;color:var(--muted);margin-bottom:10px;line-height:1.45}
+.prompt-box{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:9pt;color:var(--text);line-height:1.5;margin-bottom:10px;font-style:italic}
+.prompt-label{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+
+/* ── PAGE BREAKS ── */
+.page-break{page-break-before:always;margin-top:0}
+
+/* ── FOOTER ── */
+.doc-footer{border-top:1px solid var(--border);padding-top:12px;margin-top:32px;display:flex;justify-content:space-between;align-items:center}
+.doc-footer-l{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.doc-footer-r{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* ── PRINT STYLES ── */
+@media print{
+  body{padding:20px;max-width:none}
+  .section{page-break-inside:avoid}
+  .dd-step{page-break-inside:avoid}
+  .sail-table{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- SCREEN-ONLY NAV -->
+<div class="print-nav">
+  <div class="print-nav-brand">VISTA <span>Paper Form</span></div>
+  <div class="print-nav-note">Non-AI Version · Print or save as PDF</div>
+  <button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<!-- DOCUMENT HEADER -->
+<div class="doc-header">
+  <div class="doc-title">VISTA Assessment Protocol</div>
+  <div class="doc-sub">Visibility Into Student Thinking &amp; Agency · CNG AI Innovation Fellowship · v1.0</div>
+  <div class="fields-row">
+    <div class="field">
+      <div class="field-label">Teacher Name</div>
+      <input class="field-line" type="text" autocomplete="off">
+    </div>
+    <div class="field">
+      <div class="field-label">Subject / Discipline</div>
+      <input class="field-line" type="text" autocomplete="off">
+    </div>
+    <div class="field">
+      <div class="field-label">Assessment / Task Name</div>
+      <input class="field-line" type="text" autocomplete="off">
+    </div>
+    <div class="field">
+      <div class="field-label">Date &amp; Cycle</div>
+      <input class="field-line" type="text" autocomplete="off">
+    </div>
+  </div>
+</div>
+
+<!-- DIAGNOSTIC QUESTION -->
+<div class="dq-box">
+  <div class="dq-label">The Organizing Question</div>
+  <div class="dq-q">"If AI completed this task perfectly, what learning would disappear?"</div>
+</div>
+
+<!-- ═══════════════════════════════════ INITIAL AUDIT ═══ -->
+
+<!-- STEP 1: DESCRIBE YOUR TASK -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-badge">Step 1</span>
+    <span class="section-title">Describe Your Task</span>
+  </div>
+  <div class="section-sub">Give enough context that someone unfamiliar with your class could understand what students are doing and why. Complete this before any AI input.</div>
+
+  <div class="write-block">
+    <div class="write-label">What is the task?</div>
+    <div class="write-hint">What do students produce? What do they do?</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">What learning is this task designed to develop?</div>
+    <div class="write-hint">Name the specific disciplinary capacity — not the topic, but the thinking. What would a student who genuinely understands this be able to do?</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">What would evidence of that learning look like before AI?</div>
+    <div class="write-hint">What would you see in student work that tells you the thinking happened — not just that the product looks good?</div>
+    <div class="write-box"></div>
+  </div>
+</div>
+
+<!-- STEP 2: LEARNING VULNERABILITY CLASSIFIER -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-badge">Step 2</span>
+    <span class="section-title">Learning Vulnerability Classifier</span>
+  </div>
+  <div class="section-sub">What type of learning is at risk in this task? Check all that apply — this shapes your redesign pathway.</div>
+
+  <div class="classifier-grid">
+    <div class="classifier-card">
+      <div class="cc-check"></div>
+      <div class="cc-body">
+        <div class="cc-tag tp">Procedural</div>
+        <div class="cc-name">Procedure &amp; Fluency</div>
+        <div class="cc-desc">Step-by-step execution, algorithmic processes, skill repetition through doing. The learning lives in the practice itself.</div>
+        <div class="cc-ex">e.g. Solving systems of equations, titrating in a lab, conjugating verbs, geometric construction</div>
+      </div>
+    </div>
+    <div class="classifier-card">
+      <div class="cc-check"></div>
+      <div class="cc-body">
+        <div class="cc-tag tc">Conceptual</div>
+        <div class="cc-name">Concept &amp; Understanding</div>
+        <div class="cc-desc">Making meaning, building mental models, understanding why something works. Requires genuine sense-making — not just recognition.</div>
+        <div class="cc-ex">e.g. Why exponential growth outpaces linear, how natural selection works, what makes a source unreliable</div>
+      </div>
+    </div>
+    <div class="classifier-card">
+      <div class="cc-check"></div>
+      <div class="cc-body">
+        <div class="cc-tag te">Evaluative</div>
+        <div class="cc-name">Evaluation &amp; Judgment</div>
+        <div class="cc-desc">Weighing evidence, making disciplinary judgments, applying the epistemic standards of the field.</div>
+        <div class="cc-ex">e.g. Evaluating a historical source, deciding if a statistical claim is causal, critiquing a scientific model</div>
+      </div>
+    </div>
+    <div class="classifier-card">
+      <div class="cc-check"></div>
+      <div class="cc-body">
+        <div class="cc-tag tr">Creative</div>
+        <div class="cc-name">Creation &amp; Expression</div>
+        <div class="cc-desc">Original making, design decisions, expressive choices. The learning lives in the decisions made during creation — not in the product alone.</div>
+        <div class="cc-ex">e.g. Designing a data visualization, writing with voice, composing, building a physical model</div>
+      </div>
+    </div>
+    <div class="classifier-card wide">
+      <div class="cc-check"></div>
+      <div class="cc-body">
+        <div class="cc-tag tb">Embodied / Tacit</div>
+        <div class="cc-name">Embodied &amp; Tacit Knowledge</div>
+        <div class="cc-desc">Knowledge that lives in the body, in craft, in physical or spatial practice. Must be performed — it cannot be fully transferred through text.</div>
+        <div class="cc-ex">e.g. Athletic technique, laboratory dexterity, spatial reasoning in geometry, pacing and breath in PE</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3: COGNITIVE OFFLOADING RATING -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-badge">Step 3</span>
+    <span class="section-title">Cognitive Offloading Rating</span>
+  </div>
+  <div class="section-sub">How much of the intended learning could AI bypass? Circle or check one. This determines your redesign decision.</div>
+
+  <div class="rating-row">
+    <div class="rating-card">
+      <div class="rating-circle">⬛</div>
+      <div class="rating-label">Fully</div>
+      <div class="rating-desc">AI can complete the entire task. Student produces nothing of disciplinary value.</div>
+      <div style="margin-top:8px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--red)">Redesign Required</div>
+    </div>
+    <div class="rating-card">
+      <div class="rating-circle">🟧</div>
+      <div class="rating-label">Substantially</div>
+      <div class="rating-desc">AI does most of the work. Some genuine student input required but not the core thinking.</div>
+      <div style="margin-top:8px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)">Redesign Recommended</div>
+    </div>
+    <div class="rating-card">
+      <div class="rating-circle">🟨</div>
+      <div class="rating-label">Partially</div>
+      <div class="rating-desc">AI can scaffold but not complete. Student must make genuine decisions beyond AI.</div>
+      <div style="margin-top:8px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#8B6914">Consider a Trace</div>
+    </div>
+    <div class="rating-card">
+      <div class="rating-circle">🟩</div>
+      <div class="rating-label">Minimally</div>
+      <div class="rating-desc">AI cannot do this for the student. The task requires thinking AI cannot replicate.</div>
+      <div style="margin-top:8px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#1A6B47">Design is Working</div>
+    </div>
+  </div>
+
+  <div class="write-block" style="margin-top:10px">
+    <div class="write-label">My Rating: _______ &nbsp;&nbsp;&nbsp; Because:</div>
+    <div class="write-box" style="min-height:44px"></div>
+  </div>
+</div>
+
+<!-- STEP 4: SAIL POSITIONING -->
+<div class="section page-break">
+  <div class="section-head">
+    <span class="section-badge">Step 4</span>
+    <span class="section-title">SAIL Positioning</span>
+  </div>
+  <div class="section-sub">Not a default setting — a deliberate pedagogical decision. Circle the level that protects the learning you identified. Be ready to justify your choice.</div>
+
+  <table class="sail-table">
+    <thead>
+      <tr>
+        <th class="sail-select-col">Select</th>
+        <th style="width:60px">Level</th>
+        <th>What AI May Do</th>
+        <th>What Learning This Protects</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="sail-select-circle"></div></td>
+        <td class="sail-level">L1<br><span style="font-size:8px">No AI</span></td>
+        <td>AI is off-limits. Brain, books, academic sources only.</td>
+        <td>Full cognitive load on the student. Use when the struggle itself is the learning — first drafts, initial problem-solving, forming interpretations before any external support.</td>
+      </tr>
+      <tr>
+        <td><div class="sail-select-circle"></div></td>
+        <td class="sail-level">L2<br><span style="font-size:8px">Ideate</span></td>
+        <td>AI can help get ideas. Student thinks and writes themselves.</td>
+        <td>Student does all substantive work; AI sparks or unsticks. Use when the learning is in the doing, not in knowing where to start.</td>
+      </tr>
+      <tr>
+        <td><div class="sail-select-circle"></div></td>
+        <td class="sail-level">L3<br><span style="font-size:8px">Edit</span></td>
+        <td>AI helps improve existing student work. Student creates first.</td>
+        <td>Student retains authorship; AI refines. Use when the learning is in the decisions and substance — not in polish and mechanics.</td>
+      </tr>
+      <tr>
+        <td><div class="sail-select-circle"></div></td>
+        <td class="sail-level">L4<br><span style="font-size:8px">Evaluate</span></td>
+        <td>AI does the work. Student decides how well it answers the prompt.</td>
+        <td>Evaluative judgment is the learning. Use when the student's ability to assess quality and explain criteria is the disciplinary goal.</td>
+      </tr>
+      <tr>
+        <td><div class="sail-select-circle"></div></td>
+        <td class="sail-level">L5<br><span style="font-size:8px">Co-Create</span></td>
+        <td>AI as learning partner. Student and AI create together — student cites.</td>
+        <td>Creative leadership and epistemic authority. Use only when this VISTA audit confirms the core learning cannot be bypassed.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="write-block">
+    <div class="write-label">Justify your SAIL positioning</div>
+    <div class="write-hint">Why this level and not one above or below? What specifically about your learning goal and vulnerability rating led you here?</div>
+    <div class="write-box" style="min-height:70px"></div>
+  </div>
+</div>
+
+<!-- STEP 5: REFLECTION & TENSIONS -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-badge">Step 5</span>
+    <span class="section-title">Reflection &amp; Tensions</span>
+  </div>
+  <div class="section-sub">Complete before enactment. This captures your thinking now — what you intended — so you can compare it to what actually happens after you teach.</div>
+
+  <div class="write-block">
+    <div class="write-label">What one change did you make to the task, and what was your disciplinary reason?</div>
+    <div class="write-hint">What did you add, change, or remove? Why does that change protect the learning you named in Step 1?</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">What tension did this audit surface that you are still sitting with?</div>
+    <div class="write-hint">Name one question the audit raised that you don't have a clean answer to.</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">What would you do if a student said they don't want to use AI for this task?</div>
+    <div class="write-hint">What is the non-AI alternative that still meets the learning goal?</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">What does backwards design tell you about this task?</div>
+    <div class="write-hint">If this learning goal is what matters, does the task as designed actually lead there?</div>
+    <div class="write-box"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ AI STRESS-TEST ═══ -->
+<div class="section page-break">
+  <div class="section-head">
+    <span class="section-badge" style="background:var(--gold)">AI Stress-Test</span>
+    <span class="section-title">Stress-Test Your Task</span>
+  </div>
+  <div class="section-sub">A four-step routine: think through each question yourself first, then use AI to push further. Run this before redesign. (~30 min)</div>
+
+  <div class="dd-step">
+    <div class="dd-step-head">
+      <div class="dd-step-num">Step 1</div>
+      <div class="dd-step-title">Your Prediction — Before AI</div>
+    </div>
+    <div class="dd-step-body">
+      <div class="dd-step-sub">Before using any AI: write down what you think AI would say if asked to complete this task. What would it produce? Where would it struggle?</div>
+      <div class="write-block">
+        <div class="write-label">My prediction of what AI would produce:</div>
+        <div class="write-box" style="min-height:80px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dd-step">
+    <div class="dd-step-head">
+      <div class="dd-step-num">Step 2</div>
+      <div class="dd-step-title">Run the AI Session</div>
+    </div>
+    <div class="dd-step-body">
+      <div class="dd-step-sub">Use this prompt with your AI tool of choice. Copy the task description and paste it in.</div>
+      <div class="prompt-label">Prompt to use</div>
+      <div class="prompt-box">I am a teacher and I want to understand how AI would interact with this assessment task. Please: (1) attempt to complete the task as a student would, (2) identify which parts of the task you found easy or difficult, (3) explain what learning you think this task is designed to develop, and (4) suggest where a student could use AI to bypass that learning without detection. Be honest and specific.</div>
+      <div class="write-block">
+        <div class="write-label">What AI actually produced — key observations:</div>
+        <div class="write-box" style="min-height:80px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dd-step">
+    <div class="dd-step-head">
+      <div class="dd-step-num">Step 3</div>
+      <div class="dd-step-title">Compare — Where Were You Right or Wrong?</div>
+    </div>
+    <div class="dd-step-body">
+      <div class="dd-step-sub">Compare what AI produced to your prediction. What surprised you? Where was it more capable than you expected — or less?</div>
+      <div class="write-block">
+        <div class="write-label">Comparison — surprises, gaps, confirmations:</div>
+        <div class="write-box" style="min-height:70px"></div>
+      </div>
+      <div class="write-block">
+        <div class="write-label">In your classroom, where is this task genuinely vulnerable?</div>
+        <div class="write-hint">Connect what you saw to your real students.</div>
+        <div class="write-box" style="min-height:55px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dd-step">
+    <div class="dd-step-head">
+      <div class="dd-step-num">Step 4</div>
+      <div class="dd-step-title">Reflect &amp; Reposition</div>
+    </div>
+    <div class="dd-step-body">
+      <div class="dd-step-sub">Based on what you saw, what does this mean for your assessment design and SAIL positioning?</div>
+      <div class="write-block">
+        <div class="write-label">What one redesign move will protect the most important learning?</div>
+        <div class="write-box" style="min-height:55px"></div>
+      </div>
+      <div class="write-block">
+        <div class="write-label">How did this AI session change — or not change — your SAIL positioning decision?</div>
+        <div class="write-box" style="min-height:55px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ FINAL AUDIT ═══ -->
+<div class="section page-break">
+  <div class="section-head">
+    <span class="section-badge" style="background:var(--purple)">Final Audit</span>
+    <span class="section-title">Final Audit — After Full Enactment</span>
+  </div>
+  <div class="section-sub">Complete after you have taught the redesigned assessment and collected student work. These questions are harder — they ask about what actually happened, not what you planned.</div>
+
+  <div style="background:var(--cream);border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:20px;font-size:9.5pt;color:var(--muted);line-height:1.5">
+    This is not the same as the Initial Audit. You should have already completed a full cycle — audit, redesign, enactment, evidence collection — before working through this.
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:10px">Section A — What Actually Happened</div>
+
+  <div class="write-block">
+    <div class="write-label">What did the student reasoning artifacts reveal that your initial audit didn't anticipate?</div>
+    <div class="write-hint">Be specific. Name one thing that appeared in the student work — a misconception, a moment of genuine understanding, a pattern — that you didn't predict.</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">Where did AI deepen student understanding, and where did it replace it?</div>
+    <div class="write-hint">Don't generalize. Identify a specific student or moment where you could see which was happening.</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">What did the visible reasoning protocol actually make visible — and what did it still hide?</div>
+    <div class="write-hint">What did you learn from the reasoning artifacts that you couldn't have learned from the product alone?</div>
+    <div class="write-box"></div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin:20px 0 10px">Section B — Tensions and Unresolved Questions</div>
+
+  <div class="write-block">
+    <div class="write-label">What disciplinary tension did this cycle surface that you are still sitting with?</div>
+    <div class="write-hint">Not a design problem you can fix. A genuine tension between your discipline's epistemic values and what AI makes possible.</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">What did this cycle reveal about your own assumptions — about students, learning, or AI?</div>
+    <div class="write-hint">What belief did you hold going in that the evidence complicated?</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">What question about AI and your discipline are you now carrying that you weren't before?</div>
+    <div class="write-hint">This is your research contribution — not a solved problem, but an open question this cycle has sharpened.</div>
+    <div class="write-box"></div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin:20px 0 10px">Section C — How Your Thinking Has Changed</div>
+
+  <div class="write-block">
+    <div class="write-label">How has your understanding of what AI can and cannot do in your discipline changed?</div>
+    <div class="write-hint">Specific to your subject — not a general statement. What does AI handle well and where does it break down in ways that matter for learning?</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">If you were to redesign this task again for next year, what would you change and why?</div>
+    <div class="write-hint">Backwards design from what you actually observed. What does the evidence tell you the task should have asked for instead?</div>
+    <div class="write-box"></div>
+  </div>
+  <div class="write-block">
+    <div class="write-label">What would you say to a skeptical colleague in your department who hasn't started this work?</div>
+    <div class="write-hint">Not a pitch. An honest account of what you found hard, what surprised you, and what you'd want them to know first.</div>
+    <div class="write-box"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div class="doc-footer-l">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship</div>
+  <div class="doc-footer-r">Colegio Nueva Granada · Andrew Cajina · 2026–2027</div>
+</div>
+
+<script>
+// Auto-trigger print dialog if opened from the VISTA tool
+if (window.opener || document.referrer.includes('vista')) {
+  setTimeout(() => window.print(), 600);
+}
+</script>
+</body>
+</html>
