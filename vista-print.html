@@ -51,8 +51,8 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
 .write-label{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:5px}
 .write-hint{font-size:9pt;color:var(--muted);font-style:italic;margin-bottom:5px;line-height:1.4}
 .write-lines{display:flex;flex-direction:column;gap:8px}
-.write-line{border:none;border-bottom:1px solid var(--border);height:20px;width:100%}
-.write-box{border:1.5px solid var(--border);border-radius:6px;width:100%;min-height:60px;background:var(--paper)}
+.write-line{border:none;border-bottom:1px solid var(--border);height:28px;width:100%}
+.write-box{border:1.5px solid var(--border);border-radius:6px;width:100%;min-height:110px;background:var(--paper);padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:10.5pt;color:var(--text);resize:vertical;outline:none}
 
 /* ── CLASSIFIER ── */
 .classifier-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
@@ -166,17 +166,17 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
   <div class="write-block">
     <div class="write-label">What is the task?</div>
     <div class="write-hint">What do students produce? What do they do?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">What learning is this task designed to develop?</div>
     <div class="write-hint">Name the specific disciplinary capacity — not the topic, but the thinking. What would a student who genuinely understands this be able to do?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">What would evidence of that learning look like before AI?</div>
     <div class="write-hint">What would you see in student work that tells you the thinking happened — not just that the product looks good?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
 </div>
 
@@ -274,7 +274,7 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
 
   <div class="write-block" style="margin-top:10px">
     <div class="write-label">My Rating: _______ &nbsp;&nbsp;&nbsp; Because:</div>
-    <div class="write-box" style="min-height:44px"></div>
+    <textarea class="write-box" style="min-height:130px" placeholder="Write here..."></textarea>
   </div>
 </div>
 
@@ -332,7 +332,7 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
   <div class="write-block">
     <div class="write-label">Justify your SAIL positioning</div>
     <div class="write-hint">Why this level and not one above or below? What specifically about your learning goal and vulnerability rating led you here?</div>
-    <div class="write-box" style="min-height:70px"></div>
+    <textarea class="write-box" style="min-height:120px" placeholder="Write here..."></textarea>
   </div>
 </div>
 
@@ -347,22 +347,22 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
   <div class="write-block">
     <div class="write-label">What one change did you make to the task, and what was your disciplinary reason?</div>
     <div class="write-hint">What did you add, change, or remove? Why does that change protect the learning you named in Step 1?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">What tension did this audit surface that you are still sitting with?</div>
     <div class="write-hint">Name one question the audit raised that you don't have a clean answer to.</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">What would you do if a student said they don't want to use AI for this task?</div>
     <div class="write-hint">What is the non-AI alternative that still meets the learning goal?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">What does backwards design tell you about this task?</div>
     <div class="write-hint">If this learning goal is what matters, does the task as designed actually lead there?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
 </div>
 
@@ -383,7 +383,7 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
       <div class="dd-step-sub">Before using any AI: write down what you think AI would say if asked to complete this task. What would it produce? Where would it struggle?</div>
       <div class="write-block">
         <div class="write-label">My prediction of what AI would produce:</div>
-        <div class="write-box" style="min-height:80px"></div>
+        <textarea class="write-box" style="min-height:130px" placeholder="Write here..."></textarea>
       </div>
     </div>
   </div>
@@ -399,7 +399,7 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
       <div class="prompt-box">I am a teacher and I want to understand how AI would interact with this assessment task. Please: (1) attempt to complete the task as a student would, (2) identify which parts of the task you found easy or difficult, (3) explain what learning you think this task is designed to develop, and (4) suggest where a student could use AI to bypass that learning without detection. Be honest and specific.</div>
       <div class="write-block">
         <div class="write-label">What AI actually produced — key observations:</div>
-        <div class="write-box" style="min-height:80px"></div>
+        <textarea class="write-box" style="min-height:130px" placeholder="Write here..."></textarea>
       </div>
     </div>
   </div>
@@ -413,12 +413,12 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
       <div class="dd-step-sub">Compare what AI produced to your prediction. What surprised you? Where was it more capable than you expected — or less?</div>
       <div class="write-block">
         <div class="write-label">Comparison — surprises, gaps, confirmations:</div>
-        <div class="write-box" style="min-height:70px"></div>
+        <textarea class="write-box" style="min-height:120px" placeholder="Write here..."></textarea>
       </div>
       <div class="write-block">
         <div class="write-label">In your classroom, where is this task genuinely vulnerable?</div>
         <div class="write-hint">Connect what you saw to your real students.</div>
-        <div class="write-box" style="min-height:55px"></div>
+        <textarea class="write-box" style="min-height:100px" placeholder="Write here..."></textarea>
       </div>
     </div>
   </div>
@@ -432,11 +432,11 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
       <div class="dd-step-sub">Based on what you saw, what does this mean for your assessment design and SAIL positioning?</div>
       <div class="write-block">
         <div class="write-label">What one redesign move will protect the most important learning?</div>
-        <div class="write-box" style="min-height:55px"></div>
+        <textarea class="write-box" style="min-height:100px" placeholder="Write here..."></textarea>
       </div>
       <div class="write-block">
         <div class="write-label">How did this AI session change — or not change — your SAIL positioning decision?</div>
-        <div class="write-box" style="min-height:55px"></div>
+        <textarea class="write-box" style="min-height:100px" placeholder="Write here..."></textarea>
       </div>
     </div>
   </div>
@@ -459,17 +459,17 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
   <div class="write-block">
     <div class="write-label">What did the student reasoning artifacts reveal that your initial audit didn't anticipate?</div>
     <div class="write-hint">Be specific. Name one thing that appeared in the student work — a misconception, a moment of genuine understanding, a pattern — that you didn't predict.</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">Where did AI deepen student understanding, and where did it replace it?</div>
     <div class="write-hint">Don't generalize. Identify a specific student or moment where you could see which was happening.</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">What did the visible reasoning protocol actually make visible — and what did it still hide?</div>
     <div class="write-hint">What did you learn from the reasoning artifacts that you couldn't have learned from the product alone?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
 
   <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin:20px 0 10px">Section B — Tensions and Unresolved Questions</div>
@@ -477,17 +477,17 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
   <div class="write-block">
     <div class="write-label">What disciplinary tension did this cycle surface that you are still sitting with?</div>
     <div class="write-hint">Not a design problem you can fix. A genuine tension between your discipline's epistemic values and what AI makes possible.</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">What did this cycle reveal about your own assumptions — about students, learning, or AI?</div>
     <div class="write-hint">What belief did you hold going in that the evidence complicated?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">What question about AI and your discipline are you now carrying that you weren't before?</div>
     <div class="write-hint">This is your research contribution — not a solved problem, but an open question this cycle has sharpened.</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
 
   <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin:20px 0 10px">Section C — How Your Thinking Has Changed</div>
@@ -495,17 +495,17 @@ body{font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text);backgrou
   <div class="write-block">
     <div class="write-label">How has your understanding of what AI can and cannot do in your discipline changed?</div>
     <div class="write-hint">Specific to your subject — not a general statement. What does AI handle well and where does it break down in ways that matter for learning?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">If you were to redesign this task again for next year, what would you change and why?</div>
     <div class="write-hint">Backwards design from what you actually observed. What does the evidence tell you the task should have asked for instead?</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
   <div class="write-block">
     <div class="write-label">What would you say to a skeptical colleague in your department who hasn't started this work?</div>
     <div class="write-hint">Not a pitch. An honest account of what you found hard, what surprised you, and what you'd want them to know first.</div>
-    <div class="write-box"></div>
+    <textarea class="write-box" placeholder="Write here..."></textarea>
   </div>
 </div>
 
