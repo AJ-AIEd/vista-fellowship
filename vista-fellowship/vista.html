@@ -396,7 +396,7 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
     <div class="nav-lang" id="langToggle" onclick="toggleLang()" data-k="lang_toggle">🇪🇸 Español</div>
     <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
     <div class="nav-tab" id="navInitial" onclick="showView('initial')" data-k="nav_initial">Initial Audit</div>
-    <div class="nav-tab" id="navDeep" onclick="showView('deepdive')" data-k="nav_deepdive">AI Stress-Test</div>
+    <div class="nav-tab" id="navDeep" onclick="showView('deepdive')" data-k="nav_deepdive">Augmented Review</div>
     <div class="nav-tab" id="navFinal" onclick="showView('final')" data-k="nav_final">Final Audit</div>
     <div class="nav-tab" id="navRefs" onclick="showView('refs')" data-k="nav_refs">References</div>
     <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
@@ -414,7 +414,7 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
   </button>
   <button class="bn-tab" id="bnDeep" onclick="showView('deepdive')">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
-    Stress-Test
+    Routine
   </button>
   <button class="bn-tab" id="bnFinal" onclick="showView('final')">
     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
@@ -460,9 +460,9 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
         </div>
         <div class="path-card path-b" onclick="showView('deepdive')">
           <div class="path-step-badge" data-k="step_badge_2">Step 2</div>
-          <div class="path-title" data-k="path_b_title">AI Stress-Test</div>
-          <div class="path-sub" data-k="path_b_sub">Return here after your conversation with Cajina. Use AI as a thinking partner and model the process we want students to develop.</div>
-          <button class="path-btn" data-k="path_b_btn">Begin Stress-Test →</button>
+          <div class="path-title" data-k="path_b_title">The Augmented Human Thinking Routine</div>
+          <div class="path-sub" data-k="path_b_sub">A structured thinking routine — four moves that build your judgment about AI in your discipline. You think first, then use AI to see further than you could alone. Repeatable on any task. ~30 min.</div>
+          <button class="path-btn" data-k="path_b_btn">Begin the Routine →</button>
         </div>
       </div>
       <div class="paths-bottom">
@@ -512,8 +512,8 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
 <!-- ═══════════════════════════════════════════════════ DEEP DIVE ═══ -->
 <div class="view" id="view-deepdive">
   <div class="dd-header">
-    <div class="dd-badge" data-k="nav_deepdive">AI Stress-Test</div>
-    <div class="dd-title" data-k="deepdive_intro_title">AI Stress-Test — Think First, Then Go Deeper With AI</div>
+    <div class="dd-badge" data-k="nav_deepdive">Augmented Review</div>
+    <div class="dd-title" data-k="deepdive_intro_title">The Augmented Human Thinking Routine — Think First, Then Go Deeper</div>
     <div class="dd-sub" data-k="deepdive_intro">This layer is done after your Initial Audit and conversation with Cajina. You'll work with an AI tool using the prompts below — modelling exactly the kind of AI engagement we want students to develop.</div>
   </div>
   <div class="dd-body" id="deepdiveBody"></div>
@@ -575,14 +575,14 @@ const STRINGS = {
   en: {
     nav_brand: "VISTA",
     nav_initial: "Initial Audit",
-    nav_deepdive: "AI Stress-Test",
+    nav_deepdive: "Augmented Review",
     nav_final: "Final Audit",
     nav_refs: "References",
     step_badge_1: "Step 1",
     step_badge_2: "Step 2",
     step_badge_3: "Step 3",
     path_a_title: "Initial Audit",
-    path_b_title: "AI Stress-Test",
+    path_b_title: "The Augmented Human Thinking Routine",
     path_c_title: "Final Audit",
     path_c_sub: "Complete after a full teach-and-observe cycle. Nine questions on what actually happened vs. what you intended. The most important document in the fellowship.",
     path_c_btn: "Begin Final Audit →",
@@ -636,7 +636,7 @@ const STRINGS = {
     final_q9: "What would you say to a skeptical colleague in your department who hasn't started this work?",
     final_q9_ph: "Not a pitch for the fellowship. An honest account of what you found hard, what surprised you, and what you would want them to know before they start. This becomes part of your transfer session.",
 
-    final_submit_note: "Submitting this Final Audit completes your cycle record. It will be added to your portfolio in the Cognitive Agency Knowledge Hub alongside your Initial Audit and AI Stress-Test for comparison across iterations.",
+    final_submit_note: "Submitting this Final Audit completes your cycle record. It will be added to your portfolio in the Cognitive Agency Knowledge Hub alongside your Initial Audit and Augmented Human Thinking Routine for comparison across iterations.",
     nav_save: "Save Draft",
     nav_pdf: "PDF",
     lang_toggle: "🇪🇸 Español",
@@ -660,10 +660,10 @@ const STRINGS = {
     path_a_title: "Initial Audit",
     path_a_sub: "Work through this alone first. Your honest first pass — before any conversation or AI input. This becomes your baseline for the deep dive.",
     path_a_btn: "Begin Initial Audit →",
-    path_b_title: "AI Stress-Test",
-    path_b_sub: "A four-step routine: think through each question yourself first, then use AI to go deeper. Teaches you to prompt AI iteratively while your judgment stays in the lead. ~30 min, repeat on any task.",
-    path_b_btn: "Begin Stress-Test →",
-    path_note: "Do the Initial Audit first. Come back for the AI Stress-Test before you redesign session.",
+    path_b_title: "The Augmented Human Thinking Routine",
+    path_b_sub: "A structured thinking routine — four moves that build your judgment about AI in your discipline. You think first, then use AI to see further than you could alone. Repeatable on any task. ~30 min.",
+    path_b_btn: "Begin the Routine →",
+    path_note: "Do the Initial Audit first. Come back for the Augmented Human Thinking Routine before your redesign session.",
     
     step1_title: "Describe Your Task",
     step1_sub: "Start here. Give enough context that someone unfamiliar with your class could understand what students are doing and why.",
@@ -795,8 +795,8 @@ const STRINGS = {
     scenario_audit: "Audit",
     scenario_redesign: "Redesign",
     
-    deepdive_intro_title: "AI Stress-Test — Modelling What We Want Students to Do",
-    deepdive_intro: "A four-step routine you can run on any task: think it through yourself first, then use AI to push your thinking further. Learn to prompt AI iteratively while keeping your own judgment in the lead.",
+    deepdive_intro_title: "The Augmented Human Thinking Routine",
+    deepdive_intro: "A structured thinking routine — four moves that build the professional judgment to work with AI in your discipline. You think first. AI extends what you can see. By Cycle 2, you run this alone, on any task, without a coach.",
     deepdive_prompt_label: "Use this prompt with your AI tool of choice",
     deepdive_send_label: "Or send your audit directly",
     deepdive_llm_label: "Open in...",
@@ -817,14 +817,14 @@ const STRINGS = {
   es: {
     nav_brand: "VISTA",
     nav_initial: "Auditoría Inicial",
-    nav_deepdive: "Prueba con IA",
+    nav_deepdive: "Revisión Aumentada",
     nav_final: "Auditoría Final",
     nav_refs: "Referencias",
     step_badge_1: "Paso 1",
     step_badge_2: "Paso 2",
     step_badge_3: "Paso 3",
     path_a_title: "Auditoría Inicial",
-    path_b_title: "AI Stress-Test",
+    path_b_title: "La Rutina de Pensamiento Humano Aumentado",
     path_c_title: "Auditoría Final",
     path_c_sub: "Completa después de un ciclo completo de enseñanza y observación. Nueve preguntas sobre lo que realmente ocurrió versus lo que pretendiste. El documento más importante del fellowship.",
     path_c_btn: "Comenzar Auditoría Final →",
@@ -878,7 +878,7 @@ const STRINGS = {
     final_q9: "¿Qué le dirías a un colega escéptico en tu departamento que no ha comenzado este trabajo?",
     final_q9_ph: "No un argumento de venta para el fellowship. Un relato honesto de lo que encontraste difícil, lo que te sorprendió, y lo que querrías que supieran antes de comenzar.",
 
-    final_submit_note: "Enviar esta Auditoría Final completa tu registro de ciclo. Se añadirá a tu portafolio en el Knowledge Hub junto con tu Auditoría Inicial y la Prueba con IA para comparación entre iteraciones.",
+    final_submit_note: "Enviar esta Auditoría Final completa tu registro de ciclo. Se añadirá a tu portafolio en el Knowledge Hub junto con tu Auditoría Inicial y la Rutina de Pensamiento Humano Aumentado para comparación entre iteraciones.",
     nav_save: "Guardar Borrador",
     nav_pdf: "PDF",
     lang_toggle: "🇺🇸 English",
@@ -902,10 +902,10 @@ const STRINGS = {
     path_a_title: "Auditoría Inicial",
     path_a_sub: "Trabaja esto solo — antes de cualquier IA o conversación con Cajina. Sube tu tarea y responde cuatro preguntas honestas. 20–30 minutos. Esta es tu línea base.",
     path_a_btn: "Comenzar Auditoría Inicial →",
-    path_b_title: "AI Stress-Test",
-    path_b_sub: "Una rutina de cuatro pasos: piensa cada pregunta tú primero, luego usa la IA para profundizar. Te enseña a iterar prompts sin soltar tu juicio. ~30 min, repetible en cualquier tarea.",
-    path_b_btn: "Comenzar Prueba →",
-    path_note: "Haz primero la Auditoría Inicial. Regresa para la Prueba con IA antes de rediseñar, despué sesión de PLC.",
+    path_b_title: "La Rutina de Pensamiento Humano Aumentado",
+    path_b_sub: "Una rutina de pensamiento estructurada — cuatro movimientos que construyen tu juicio sobre la IA en tu disciplina. Tú piensas primero, luego usas la IA para ver más lejos de lo que podrías solo. Repetible en cualquier tarea. ~30 min.",
+    path_b_btn: "Comenzar la Rutina →",
+    path_note: "Haz primero la Auditoría Inicial. Regresa para la Rutina de Pensamiento Humano Aumentado antes de tu sesión de rediseño.",
     
     step1_title: "Describe Tu Tarea",
     step1_sub: "Comienza aquí. Da suficiente contexto para que alguien ajeno a tu clase pueda entender qué hacen los estudiantes y por qué.",
@@ -1004,8 +1004,8 @@ const STRINGS = {
     scenario_audit: "Auditoría",
     scenario_redesign: "Rediseño",
     
-    deepdive_intro_title: "Prueba con IA — Descubre qué hace la IA con tu tareaelando lo que Queremos que Hagan los Estudiantes",
-    deepdive_intro: "Una rutina de cuatro pasos para cualquier tarea: piensa tú primero, luego usa la IA para llevar tu pensamiento más lejos. Aprende a iterar prompts con la IA sin soltar tu propio juicio.",
+    deepdive_intro_title: "La Rutina de Pensamiento Humano Aumentado",
+    deepdive_intro: "Una rutina de pensamiento estructurada — cuatro movimientos que construyen el juicio profesional para trabajar con IA en tu disciplina. Tú piensas primero. La IA extiende lo que puedes ver. En el Ciclo 2, la corres solo, en cualquier tarea, sin un facilitador.",
     deepdive_prompt_label: "Usa este prompt con tu herramienta de IA",
     deepdive_send_label: "O envía tu auditoría directamente",
     deepdive_llm_label: "Abrir en...",
@@ -2218,7 +2218,7 @@ function rebuildDeepDive() {
   how.style.cssText = 'background:var(--navy);border-radius:12px;padding:24px 28px;margin-bottom:22px';
   how.innerHTML = `
     <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">${ES?'Cómo usar esta página':'How to use this page'}</div>
-    <div style="font-size:15px;color:#fff;font-weight:500;line-height:1.5;margin-bottom:16px">${ES?'La regla de oro: piensa tú primero, después profundiza con la IA.':'The golden rule: think it through yourself first, then go deeper with AI.'}</div>
+    <div style="font-size:15px;color:#fff;font-weight:500;line-height:1.5;margin-bottom:16px">${ES?'La regla de oro: piensa tú primero — luego usa la IA para ver más lejos.':'The golden rule: think it through yourself first — then use AI to see further.'}</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px 16px">
         <div style="font-size:12px;font-weight:600;color:var(--gold);margin-bottom:5px">${ES?'1 \u00b7 Tú primero':'1 \u00b7 You first'}</div>
@@ -2229,7 +2229,7 @@ function rebuildDeepDive() {
         <div style="font-size:12.5px;color:rgba(255,255,255,.8);line-height:1.5">${ES?'Usa el prompt sugerido para empujar tu pensamiento más lejos. La IA no te da la respuesta — te ayuda a ver lo que no habías visto.':'Use the suggested prompt to push your thinking further. AI doesn\u2019t give you the answer — it helps you see what you hadn\u2019t.'}</div>
       </div>
     </div>
-    <div style="font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.55;margin-top:14px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px">${ES?'Son cuatro pasos. Toma unos 30 minutos. Al final tendrás una decisión concreta para mejorar tu evaluación \u2014 y habrás practicado una forma de pensar con IA que puedes repetir tú solo en cualquier tarea.':'Four steps. About 30 minutes. By the end you\u2019ll have one concrete decision to improve your assessment \u2014 and you\u2019ll have practiced a way of thinking with AI you can repeat on your own, on any task.'}</div>\n    <div style="font-size:12px;color:var(--gold);line-height:1.5;margin-top:12px;background:rgba(196,134,26,.12);border-radius:8px;padding:11px 14px">${ES?'\ud83d\udca1 Truco clave: nunca te quedes con la primera respuesta de la IA. Cada paso incluye preguntas de seguimiento para pegar \u2014 cuestiona, pide ejemplos, hazla defender su respuesta. Así es como se piensa con IA, no solo se consume.':'\ud83d\udca1 Key habit: never stop at the AI\u2019s first answer. Every step gives you follow-up prompts to paste \u2014 challenge it, ask for examples, make it defend its answer. That\u2019s how you think *with* AI instead of just taking what it gives.'}</div>`;
+    <div style="font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.55;margin-top:14px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px">${ES?'Son cuatro pasos. Toma unos 30 minutos. Al final tendrás una decisión concreta para mejorar tu evaluación \u2014 y habrás practicado una forma de pensar con IA que puedes repetir tú solo en cualquier tarea.':'Four steps. About 30 minutes. By the end you\u2019ll have one concrete decision to improve your assessment \u2014 and you\u2019ll have practiced a way of thinking with AI you can repeat on your own, on any task.'}</div>\n    <div style="font-size:12px;color:var(--gold);line-height:1.5;margin-top:12px;background:rgba(196,134,26,.12);border-radius:8px;padding:11px 14px">${ES?'\ud83d\udca1 La rutina: tu juicio primero \u2014 la IA lo extiende. Nunca te quedes con la primera respuesta.':'\ud83d\udca1 The routine: your judgment leads \u2014 AI extends it. Never stop at the first answer.'}</div>`;
   body.appendChild(how);
 
   // helper to build a "you first → then AI" step
@@ -2359,7 +2359,7 @@ function rebuildDeepDive() {
   // ── CLOSING ─────────────────────────────────────────────────────────────
   const close=document.createElement('div'); close.className='dd-section';
   close.style.cssText='background:var(--navy);border-radius:12px;padding:22px 26px;margin-top:8px';
-  close.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">${ES?'Lo que acabas de practicar':'What you just practiced'}</div><div style="font-size:13px;color:rgba(255,255,255,.82);line-height:1.65">${ES?'Pensaste primero, luego profundizaste con la IA \u2014 cuatro veces. Esa es la rutina: tu juicio al frente, la IA para empujarlo m\u00e1s lejos. Es exactamente lo que quieres que tus estudiantes aprendan a hacer. Y ahora puedes correrla t\u00fa solo, en cualquier tarea, cuando quieras.':'You thought first, then deepened with AI \u2014 four times. That\u2019s the routine: your judgment leads, AI pushes it further. It\u2019s exactly what you want your students learning to do. And now you can run it yourself, on any task, whenever you want.'}</div>`;
+  close.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">${ES?'Lo que acabas de practicar':'What you just practiced'}</div><div style="font-size:13px;color:rgba(255,255,255,.82);line-height:1.65">${ES?'Acabas de correr la Rutina de Pensamiento Humano Aumentado. Cuatro movimientos. Tu juicio primero \u2014 la IA extendi\u00f3 lo que pod\u00edas ver. Esa es la pr\u00e1ctica. C\u00f3rrela en cualquier tarea, cuando quieras, sin m\u00ed.':'You just ran the Augmented Human Thinking Routine. Four moves. Your judgment led \u2014 AI extended what you could see. That\u2019s the practice. Run it on any task, anytime, without me.'}</div>`;
   body.appendChild(close);
 
   document.querySelectorAll('.dd-section').forEach(el => visObs.observe(el));
