@@ -444,11 +444,11 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
       </div>
       <div style="font-size:11px;color:rgba(139,168,181,.5);text-align:center;margin:-16px auto 22px;font-family:'DM Sans',sans-serif;font-style:italic;letter-spacing:.02em" id="vista-caption">Visibility Into Student Thinking and Agency</div>
       <div class="qcard">
-        <div class="ql" data-k="launch_q_label">The Diagnostic Question</div>
-        <div class="qt" data-k="launch_q">"If AI completed this task perfectly, what learning would disappear?"</div>
+        <div class="ql" data-k="launch_q_label">Primary Question — The Problem of Practice</div>
+        <div class="qt" data-k="launch_q">"If AI can produce the answer, how do we assess the reasoning, interpretation, revision, and judgment behind it?"</div>
         <div class="qsplit">
-          <div class="qhalf bad"><strong data-k="launch_bad_head">⬛ When everything meaningful disappears</strong><span data-k="launch_bad">AI can complete the task instead of the student. The design has a problem.</span></div>
-          <div class="qhalf good"><strong data-k="launch_good_head">🟩 When nothing significant disappears</strong><span data-k="launch_good">The task protects genuine learning. The design is working.</span></div>
+          <div class="qhalf bad"><strong data-k="launch_bad_head">⬛ When the product is all there is</strong><span data-k="launch_bad">AI generates it. The student's reasoning, interpretation, and judgment never had to exist. The assessment has a validity problem.</span></div>
+          <div class="qhalf good"><strong data-k="launch_good_head">🟩 When reasoning is made visible</strong><span data-k="launch_good">The assessment generates evidence of how the student thinks — not just what they produced. That evidence is worth trusting.</span></div>
         </div>
       </div>
       <div class="paths">
@@ -512,9 +512,9 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
 <!-- ═══════════════════════════════════════════════════ DEEP DIVE ═══ -->
 <div class="view" id="view-deepdive">
   <div class="dd-header">
-    <div class="dd-badge" data-k="nav_deepdive">Augmented Review</div>
+    <div class="dd-badge" data-k="nav_deepdive">Augmented Human Thinking Routine</div>
     <div class="dd-title" data-k="deepdive_intro_title">The Augmented Human Thinking Routine — Think First, Then Go Deeper</div>
-    <div class="dd-sub" data-k="deepdive_intro">This layer is done after your Initial Audit and conversation with Cajina. You'll work with an AI tool using the prompts below — modelling exactly the kind of AI engagement we want students to develop.</div>
+    <div class="dd-sub" data-k="deepdive_intro">Four moves that build the professional judgment to work with AI in your discipline. <strong style="color:#fff">In Cycle 1</strong>, Cajina walks through this routine with you — using AI-TPACK as the coaching lens on your specific task and discipline. <strong style="color:#fff">In Cycle 2</strong>, you run it alone, on any task, without a coach. That shift from guided to independent is the test of whether the routine has become your own.</div>
   </div>
   <div class="dd-body" id="deepdiveBody"></div>
   <footer>
@@ -650,12 +650,12 @@ const STRINGS = {
     vista_s: "Student",
     vista_t: "Thinking",
     vista_a: "& Agency",
-    launch_q_label: "The Diagnostic Question",
-    launch_q: "\"If AI completed this task perfectly, what learning would disappear?\"",
-    launch_bad_head: "⬛ When everything meaningful disappears",
-    launch_bad: "AI can complete the task instead of the student. The design has a problem.",
-    launch_good_head: "🟩 When nothing significant disappears",
-    launch_good: "The task protects genuine learning. The design is working.",
+    launch_q_label: "Primary Question — The Problem of Practice",
+    launch_q: "\"If AI can produce the answer, how do we assess the reasoning, interpretation, revision, and judgment behind it?\"",
+    launch_bad_head: "⬛ When the product is all there is",
+    launch_bad: "AI generates it. The student's reasoning, interpretation, and judgment never had to exist. The assessment has a validity problem.",
+    launch_good_head: "🟩 When reasoning is made visible",
+    launch_good: "The assessment generates evidence of how the student thinks — not just what they produced. That evidence is worth trusting.",
     
     path_a_title: "Initial Audit",
     path_a_sub: "Work through this alone first. Your honest first pass — before any conversation or AI input. This becomes your baseline for the deep dive.",
@@ -892,12 +892,12 @@ const STRINGS = {
     vista_s: "del",
     vista_t: "Pensamiento",
     vista_a: "y Agencia",
-    launch_q_label: "La Pregunta Diagnóstica",
-    launch_q: "\"Si la IA completara esta tarea perfectamente, ¿qué aprendizaje desaparecería?\"",
-    launch_bad_head: "⬛ Cuando todo lo significativo desaparece",
-    launch_bad: "La IA puede completar la tarea en lugar del estudiante. El diseño tiene un problema.",
-    launch_good_head: "🟩 Cuando nada significativo desaparece",
-    launch_good: "La tarea protege el aprendizaje genuino. El diseño está funcionando.",
+    launch_q_label: "Pregunta Principal — El Problema de Práctica",
+    launch_q: "\"Si la IA puede producir la respuesta, ¿cómo evaluamos el razonamiento, la interpretación, la revisión y el juicio detrás de ella?\"",
+    launch_bad_head: "⬛ Cuando el producto es todo lo que hay",
+    launch_bad: "La IA lo genera. El razonamiento, la interpretación y el juicio del estudiante nunca tuvieron que existir. La evaluación tiene un problema de validez.",
+    launch_good_head: "🟩 Cuando el razonamiento se hace visible",
+    launch_good: "La evaluación genera evidencia de cómo piensa el estudiante — no solo de lo que produjo. Esa evidencia merece confianza.",
     
     path_a_title: "Auditoría Inicial",
     path_a_sub: "Trabaja esto solo — antes de cualquier IA o conversación con Cajina. Sube tu tarea y responde cuatro preguntas honestas. 20–30 minutos. Esta es tu línea base.",
