@@ -81,6 +81,15 @@ section{padding:80px 32px;max-width:1080px;margin:0 auto}
 /* CYCLE GRID */
 .cycle-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:32px 0}
 @media(max-width:680px){.cycle-grid{grid-template-columns:1fr}}
+/* ILLUSIONS GRID */
+.illusions-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:40px}
+/* MOBILE HORIZONTAL SCROLL */
+@media(max-width:640px){
+  .illusions-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:12px;padding-bottom:12px;scrollbar-width:none;-ms-overflow-style:none;margin-right:-24px;padding-right:24px}
+  .illusions-grid>div{flex:none;width:80vw;scroll-snap-align:start}
+  .resource-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:12px;padding-bottom:12px;scrollbar-width:none;-ms-overflow-style:none;margin-right:-24px;padding-right:24px}
+  .resource-grid>*{flex:none;width:80vw;scroll-snap-align:start}
+}
 .cycle-card{background:var(--paper);border:1.5px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden}
 .cycle-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
 .cycle-1::before{background:var(--teal)}
@@ -168,7 +177,7 @@ footer{background:var(--navy);padding:40px 32px;text-align:center;margin-top:60p
   <div class="section-title">Cuando la IA puede producir el trabajo, el producto deja de contar la historia.</div>
   <div class="section-sub">La IA generativa ha hecho que el rendimiento académico pulido sea dramáticamente más accesible — pero los diseños de evaluación fueron creados para un mundo donde el rendimiento pulido requería el esfuerzo cognitivo correspondiente. Esa brecha es el problema que aborda esta beca.</div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:40px">
+  <div class="illusions-grid">
     <div style="background:var(--paper);border:1.5px solid var(--border);border-radius:10px;padding:20px 22px;border-top:3px solid var(--red)">
       <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:8px">Falla de Validez 1</div>
       <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px">Ilusión de Fluidez</div>

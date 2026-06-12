@@ -81,9 +81,18 @@ section{padding:80px 32px;max-width:1080px;margin:0 auto}
 .badge-purple{background:rgba(92,26,107,.1);color:var(--purple)}
 .badge-green{background:rgba(26,107,71,.1);color:var(--green)}
 
+/* ILLUSIONS GRID */
+.illusions-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:40px}
 /* CYCLE GRID */
 .cycle-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:32px 0}
 @media(max-width:680px){.cycle-grid{grid-template-columns:1fr}}
+/* MOBILE HORIZONTAL SCROLL */
+@media(max-width:640px){
+  .illusions-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:12px;padding-bottom:12px;scrollbar-width:none;-ms-overflow-style:none;margin-right:-24px;padding-right:24px}
+  .illusions-grid>div{flex:none;width:80vw;scroll-snap-align:start}
+  .resource-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:12px;padding-bottom:12px;scrollbar-width:none;-ms-overflow-style:none;margin-right:-24px;padding-right:24px}
+  .resource-grid>*{flex:none;width:80vw;scroll-snap-align:start}
+}
 .cycle-card{background:var(--paper);border:1.5px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden}
 .cycle-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
 .cycle-1::before{background:var(--teal)}
@@ -174,7 +183,7 @@ footer{background:var(--navy);padding:40px 32px;text-align:center;margin-top:60p
   <div class="section-title">When AI can produce the work, the product stops telling the story.</div>
   <div class="section-sub" style="max-width:none">Generative AI has made polished academic performance dramatically more accessible — but assessment designs were built for a world where polished performance required corresponding cognitive effort. That gap is the problem this fellowship addresses.</div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:40px">
+  <div class="illusions-grid">
     <div style="background:var(--paper);border:1.5px solid var(--border);border-radius:10px;padding:20px 22px;border-top:3px solid var(--red)">
       <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:8px">Validity Failure 1</div>
       <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--navy);margin-bottom:8px">Illusion of Fluency</div>
