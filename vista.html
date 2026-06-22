@@ -2414,6 +2414,7 @@ function restoreState() {
       });
       markDone(2, true);
     }
+    if (d.sail) { state.sailLevel = d.sail; }
     if (d.sailJustify) { const el = document.getElementById('sailJustify'); if(el) el.value = d.sailJustify; }
     if (d.reflection) {
       Object.entries(d.reflection).forEach(([k,v]) => {
