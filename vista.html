@@ -1479,44 +1479,20 @@ function buildUploadTop() {
   return wrap;
 }
 
-// ── LIGHT REFLECTION (Initial Audit only — 3 simple questions) ─────────────
+// ── LIGHT REFLECTION (Initial Audit only — one optional flag) ─────────────
 function buildLightReflection() {
   const wrap = document.createElement('div');
-  const qs = [
-    {
-      id:'lr1',
-      en:['What one thing are you hoping the audit will help you see?', 'Not what you expect to find — what are you genuinely curious about? What might this task be hiding that you want to understand?'],
-      es:['¿Qué una cosa esperas que la auditoría te ayude a ver?', 'No lo que esperas encontrar — ¿qué te genera genuina curiosidad? ¿Qué podría estar ocultando esta tarea?']
-    },
-    {
-      id:'lr2',
-      en:['What is the one moment where genuine student thinking is most required?', 'Identify the specific moment — not the task description. Where exactly can a student not pass through this without thinking?'],
-      es:['¿Cuál es el momento en esta tarea donde crees que se requiere más el pensamiento genuino del estudiante?', 'No describas la tarea — identifica el momento específico. ¿Dónde exactamente no puede pasar un estudiante sin pensar?']
-    },
-    {
-      id:'lr3',
-      en:['What would you do if a student said they did not want to use AI for this task?', 'There is no wrong answer. This is your first pass — honest, not polished.'],
-      es:['¿Qué harías si un estudiante te dijera que no quiere usar IA para esta tarea?', 'No hay respuesta incorrecta. Esta es tu primera impresión — honesta, no pulida.']
-    }
-  ];
-  const grid = document.createElement('div');
-  grid.className = 'rf-grid';
-  qs.forEach(q => {
-    const [label, ph] = lang === 'es' ? q.es : q.en;
-    grid.innerHTML += `
-      <div class="rfb${q.id==='lr3'?' wide':''}">
-        <div class="rf-label">${label}</div>
-        <textarea class="rf-area" id="${q.id}" placeholder="${ph}" oninput="checkLightReflection()"></textarea>
-      </div>
-    `;
-  });
-  wrap.appendChild(grid);
+  wrap.innerHTML = `
+    <div class="rfb wide">
+      <div class="rf-label">${t('step6_flag_label')}</div>
+      <textarea class="rf-area" id="lr1" placeholder="${t('step6_flag_ph')}" oninput="checkLightReflection()"></textarea>
+    </div>
+  `;
   return wrap;
 }
 
 function checkLightReflection() {
-  const filled = ['lr1','lr2','lr3'].some(id => document.getElementById(id)?.value.trim().length > 5);
-  markDone(6, filled);
+  markDone(6, true);
 }
 
 function buildSubmitBar() {
@@ -1663,13 +1639,13 @@ function rebuildAudit() {
     buildSAIL()
   , true));
   
-  // Step 6: Light reflection (Initial Audit only — one question per area)
+  // Step 6: One optional flag before enactment
   body.appendChild(buildStep(6,
-    lang==='es'?'Una Reflexión Inicial':'One Initial Reflection',
-    lang==='es'?'Tres preguntas, antes de actuar. Estas son tu punto de partida — respuestas honestas, no pulidas.':'Three questions, before you enact. These are your starting point — honest answers, not polished ones.',
+    t('step6_title'),
+    t('step6_sub'),
     lang==='es'
-      ? 'Esto no es el análisis profundo — ese viene en la <strong>Auditoría Final</strong>. Estas preguntas capturan tu pensamiento ahora, antes de que la implementación cambie lo que recuerdas haber pensado.'
-      : 'This is not the deep analysis — that comes in the <strong>Final Audit</strong>. These questions capture your thinking now, before enactment changes what you remember thinking.',
+      ? 'Esto no es el análisis profundo — ese viene en la <strong>Auditoría Final</strong>. Una línea es suficiente.'
+      : 'This is not the deep analysis — that comes in the <strong>Final Audit</strong>. One line is enough.',
     buildLightReflection()
   , true));
   
@@ -2429,8 +2405,6 @@ function saveDraft() {
     },
     light_reflection: {
       lr1: document.getElementById('lr1')?.value,
-      lr2: document.getElementById('lr2')?.value,
-      lr3: document.getElementById('lr3')?.value,
     },
     final_audit: {
       fq1: document.getElementById('fq1')?.value,
