@@ -589,23 +589,8 @@ const STRINGS = {
     path_c_sub: "Complete after a full teach-and-observe cycle. Nine questions on what actually happened vs. what you intended. The most important document in the fellowship.",
     path_c_btn: "Begin Final Audit →",
 
-    upload_section_title: "Upload Your Materials",
-    upload_section_sub: "Start here. Upload the task and any supporting materials before working through the audit. Having your actual documents in front of you — and in front of Cajina — makes every step more concrete.",
-    upload_rec_head: "✓ Recommended",
-    upload_not_head: "✗ Not recommended",
-    upload_rec_items: [
-      ["The task document itself (PDF)", "The core object of this audit. Required."],
-      ["Your rubric or assessment criteria", "Tells the audit what you think success looks like — often reveals the real vulnerability."],
-      ["A slide deck or unit overview", "Useful context for how this task sits in the broader sequence."],
-      ["2–3 anonymized student work samples", "Optional but powerful. Real work makes the audit concrete, not hypothetical."],
-      ["Previous iteration notes", "If this is not your first cycle, include your last audit record for comparison."],
-    ],
-    upload_not_items: [
-      ["Raw photos of student work", "Hard to read and process. Scan or export to PDF first."],
-      ["Entire unit portfolios (50+ pages)", "Too much to work through in a session. Select the most relevant 2–4 documents."],
-      ["Video or audio files", "This tool doesn't process media. Describe key moments in your reflection instead."],
-      ["Drafts or incomplete versions", "Upload the version students actually saw, not planning documents."],
-    ],
+    upload_section_title: "Attach the task document (optional)",
+    upload_section_sub: "Now that you've described the task, attach the actual document if you have it handy — it makes later steps more concrete. PDF, optional. You can complete the whole audit without it.",
 
     final_header_title: "Final Audit",
     final_header_sub: "This is for the end of a full iteration cycle — after you've taught the redesigned assessment and collected student work. The questions here are harder. They ask about what actually happened, not what you planned.",
@@ -822,23 +807,8 @@ const STRINGS = {
     path_c_sub: "Completa después de un ciclo completo de enseñanza y observación. Nueve preguntas sobre lo que realmente ocurrió versus lo que pretendiste. El documento más importante del fellowship.",
     path_c_btn: "Comenzar Auditoría Final →",
 
-    upload_section_title: "Sube Tus Materiales",
-    upload_section_sub: "Empieza aquí. Sube la tarea y materiales de apoyo antes de trabajar en la auditoría. Tener tus documentos reales disponibles hace cada paso más concreto.",
-    upload_rec_head: "✓ Recomendado",
-    upload_not_head: "✗ No recomendado",
-    upload_rec_items: [
-      ["El documento de la tarea (PDF)", "El objeto central de esta auditoría. Requerido."],
-      ["Tu rúbrica o criterios de evaluación", "Dice a la auditoría qué crees que es el éxito — a menudo revela la vulnerabilidad real."],
-      ["Una presentación o resumen de unidad", "Contexto útil sobre cómo esta tarea se ubica en la secuencia."],
-      ["2–3 muestras de trabajo estudiantil anónimas", "Opcional pero poderoso. El trabajo real hace la auditoría concreta, no hipotética."],
-      ["Notas de iteraciones anteriores", "Si este no es tu primer ciclo, incluye tu último registro de auditoría para comparación."],
-    ],
-    upload_not_items: [
-      ["Fotos de trabajo estudiantil", "Difíciles de leer. Escanea o exporta a PDF primero."],
-      ["Portafolios de unidad completos (50+ páginas)", "Demasiado para trabajar en una sesión. Selecciona los 2–4 documentos más relevantes."],
-      ["Archivos de video o audio", "Esta herramienta no procesa medios. Describe momentos clave en tu reflexión."],
-      ["Borradores o versiones incompletas", "Sube la versión que los estudiantes realmente vieron."],
-    ],
+    upload_section_title: "Adjunta el documento de la tarea (opcional)",
+    upload_section_sub: "Ahora que describiste la tarea, adjunta el documento real si lo tienes a mano — hace los pasos siguientes más concretos. PDF, opcional. Puedes completar toda la auditoría sin él.",
 
     final_header_title: "Auditoría Final",
     final_header_sub: "Esta es para el final de un ciclo completo — después de haber enseñado la evaluación rediseñada y recopilado trabajo estudiantil. Las preguntas aquí son más difíciles.",
@@ -1444,36 +1414,19 @@ const visObs = new IntersectionObserver(entries => {
 }, {threshold:0.07});
 
 // ── AUDIT BUILDER ─────────────────────────────────────────────────────────────
-// ── UPLOAD TOP (PDF-only, guidance cards) ─────────────────────────────────────
+// ── UPLOAD (task document only, optional) ─────────────────────────────────────
 function buildUploadTop() {
-  const s = STRINGS[lang];
   const wrap = document.createElement('div');
-  const recItems = s.upload_rec_items.map(([name,why]) =>
-    `<div class="ug-item"><div class="ug-dot"></div><div><span class="ug-item-name">${name}</span> <span class="ug-item-why">— ${why}</span></div></div>`
-  ).join('');
-  const notItems = s.upload_not_items.map(([name,why]) =>
-    `<div class="ug-item"><div class="ug-dot"></div><div><span class="ug-item-name">${name}</span> <span class="ug-item-why">— ${why}</span></div></div>`
-  ).join('');
   wrap.innerHTML = `
-    <div class="upload-guidance">
-      <div class="ug-card ug-rec">
-        <div class="ug-head">${s.upload_rec_head}</div>
-        ${recItems}
-      </div>
-      <div class="ug-card ug-not">
-        <div class="ug-head">${s.upload_not_head}</div>
-        ${notItems}
-      </div>
-    </div>
     <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileIn').click()"
          ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
       <div class="upload-icon">📄</div>
-      <div class="upload-title">${lang==='es'?'Solo PDF — arrastra aquí o haz clic':'PDF only — drag here or click to browse'}</div>
-      <div class="upload-sub">${lang==='es'?'Tarea · Rúbrica · Descripción de unidad · Muestras de trabajo (anonimizadas)':'Task document · Rubric · Unit overview · Student work samples (anonymized)'}</div>
-      <div class="upload-sub2">${lang==='es'?'Máximo 20MB por archivo · Solo archivos PDF':'Max 20MB per file · PDF files only'}</div>
-      <div class="upload-btn-ui">${lang==='es'?'Elegir PDFs':'Choose PDFs'}</div>
+      <div class="upload-title">${lang==='es'?'Arrastra el PDF aquí o haz clic para buscar':'Drag PDF here or click to browse'}</div>
+      <div class="upload-sub">${lang==='es'?'Solo el documento de la tarea · PDF · Opcional':'Task document only · PDF · Optional'}</div>
+      <div class="upload-sub2">${lang==='es'?'Máximo 20MB':'Max 20MB'}</div>
+      <div class="upload-btn-ui">${lang==='es'?'Elegir PDF':'Choose PDF'}</div>
     </div>
-    <input type="file" id="fileIn" multiple accept=".pdf,application/pdf" style="display:none" onchange="handleFiles(this.files)">
+    <input type="file" id="fileIn" accept=".pdf,application/pdf" style="display:none" onchange="handleFiles(this.files)">
     <div class="upload-list" id="uploadList"></div>
   `;
   return wrap;
