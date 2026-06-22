@@ -2277,15 +2277,11 @@ function makeDDSection(title, sub) {
 
 function generatePrompt() {
   const task = document.getElementById('s1task')?.value || (lang==='es'?'[pega aquí tu tarea — o descríbela en la Auditoría Inicial]':'[paste your task here — or describe it in the Initial Audit]');
-  const learning = document.getElementById('s1learning')?.value || (lang==='es'?'[el aprendizaje que quieres evaluar]':'[the learning you want to assess]');
 
   if (lang === 'es') return `Actúa como un estudiante capaz y motivado de mi clase con acceso a IA. Voy a darte una tarea real que asigno y quiero que la completes como lo haría ese estudiante.
 
-LA TAREA:
+LA TAREA Y LO QUE BUSCO QUE APRENDAN:
 ${task}
-
-LO QUE QUIERO QUE APRENDAN:
-${learning}
 
 Por favor:
 1. Completa la tarea de verdad — produce el trabajo real, no una descripción de cómo lo harías.
@@ -2296,11 +2292,8 @@ Sé específico sobre mi materia.`;
 
   return `Act as a capable, motivated student in my class with access to AI. I'll give you a real task I assign, and I want you to complete it the way that student would.
 
-THE TASK:
+THE TASK AND WHAT I WANT THEM TO LEARN:
 ${task}
-
-WHAT I WANT THEM TO LEARN:
-${learning}
 
 Please:
 1. Actually complete the task — produce the real work, not a description of how you'd approach it.
