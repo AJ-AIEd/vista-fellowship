@@ -1552,22 +1552,22 @@ function rebuildAudit() {
   body.innerHTML = '';
   buildProgressBar();
   
-  // Upload first — unlocked
-  body.appendChild(buildStep(1, t('upload_section_title'), t('upload_section_sub'),
-    lang==='es'
-      ? '<strong>Empieza aquí.</strong> Solo PDF. Sube los documentos que usarás en la auditoría antes de comenzar los pasos. Esto hace la auditoría concreta, no hipotética.'
-      : '<strong>Start here, before anything else.</strong> PDF only. Upload your documents before starting the steps — this makes the audit concrete rather than hypothetical.',
-    buildUploadTop()
-  ));
-
-  // Step 2: Task Description
-  body.appendChild(buildStep(2, t('step1_title'), t('step1_sub'),
+  // Step 1: Task Description — first interaction
+  body.appendChild(buildStep(1, t('step1_title'), t('step1_sub'),
     lang==='es'
       ? 'Sé específico. Descripción honesta, no pulida.'
       : 'Be specific. Honest description, not polished language.',
     buildTaskDescription()
+  ));
+
+  // Step 2: Upload (optional, task doc only) — after task description
+  body.appendChild(buildStep(2, t('upload_section_title'), t('upload_section_sub'),
+    lang==='es'
+      ? 'Solo PDF. Opcional — puedes completar toda la auditoría sin él.'
+      : 'PDF only. Optional — you can complete the whole audit without it.',
+    buildUploadTop()
   , true));
-  
+
   // Step 3: Classifier
   body.appendChild(buildStep(3, t('step2_title'), t('step2_sub'),
     lang==='es'
