@@ -1597,7 +1597,7 @@ function rebuildAudit() {
   body.appendChild(buildStep(5, t('step4_title'), t('step4_sub'),
     lang==='es'
       ? 'No un ajuste por defecto — una <strong>decisión pedagógica deliberada</strong>. ¿Qué nivel protege el aprendizaje que identificaste?'
-      : 'Not a default — a <strong>deliberate decision</strong>. Choose the level that protects what you named in Step 2. Then justify it in one sentence.',
+      : 'Not a default — a <strong>deliberate decision</strong>. Choose the level that protects what you named in Step 1. Then justify it in one sentence.',
     buildSAIL()
   , true));
   
@@ -1790,7 +1790,7 @@ function buildSAIL() {
   html += `</div>
   <div class="sail-justify">
     <label class="sj-label">${t('step4_justify_label')}</label>
-    <textarea class="sj-area" id="sailJustify" placeholder="${t('step4_justify_ph')}" oninput="markDone(4,this.value.trim().length>10)"></textarea>
+    <textarea class="sj-area" id="sailJustify" placeholder="${t('step4_justify_ph')}" oninput="markDone(5,this.value.trim().length>10)"></textarea>
   </div>`;
   wrap.innerHTML = html;
   return wrap;
@@ -1890,7 +1890,7 @@ function toggleCl(card) {
   const type = card.getAttribute('data-type');
   if (card.classList.contains('on')) state.selectedTypes.add(type);
   else state.selectedTypes.delete(type);
-  markDone(2, state.selectedTypes.size > 0);
+  markDone(3, state.selectedTypes.size > 0);
   if (state.rating) { updatePathways(); updateAdaptiveGuidance(); }
 }
 
@@ -1907,7 +1907,7 @@ function selectR(card) {
     const el = document.getElementById('dp-' + state.rating);
     if (el) { el.classList.add('show'); updatePathways(); }
   }, 80);
-  markDone(3, true);
+  markDone(4, true);
 }
 
 // ── MIN REFLECTION PANEL BUILDER ─────────────────────────────────────────────
@@ -2080,7 +2080,7 @@ function handleFiles(files) {
     item.innerHTML = `<span class="ui-icon">📄</span><span class="ui-name">${file.name}</span><span class="ui-size">${(file.size/1024).toFixed(0)} KB</span><span class="ui-remove" onclick="this.closest('.upload-item').remove();state.uploads=state.uploads.filter(u=>u!=='${file.name.replace(/'/g,"\'")}')">✕</span>`;
     list.appendChild(item);
   });
-  markDone(1, state.uploads.length > 0);
+  markDone(2, state.uploads.length > 0);
   document.getElementById('fileIn').value = '';
 }
 
