@@ -1524,6 +1524,7 @@ function rebuildFinal() {
   body.appendChild(submitWrap);
 
   document.querySelectorAll('#finalBody .step-block').forEach(el => visObs.observe(el));
+  restoreState();
 }
 
 function buildFinalSection(title, sub, accentColor, questions) {
@@ -1782,7 +1783,7 @@ function buildSAIL() {
   const levels = ['L1','L2','L3','L4','L5'];
   let html = `<div class="sail-wrap"><div class="sail-hd"><span>${t('sail_col1')}</span><span>${t('sail_col2')}</span><span>${t('sail_col3')}</span></div>`;
   rows.forEach((r,i) => {
-    html += `<div class="sail-row${state.sailLevel===levels[i]?' on':''}" onclick="selectSail(this,'${levels[i]}')">
+    html += `<div class="sail-row${state.sailLevel===levels[i]?' on':''}" data-level="${levels[i]}" onclick="selectSail(this,'${levels[i]}')">
       <div><div class="slvl">${r[0]}</div><div class="slnm">${r[1]}</div></div>
       <div class="sld">${r[2]}</div><div class="slp">${r[3]}</div>
     </div>`;
@@ -2287,6 +2288,7 @@ function rebuildDeepDive() {
   body.appendChild(close);
 
   document.querySelectorAll('.dd-section').forEach(el => visObs.observe(el));
+  restoreState();
 }
 function makeDDSection(title, sub) {
   const div = document.createElement('div');
@@ -2364,11 +2366,13 @@ function saveDraft() {
       min_exemplar: document.getElementById('min_exemplar_text')?.value,
     },
     deepdive: {
+      prediction: document.getElementById('ddYou1')?.value,
       dd1: document.getElementById('dd1')?.value,
       dd2: document.getElementById('dd2')?.value,
       dd3: document.getElementById('dd3')?.value,
       dd4: document.getElementById('dd4')?.value,
       dd4redesign: document.getElementById('dd4redesign')?.value,
+      standaloneSail: document.getElementById('ahtrsail')?.value,
     },
     light_reflection: {
       lr1: document.getElementById('lr1')?.value,
@@ -2383,6 +2387,12 @@ function saveDraft() {
       fq7: document.getElementById('fq7')?.value,
       fq8: document.getElementById('fq8')?.value,
       fq9: document.getElementById('fq9')?.value,
+    },
+    final_meta: {
+      teacher: document.getElementById('ftf')?.value,
+      discipline: document.getElementById('fdf')?.value,
+      assessment: document.getElementById('faf')?.value,
+      cycle: document.getElementById('fcycle')?.value,
     },
     savedAt: new Date().toISOString()
   };
@@ -2423,29 +2433,62 @@ function restoreState() {
     const saved = localStorage.getItem('dlp_draft_v2');
     if (!saved) return;
     const d = JSON.parse(saved);
+    const setValue = (id, value) => {
+      const el = document.getElementById(id);
+      if (el && value !== undefined && value !== null) el.value = value;
+    };
+    const restoreGroup = (group, fieldMap) => {
+      if (!group) return;
+      Object.entries(fieldMap).forEach(([savedKey, fieldId]) => setValue(fieldId, group[savedKey]));
+    };
+
     if (d.meta) {
-      if (d.meta.teacher) { const el = document.getElementById('ft'); if(el) el.value = d.meta.teacher; }
-      if (d.meta.discipline) { const el = document.getElementById('fd'); if(el) el.value = d.meta.discipline; }
-      if (d.meta.assessment) { const el = document.getElementById('fa'); if(el) el.value = d.meta.assessment; }
+      restoreGroup(d.meta, {teacher:'ft', discipline:'fd', assessment:'fa', date:'fdate'});
     }
-    if (d.task) { const el = document.getElementById('s1task'); if(el) { el.value = d.task; markDone(1, true); }}
+    if (d.task) { setValue('s1task', d.task); state.completedSteps.add(1); }
     if (d.classifier?.length) {
+      state.selectedTypes.clear();
       d.classifier.forEach(type => {
         state.selectedTypes.add(type);
         const card = document.querySelector(`.cl-card[data-type="${type}"]`);
         if (card) card.classList.add('on');
       });
-      markDone(2, true);
+      state.completedSteps.add(3);
     }
-    if (d.sail) { state.sailLevel = d.sail; }
-    if (d.sailJustify) { const el = document.getElementById('sailJustify'); if(el) el.value = d.sailJustify; }
+    if (d.rating) {
+      state.rating = d.rating;
+      document.querySelectorAll('.rc').forEach(card => card.classList.toggle('on', card.getAttribute('data-d') === d.rating));
+      document.querySelectorAll('.dp-wrap').forEach(panel => panel.classList.remove('show'));
+      document.getElementById('dp-' + d.rating)?.classList.add('show');
+      updatePathways();
+      updateAdaptiveGuidance();
+      state.completedSteps.add(4);
+    }
+    if (d.sail) {
+      state.sailLevel = d.sail;
+      document.querySelectorAll('.sail-row').forEach(row => row.classList.toggle('on', row.getAttribute('data-level') === d.sail));
+    }
+    if (d.sailJustify) {
+      setValue('sailJustify', d.sailJustify);
+      if (d.sailJustify.trim().length > 10) state.completedSteps.add(5);
+    }
     if (d.reflection) {
-      Object.entries(d.reflection).forEach(([k,v]) => {
-        if (v) { const el = document.getElementById(k); if(el) el.value = v; }
-      });
-      const anyFilled = Object.values(d.reflection).some(v => v?.length > 10);
-      if (anyFilled) markDone(6, true);
+      Object.entries(d.reflection).forEach(([id, value]) => setValue(id, value));
     }
+    restoreGroup(d.min_reflection, {
+      min_r1:'min_r1', min_r2:'min_r2', min_r3:'min_r3', min_r4:'min_r4', min_exemplar:'min_exemplar_text'
+    });
+    restoreGroup(d.deepdive, {
+      prediction:'ddYou1', dd1:'dd1', dd2:'dd2', dd3:'dd3', dd4:'dd4', dd4redesign:'dd4redesign', standaloneSail:'ahtrsail'
+    });
+    restoreGroup(d.light_reflection, {lr1:'lr1'});
+    if (d.light_reflection?.lr1) state.completedSteps.add(6);
+    restoreGroup(d.final_audit, {
+      fq1:'fq1', fq2:'fq2', fq3:'fq3', fq4:'fq4', fq5:'fq5', fq6:'fq6', fq7:'fq7', fq8:'fq8', fq9:'fq9'
+    });
+    restoreGroup(d.final_meta, {teacher:'ftf', discipline:'fdf', assessment:'faf', cycle:'fcycle'});
+    updateProgressBar();
+    updateSubmitStatus();
   } catch(e) {}
 }
 
