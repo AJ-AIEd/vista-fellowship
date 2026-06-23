@@ -1403,7 +1403,7 @@ function showView(name) {
   document.getElementById('view-' + name).classList.add('active');
   document.querySelectorAll('.nav-tab,.bn-tab').forEach(t => t.classList.remove('active'));
   if (name === 'initial') { document.getElementById('navInitial').classList.add('active'); document.getElementById('bnInitial')?.classList.add('active'); }
-  if (name === 'deepdive') { document.getElementById('navDeep').classList.add('active'); document.getElementById('bnDeep')?.classList.add('active'); }
+  if (name === 'deepdive') { document.getElementById('navDeep').classList.add('active'); document.getElementById('bnDeep')?.classList.add('active'); refreshDeepDiveContext(); }
   if (name === 'final') { document.getElementById('navFinal').classList.add('active'); document.getElementById('bnFinal')?.classList.add('active'); rebuildFinal(); associateLabels(); }
   if (name === 'refs') { document.getElementById('navRefs').classList.add('active'); document.getElementById('bnRefs')?.classList.add('active'); rebuildRefs(); }
   window.scrollTo(0,0);
@@ -2265,8 +2265,8 @@ function rebuildDeepDive() {
   const you4=document.createElement('div');
   you4.style.cssText='background:var(--lgold);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px';
   const sailBlock = state.sailLevel
-    ? `<div style="background:#fff;border:1px solid var(--border);border-radius:7px;padding:10px 13px;font-size:11.5px;color:var(--muted)">${ES?'Tu nivel SAIL de la Auditor\u00eda Inicial':'Your SAIL level from the Initial Audit'}: <strong style="color:var(--navy)">${state.sailLevel}</strong>. ${ES?'\u00bfSigue teniendo sentido despu\u00e9s de lo que viste en los Pasos 1\u20133?':'Does it still hold after what you just saw in Steps 1\u20133?'}</div>`
-    : `<div style="background:#fff;border:1px solid var(--border);border-radius:7px;padding:10px 13px;font-size:11.5px;color:var(--muted)">
+    ? `<div id="ahtrSailBlock" style="background:#fff;border:1px solid var(--border);border-radius:7px;padding:10px 13px;font-size:11.5px;color:var(--muted)">${ES?'Tu nivel SAIL de la Auditor\u00eda Inicial':'Your SAIL level from the Initial Audit'}: <strong style="color:var(--navy)">${state.sailLevel}</strong>. ${ES?'\u00bfSigue teniendo sentido despu\u00e9s de lo que viste en los Pasos 1\u20133?':'Does it still hold after what you just saw in Steps 1\u20133?'}</div>`
+    : `<div id="ahtrSailBlock" style="background:#fff;border:1px solid var(--border);border-radius:7px;padding:10px 13px;font-size:11.5px;color:var(--muted)">
         <div style="margin-bottom:6px">${ES?'<strong>\u00bfYa hiciste la Auditor\u00eda Inicial?</strong> Ingresa el nivel SAIL que elegiste:':'<strong>Already ran an Initial Audit?</strong> Enter the SAIL level you chose:'} <input id="ahtrsail" type="text" aria-label="${ES?'Nivel SAIL, L1 a L5':'SAIL level, L1 through L5'}" placeholder="L1\u2013L5" style="width:70px;border:1px solid var(--border);border-radius:4px;padding:3px 7px;font-size:12px;font-family:\'DM Mono\',monospace" oninput="this.value=this.value.toUpperCase()"> ${ES?'\u00bfSigue teniendo sentido despu\u00e9s de lo que viste?':'Does it still hold after what you just saw?'}</div>
         <div style="color:var(--teal);font-style:italic">${ES?'\u00bfEstas corriendo esta rutina por tu cuenta? Elige el nivel que encaje seg\u00fan los Pasos 1\u20133 \u2014 puedes formalizarlo en una Auditor\u00eda Inicial despu\u00e9s.':'Running this on its own? Pick the level that fits based on Steps 1\u20133 \u2014 you can formalize it in an Initial Audit later.'}</div>
       </div>`;
@@ -2329,6 +2329,15 @@ Please:
 3. Point out where your answer sounds convincing but is missing the reasoning a teacher expects to see.
 
 Be specific to my subject.`;
+}
+
+function refreshDeepDiveContext() {
+  const prompt = document.getElementById('generatedPrompt');
+  if (prompt) prompt.textContent = generatePrompt();
+  const sailBlock = document.getElementById('ahtrSailBlock');
+  if (sailBlock && state.sailLevel) {
+    sailBlock.innerHTML = `${lang==='es'?'Tu nivel SAIL de la Auditoría Inicial':'Your SAIL level from the Initial Audit'}: <strong style="color:var(--navy)">${state.sailLevel}</strong>. ${lang==='es'?'¿Sigue teniendo sentido después de lo que viste en los Pasos 1–3?':'Does it still hold after what you just saw in Steps 1–3?'}`;
+  }
 }
 function copyPrompt() {
   const text = document.getElementById('generatedPrompt')?.textContent || '';
