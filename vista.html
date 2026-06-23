@@ -386,13 +386,18 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
   h2,h3{font-size:14pt}
   body,p,li{font-size:11pt}
 }
+
+/* A.6 — focus states */
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:3px}
+.cl-card:focus-visible,.sail-row:focus-visible,.ptab:focus-visible,.path-card:focus-visible,.llm-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div style="display:flex;align-items:center;gap:16px"><a href="/" class="nav-back">← Hub</a><div class="nav-brand" onclick="showView('launch')" data-k="nav_brand">VISTA</div></div>
+  <div style="display:flex;align-items:center;gap:16px"><a href="/launch" class="nav-back">← Home</a><div class="nav-brand" onclick="showView('launch')" data-k="nav_brand">VISTA</div></div>
   <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
     <div class="nav-lang" id="langToggle" onclick="toggleLang()" data-k="lang_toggle">🇪🇸 Español</div>
     <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
@@ -403,6 +408,7 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
     <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
     <button class="nav-pdf" onclick="window.open('/vista-print','_blank')" data-k="nav_pdf">PDF</button>
     <button class="nav-save" onclick="saveDraft()" data-k="nav_save">Save Draft</button>
+    <span id="saveIndicator" style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);margin-left:6px;letter-spacing:.04em"></span>
   </div>
 </nav>
 <div class="prog"><div class="prog-fill" id="pf"></div></div>
@@ -1330,6 +1336,7 @@ let state = {
   selectedTypes: new Set(),
   rating: null,
   sailLevel: null,
+  selectedLens: null,
   uploads: [],
   completedSteps: new Set(),
   draft: {}
@@ -1384,6 +1391,7 @@ function applyStrings() {
   rebuildAudit();
   rebuildDeepDive();
   if (currentView === 'final') rebuildFinal();
+  associateLabels();
   if (currentView === 'refs') rebuildRefs();
   renderBibliography();
 }
@@ -1396,7 +1404,7 @@ function showView(name) {
   document.querySelectorAll('.nav-tab,.bn-tab').forEach(t => t.classList.remove('active'));
   if (name === 'initial') { document.getElementById('navInitial').classList.add('active'); document.getElementById('bnInitial')?.classList.add('active'); }
   if (name === 'deepdive') { document.getElementById('navDeep').classList.add('active'); document.getElementById('bnDeep')?.classList.add('active'); }
-  if (name === 'final') { document.getElementById('navFinal').classList.add('active'); document.getElementById('bnFinal')?.classList.add('active'); rebuildFinal(); }
+  if (name === 'final') { document.getElementById('navFinal').classList.add('active'); document.getElementById('bnFinal')?.classList.add('active'); rebuildFinal(); associateLabels(); }
   if (name === 'refs') { document.getElementById('navRefs').classList.add('active'); document.getElementById('bnRefs')?.classList.add('active'); rebuildRefs(); }
   window.scrollTo(0,0);
 }
@@ -1428,6 +1436,7 @@ function buildUploadTop() {
     </div>
     <input type="file" id="fileIn" accept=".pdf,application/pdf" style="display:none" onchange="handleFiles(this.files)">
     <div class="upload-list" id="uploadList"></div>
+    <div style="margin-top:8px;font-size:11px;color:var(--muted);font-style:italic">${lang==='es'?'Por favor no subas trabajo que identifique estudiantes individuales.':'Please don\'t upload work that identifies individual students.'}</div>
   `;
   return wrap;
 }
@@ -1991,18 +2000,20 @@ function updatePathways() {
 
     // Tab — selected types get a highlighted style
     const tab = document.createElement('div');
-    tab.className = 'ptab' + (firstTab ? ' on' : '') + (isSelected ? ' ptab-selected' : '');
+    const isActiveLens = state.selectedLens ? type === state.selectedLens : firstTab;
+    tab.className = 'ptab' + (isActiveLens ? ' on' : '') + (isSelected ? ' ptab-selected' : '');
     tab.innerHTML = isSelected
       ? `${label} <span class="ptab-check">✓</span>`
       : label;
     tab.setAttribute('data-cid', contentId);
     tab.setAttribute('data-pre', prefix);
+    tab.setAttribute('data-type', type);
     tab.onclick = () => activateTab(tab, prefix);
     tabsEl.appendChild(tab);
 
     // Content panel
     const content = document.createElement('div');
-    content.className = 'pcontent' + (firstTab ? ' show' : '');
+    content.className = 'pcontent' + (isActiveLens ? ' show' : '');
     content.id = contentId;
     const goal = data[`goal_${lang}`];
     const items = data[`items_${lang}`].map(([name, desc]) =>
@@ -2024,6 +2035,7 @@ function activateTab(tab, prefix) {
   document.querySelectorAll(`#ptabs-${prefix} .ptab`).forEach(t => t.classList.remove('on'));
   document.querySelectorAll(`#pcontents-${prefix} .pcontent`).forEach(c => c.classList.remove('show'));
   tab.classList.add('on');
+  state.selectedLens = tab.getAttribute('data-type');
   const content = document.getElementById(tab.getAttribute('data-cid'));
   if (content) content.classList.add('show');
 }
@@ -2173,7 +2185,7 @@ function rebuildDeepDive() {
   m1.appendChild(you1);
   const ai1 = document.createElement('div');
   ai1.style.cssText='background:var(--light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px';
-  ai1.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px">${ES?'\ud83e\udd16 Ahora ponla a trabajar':'\ud83e\udd16 Now put it to work'}</div><div style="font-size:12.5px;color:var(--text);line-height:1.55;margin-bottom:10px">${ES?'Copia este prompt, \u00e1brelo en una IA y pega tu tarea real. Pídele que la haga como lo har\u00eda un buen estudiante.':'Copy this prompt, open an AI, and paste your real task. Ask it to do the work the way a strong student would.'}</div>`;
+  ai1.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px">${ES?'\ud83e\udd16 Ahora ponla a trabajar':'\ud83e\udd16 Now put it to work'}</div><div style="font-size:12.5px;color:var(--text);line-height:1.55;margin-bottom:10px">${ES?'Copia este prompt, \u00e1brelo en una IA y pega tu tarea real. Pídele que la haga como lo har\u00eda un buen estudiante.':'Copy this prompt, open an AI, and paste your real task. Ask it to do the work the way a strong student would.'}</div><div style="font-size:11px;color:var(--muted);font-style:italic;margin-bottom:8px">${ES?'Evita pegar cualquier cosa que identifique a estudiantes individuales en herramientas de IA externas.':'Avoid pasting anything that identifies individual students into external AI tools.'}</div>`;
   const pb = document.createElement('div');
   pb.className='prompt-box';
   pb.innerHTML=`<div class="pb-lbl">${ES?'Prompt de inicio':'Starter prompt'}</div><div class="pb-text" id="generatedPrompt">${generatePrompt()}</div><button class="pb-copy" onclick="copyPrompt()">${ES?'Copiar Prompt':'Copy Prompt'}</button>`;
@@ -2263,6 +2275,9 @@ function rebuildDeepDive() {
   const f4=document.createElement('div'); f4.className='rfb';
   f4.innerHTML=`<div class="rf-label">${ES?'Tu decisi\u00f3n de rediseño \u2014 esto es lo que llevas a tu pr\u00f3xima versi\u00f3n de la tarea:':'Your redesign decision \u2014 this is what you carry into your next version of the task:'}</div><textarea class="rf-area" id="dd4" style="min-height:120px" placeholder="${ES?'Una decisi\u00f3n concreta que surge de los cuatro pasos.':'One concrete decision that comes from the four steps.'}"></textarea>`;
   m4.appendChild(f4);
+  const f4b = document.createElement('div'); f4b.className='rfb';
+  f4b.innerHTML=`<div class="rf-label" style="color:var(--muted);font-weight:400">${ES?'Pega o enlaza tu tarea rediseñada (opcional) — para tenerla a mano cuando la reflexiones más tarde.':'Paste or link your redesigned task (optional) — so you have it on hand when you reflect on it later.'}</div><textarea class="rf-area" id="dd4redesign" style="min-height:80px" placeholder="${ES?'Tarea rediseñada, enlace, o notas rápidas.':'Redesigned task, a link, or quick notes.'}"></textarea>`;
+  m4.appendChild(f4b);
   body.appendChild(m4);
 
   // ── CLOSING ─────────────────────────────────────────────────────────────
@@ -2353,6 +2368,7 @@ function saveDraft() {
       dd2: document.getElementById('dd2')?.value,
       dd3: document.getElementById('dd3')?.value,
       dd4: document.getElementById('dd4')?.value,
+      dd4redesign: document.getElementById('dd4redesign')?.value,
     },
     light_reflection: {
       lr1: document.getElementById('lr1')?.value,
@@ -2373,6 +2389,8 @@ function saveDraft() {
   try {
     localStorage.setItem('dlp_draft_v2', JSON.stringify(draft));
     showToast(lang==='es'?'Borrador guardado ✓':'Draft saved ✓');
+    const ind = document.getElementById('saveIndicator');
+    if (ind) { ind.textContent = lang==='es'?'guardado ahora':'saved just now'; const ts = Date.now(); const tick = setInterval(() => { const m = Math.round((Date.now()-ts)/60000); if (m < 1) return; ind.textContent = lang==='es'?`hace ${m} min`:`${m} min ago`; if (m >= 60) clearInterval(tick); }, 30000); }
   } catch(e) { showToast('Save failed — localStorage may be full'); }
 }
 
@@ -2603,8 +2621,23 @@ function rebuildRefs() {
 }
 
 document.getElementById('fdate').value = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+// ── A.6 LABEL ASSOCIATION ─────────────────────────────────────────────────────
+function associateLabels() {
+  document.querySelectorAll('textarea[id], input[type="text"][id]').forEach(el => {
+    if (el.getAttribute('aria-labelledby')) return;
+    const parent = el.closest('.rfb,.tf-wrap,.sfb,.min-card');
+    if (!parent) return;
+    const lbl = parent.querySelector('.rf-label,.tf-label,.sf-label');
+    if (!lbl) return;
+    const lid = el.id + '_lbl';
+    lbl.id = lid;
+    el.setAttribute('aria-labelledby', lid);
+  });
+}
 rebuildAudit();
 rebuildDeepDive();
+associateLabels();
 applyStrings();
 renderBibliography();
 

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script defer src="/_vercel/insights/script.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CNG AI Innovation Fellowship</title>
+<meta name="description" content="CNG AI Innovation Fellowship — Teacher Hub, VISTA Protocol, and Fellowship resources.">
+<meta name="author" content="Andrew Cajina">
+<meta name="theme-color" content="#0F2236">
+<link rel="stylesheet" href="/css/shared.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F2236;--teal:#1A6B7A;--gold:#C4861A;--cream:#F7F2EB;
+  --paper:#FDFAF6;--mid:#8BA8B5;--muted:#6B7B85;--green:#1A6B47;
+  --text:#1A1F2E;--border:#E0D8CE;--light:#E8F4F6;--lgold:#FBF4E8;
+  --purple:#5C1A6B;--red:#9B2335;
+}
+html{height:100%;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;font-weight:300;background:var(--navy);color:#fff;min-height:100vh;display:flex;flex-direction:column}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:rgba(15,34,54,.97);backdrop-filter:blur(14px);display:flex;align-items:center;padding:0 24px;gap:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-brand{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:#fff;text-decoration:none;flex:1;white-space:nowrap}
+.nav-brand span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:20px}
+.nav-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;white-space:nowrap}
+.nav-link:hover,.nav-link.active{color:var(--gold)}
+.nav-cta{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;background:var(--teal);color:#fff;border-radius:4px;text-decoration:none;transition:opacity .2s;white-space:nowrap}
+.nav-cta:hover{opacity:.85}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:3px}
+a:focus-visible{outline-color:var(--gold)}
+
+/* MAIN LAYOUT */
+main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:80px 24px 48px;min-height:100vh}
+
+/* WORDMARK / BADGE */
+.site-badge{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:20px;text-align:center}
+.site-title{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,48px);font-weight:700;color:#fff;text-align:center;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px}
+.site-sub{font-size:15px;color:var(--mid);text-align:center;margin-bottom:56px;line-height:1.5}
+
+/* DOOR GRID */
+.door-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:760px;width:100%;margin-bottom:28px}
+@media(max-width:600px){.door-grid{grid-template-columns:1fr}}
+
+.door{display:flex;flex-direction:column;border-radius:14px;padding:36px 32px 32px;text-decoration:none;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+.door:hover{transform:translateY(-3px)}
+.door:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
+.door-hub{background:linear-gradient(145deg,rgba(26,107,122,.18),rgba(26,107,122,.08));border:1.5px solid rgba(26,107,122,.35)}
+.door-hub:hover{box-shadow:0 12px 40px rgba(26,107,122,.22)}
+.door-vista{background:linear-gradient(145deg,rgba(196,134,26,.16),rgba(196,134,26,.06));border:1.5px solid rgba(196,134,26,.3)}
+.door-vista:hover{box-shadow:0 12px 40px rgba(196,134,26,.2)}
+
+.door-icon{font-size:28px;margin-bottom:16px;display:block}
+.door-eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+.door-hub .door-eyebrow{color:var(--teal)}
+.door-vista .door-eyebrow{color:var(--gold)}
+.door-name{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.1}
+.door-desc{font-size:13.5px;color:rgba(255,255,255,.65);line-height:1.6;flex:1}
+.door-arrow{margin-top:24px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.door-hub .door-arrow{color:var(--teal)}
+.door-vista .door-arrow{color:var(--gold)}
+
+/* TERTIARY LINK */
+.tertiary{text-align:center}
+.tertiary a{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s}
+.tertiary a:hover{color:rgba(255,255,255,.55)}
+.tertiary a:focus-visible{outline:2px solid rgba(255,255,255,.4);border-radius:2px}
+
+footer{text-align:center;padding:20px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.2);text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/launch" class="nav-brand">Fellowship <span>CNG</span></a>
+  <div class="nav-links">
+    <a href="/teacher-hub" class="nav-link">Teacher Hub</a>
+    <a href="/vista" class="nav-link nav-cta">Open VISTA →</a>
+  </div>
+</nav>
+
+<main>
+  <div class="site-badge">CNG AI Innovation Fellowship 2026–2027</div>
+  <h1 class="site-title">Where do you want to start?</h1>
+  <p class="site-sub">Two ways in. Same work.</p>
+
+  <div class="door-grid">
+    <a href="/teacher-hub" class="door door-hub">
+      <span class="door-icon">🎓</span>
+      <div class="door-eyebrow">For teachers</div>
+      <div class="door-name">Teacher Hub</div>
+      <p class="door-desc">What you're doing this year, why it matters, and how the whole year is structured — start here if you're new.</p>
+      <div class="door-arrow">Explore the year →</div>
+    </a>
+
+    <a href="/vista" class="door door-vista">
+      <span class="door-icon">🔍</span>
+      <div class="door-eyebrow">The tool</div>
+      <div class="door-name">VISTA Protocol</div>
+      <p class="door-desc">The audit tool itself — Initial Audit, Thinking Routine, Final Audit. Jump straight in if you know where you are.</p>
+      <div class="door-arrow">Open the tool →</div>
+    </a>
+  </div>
+
+  <div class="tertiary">
+    <a href="/index">Fellowship Proposal &amp; Research Documentation</a>
+  </div>
+</main>
+
+<footer>Colegio Nueva Granada · Bogotá</footer>
+
+</body>
+</html>
