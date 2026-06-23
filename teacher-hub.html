@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script defer src="/_vercel/insights/script.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Teacher Hub — CNG AI Fellowship</title>
+<meta name="description" content="What you're actually doing this year — one task, twice, with support the first time and on your own the second.">
+<meta name="author" content="Andrew Cajina">
+<meta name="theme-color" content="#0F2236">
+<link rel="stylesheet" href="/css/shared.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F2236;--teal:#1A6B7A;--gold:#C4861A;--cream:#F7F2EB;
+  --paper:#FDFAF6;--mid:#8BA8B5;--muted:#6B7B85;--green:#1A6B47;
+  --text:#1A1F2E;--border:#E0D8CE;--light:#E8F4F6;--lgold:#FBF4E8;
+  --purple:#5C1A6B;--red:#9B2335;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;font-weight:300;background:var(--cream);color:var(--text)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:rgba(15,34,54,.97);backdrop-filter:blur(14px);display:flex;align-items:center;padding:0 24px;gap:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-brand{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:#fff;text-decoration:none;flex:1;white-space:nowrap}
+.nav-brand span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:20px}
+.nav-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;white-space:nowrap}
+.nav-link:hover{color:var(--gold)}
+.nav-link.active{color:rgba(255,255,255,.9)}
+.nav-cta{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;background:var(--teal);color:#fff;border-radius:4px;text-decoration:none;transition:opacity .2s;white-space:nowrap}
+.nav-cta:hover{opacity:.85}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:3px}
+a:focus-visible{outline-color:var(--gold)}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 32px 80px;position:relative;overflow:hidden}
+.hero-ring{position:absolute;border-radius:50%;border:1px solid rgba(196,134,26,.05);top:50%;left:50%;transform:translate(-50%,-50%)}
+.hero-badge{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:20px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(32px,6vw,62px);font-weight:700;color:#fff;line-height:1.05;letter-spacing:-.025em;margin-bottom:20px;max-width:800px}
+.hero-sub{font-size:16px;color:var(--mid);max-width:580px;line-height:1.65;margin-bottom:44px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-primary{padding:13px 28px;background:var(--gold);color:var(--navy);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;border-radius:6px;text-decoration:none;transition:all .2s}
+.btn-primary:hover{opacity:.85;transform:translateY(-1px)}
+.btn-outline{padding:13px 28px;border:1.5px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;border-radius:6px;text-decoration:none;transition:all .2s}
+.btn-outline:hover{border-color:rgba(255,255,255,.45);color:#fff}
+
+/* SECTIONS */
+.section{padding:80px 32px;max-width:740px;margin:0 auto}
+.section-eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.section h2{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--navy);line-height:1.15;letter-spacing:-.02em;margin-bottom:22px}
+.section p{font-size:16px;line-height:1.75;color:var(--text);margin-bottom:16px}
+.section p:last-child{margin-bottom:0}
+
+/* WHY THIS block */
+.why-block{background:var(--paper);border-radius:14px;padding:44px 40px;border:1px solid var(--border);margin:0 auto;max-width:740px}
+@media(max-width:600px){.why-block{padding:32px 24px}}
+
+/* SECTION 3 — launch session callout */
+.callout-card{background:var(--navy);border-radius:14px;padding:44px 40px;color:#fff;max-width:740px;margin:0 auto}
+@media(max-width:600px){.callout-card{padding:32px 24px}}
+.callout-card .section-eyebrow{color:var(--gold)}
+.callout-card h2{color:#fff}
+.callout-card p{color:rgba(255,255,255,.75);margin-bottom:16px}
+.callout-card p:last-child{margin-bottom:0}
+.callout-note{background:rgba(196,134,26,.12);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-top:24px;font-size:14px;color:rgba(255,255,255,.75);line-height:1.6}
+
+/* SECTION 4 — big question */
+.question-block{background:var(--lgold);border-radius:14px;padding:56px 48px;text-align:center;max-width:740px;margin:0 auto;border:1px solid rgba(196,134,26,.2)}
+@media(max-width:600px){.question-block{padding:40px 28px}}
+.question-block .big-q{font-family:'Fraunces',serif;font-size:clamp(22px,3.5vw,32px);font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:20px}
+.question-block p{font-size:15px;color:var(--muted);line-height:1.7}
+
+/* DIVIDERS */
+.section-divider{height:1px;background:var(--border);max-width:740px;margin:0 auto}
+
+footer{background:var(--navy);color:rgba(255,255,255,.3);text-align:center;padding:28px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/launch" class="nav-brand">Fellowship <span>CNG</span></a>
+  <div class="nav-links">
+    <a href="/teacher-hub" class="nav-link active">Teacher Hub</a>
+    <a href="/vista" class="nav-link nav-cta">Open VISTA →</a>
+  </div>
+</nav>
+
+<!-- SECTION 1 — HERO -->
+<div class="hero">
+  <div class="hero-ring" style="width:400px;height:400px"></div>
+  <div class="hero-ring" style="width:720px;height:720px;border-color:rgba(196,134,26,.03)"></div>
+  <div class="hero-ring" style="width:1050px;height:1050px;border-color:rgba(196,134,26,.015)"></div>
+  <div class="hero-badge">CNG AI Innovation Fellowship 2026–2027</div>
+  <h1>One Task. Two Times This Year. Here's What You're Actually Doing.</h1>
+  <p class="hero-sub">You picked (or are about to pick) one assessment you already use. Over the year, you'll look at it twice — once with support, once on your own — to see where AI could quietly do your students' thinking for them, and what to do about it.</p>
+  <div class="hero-actions">
+    <a href="/vista" class="btn-primary">Start the Initial Audit →</a>
+    <a href="#year-at-a-glance" class="btn-outline">See the full year at a glance ↓</a>
+  </div>
+</div>
+
+<!-- SECTION 2 — WHY THIS, WHY NOW -->
+<div style="padding:80px 32px">
+  <div class="why-block">
+    <div class="section-eyebrow">Context</div>
+    <h2>Why This, Why Now</h2>
+    <p>You've probably already noticed it: a student turns in something polished, and you genuinely can't tell whether they understood it or AI carried them.</p>
+    <p>That's not a discipline problem on your end. It's that most assignments were built for a world where "looks good" reliably meant "thought hard." That's not true anymore.</p>
+    <p>This isn't about catching AI use. It's about redesigning the task so you can see the thinking again — whether or not AI was involved.</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 3 — YOU'LL DO THIS WITH ME FIRST -->
+<div style="padding:80px 32px">
+  <div class="callout-card">
+    <div class="section-eyebrow">August launch session</div>
+    <h2>You'll Do This With Me First</h2>
+    <p>At the August launch, you'll watch me audit one of my own real tasks live — including the parts where I'm not sure what to put. Then you'll try it yourself, with a partner, on a different real task of mine where I already know what changed and why.</p>
+    <p>By the end of that one session, you'll have done this once before you ever do it alone.</p>
+    <div class="callout-note">Bring a task you're genuinely unsure about for after that session — that's the one you'll redesign for Cycle 1.</div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 4 — THE ONE QUESTION -->
+<div style="padding:80px 32px">
+  <div class="question-block">
+    <div class="section-eyebrow" style="color:var(--gold);margin-bottom:18px">The question behind all of this</div>
+    <div class="big-q">If AI can produce the answer, how do you grade the thinking behind it?</div>
+    <p>That's it. Every part of this fellowship — the audit, the thinking routine, the reflection at the end — is just structured ways of answering that one question for one task at a time.</p>
+  </div>
+</div>
+
+<!-- ⛔ STOP — Sections 5–13 not yet built. Awaiting tone review of Sections 1–4. -->
+
+<footer>Colegio Nueva Granada · Bogotá · CNG AI Innovation Fellowship 2026–2027</footer>
+
+</body>
+</html>
