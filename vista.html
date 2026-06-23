@@ -2264,6 +2264,9 @@ function rebuildDeepDive() {
   const f4=document.createElement('div'); f4.className='rfb';
   f4.innerHTML=`<div class="rf-label">${ES?'Tu decisi\u00f3n de rediseño \u2014 esto es lo que llevas a tu pr\u00f3xima versi\u00f3n de la tarea:':'Your redesign decision \u2014 this is what you carry into your next version of the task:'}</div><textarea class="rf-area" id="dd4" style="min-height:120px" placeholder="${ES?'Una decisi\u00f3n concreta que surge de los cuatro pasos.':'One concrete decision that comes from the four steps.'}"></textarea>`;
   m4.appendChild(f4);
+  const f4b = document.createElement('div'); f4b.className='rfb';
+  f4b.innerHTML=`<div class="rf-label" style="color:var(--muted);font-weight:400">${ES?'Pega o enlaza tu tarea rediseñada (opcional) — para tenerla a mano cuando la reflexiones más tarde.':'Paste or link your redesigned task (optional) — so you have it on hand when you reflect on it later.'}</div><textarea class="rf-area" id="dd4redesign" style="min-height:80px" placeholder="${ES?'Tarea rediseñada, enlace, o notas rápidas.':'Redesigned task, a link, or quick notes.'}"></textarea>`;
+  m4.appendChild(f4b);
   body.appendChild(m4);
 
   // ── CLOSING ─────────────────────────────────────────────────────────────
@@ -2354,6 +2357,7 @@ function saveDraft() {
       dd2: document.getElementById('dd2')?.value,
       dd3: document.getElementById('dd3')?.value,
       dd4: document.getElementById('dd4')?.value,
+      dd4redesign: document.getElementById('dd4redesign')?.value,
     },
     light_reflection: {
       lr1: document.getElementById('lr1')?.value,
