@@ -73,7 +73,7 @@ If shared submission is added later, define authentication, permissions, retenti
 
 ## Documents
 
-Downloadable proposal files live in `public/docs/`. The current public PDF is:
+Downloadable proposal files live in `public/docs/`. The current public proposal is:
 
 ```text
 public/docs/CNG_Fellowship_Proposal_v9.docx
