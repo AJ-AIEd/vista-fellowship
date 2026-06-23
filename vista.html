@@ -503,10 +503,10 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
     </div>
   </div>
   <div class="meta-bar">
-    <div class="mf"><label data-k-meta="Teacher">Teacher</label><input type="text" id="ft" placeholder="Your name"></div>
-    <div class="mf"><label data-k-meta="Department">Department</label><input type="text" id="fd" placeholder="e.g. High School Mathematics"></div>
-    <div class="mf"><label data-k-meta="Assessment">Assessment</label><input type="text" id="fa" placeholder="Name of task being audited"></div>
-    <div class="mf"><label data-k-meta="Date">Date</label><input type="text" id="fdate"></div>
+    <div class="mf"><label for="ft" data-k-meta="Teacher">Teacher</label><input type="text" id="ft" placeholder="Your name"></div>
+    <div class="mf"><label for="fd" data-k-meta="Department">Department</label><input type="text" id="fd" placeholder="e.g. High School Mathematics"></div>
+    <div class="mf"><label for="fa" data-k-meta="Assessment">Assessment</label><input type="text" id="fa" placeholder="Name of task being audited"></div>
+    <div class="mf"><label for="fdate" data-k-meta="Date">Date</label><input type="text" id="fdate"></div>
   </div>
   <div class="audit-body" id="auditBody"></div>
   
@@ -540,10 +540,10 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
     <div class="ah-progress" id="finalProgress"></div>
   </div>
   <div class="meta-bar">
-    <div class="mf"><label data-k-meta="Teacher">Teacher</label><input type="text" id="ftf" placeholder="Your name"></div>
-    <div class="mf"><label data-k-meta="Department">Department</label><input type="text" id="fdf" placeholder="e.g. High School Mathematics"></div>
-    <div class="mf"><label data-k-meta="Assessment">Assessment</label><input type="text" id="faf" placeholder="Name of task being audited"></div>
-    <div class="mf"><label data-k-meta="Cycle">Cycle</label><input type="text" id="fcycle" placeholder="e.g. Iteration 1, Nov 2026"></div>
+    <div class="mf"><label for="ftf" data-k-meta="Teacher">Teacher</label><input type="text" id="ftf" placeholder="Your name"></div>
+    <div class="mf"><label for="fdf" data-k-meta="Department">Department</label><input type="text" id="fdf" placeholder="e.g. High School Mathematics"></div>
+    <div class="mf"><label for="faf" data-k-meta="Assessment">Assessment</label><input type="text" id="faf" placeholder="Name of task being audited"></div>
+    <div class="mf"><label for="fcycle" data-k-meta="Cycle">Cycle</label><input type="text" id="fcycle" placeholder="e.g. Iteration 1, Nov 2026"></div>
   </div>
   <div class="audit-body" id="finalBody"></div>
   <footer>
@@ -1446,7 +1446,7 @@ function buildLightReflection() {
   const wrap = document.createElement('div');
   wrap.innerHTML = `
     <div class="rfb wide">
-      <div class="rf-label">${t('step6_flag_label')}</div>
+      <label class="rf-label" for="lr1">${t('step6_flag_label')}</label>
       <textarea class="rf-area" id="lr1" placeholder="${t('step6_flag_ph')}" oninput="checkLightReflection()"></textarea>
     </div>
   `;
@@ -1657,7 +1657,7 @@ function buildTaskDescription() {
   wrap.className = 'task-grid full';
   wrap.innerHTML = `
     <div class="tfield wide">
-      <div class="tf-label">${t('step1_task_label')}</div>
+      <label class="tf-label" for="s1task">${t('step1_task_label')}</label>
       <textarea class="tf-area" id="s1task" rows="4" placeholder="${t('step1_task_ph')}" oninput="markDone(1,this.value.trim().length>10)"></textarea>
     </div>
   `;
@@ -1790,7 +1790,7 @@ function buildSAIL() {
   });
   html += `</div>
   <div class="sail-justify">
-    <label class="sj-label">${t('step4_justify_label')}</label>
+    <label class="sj-label" for="sailJustify">${t('step4_justify_label')}</label>
     <textarea class="sj-area" id="sailJustify" placeholder="${t('step4_justify_ph')}" oninput="markDone(5,this.value.trim().length>10)"></textarea>
   </div>`;
   wrap.innerHTML = html;
@@ -1888,6 +1888,7 @@ function buildUploadSubmit() {
 // ── CLASSIFIER TOGGLE ─────────────────────────────────────────────────────────
 function toggleCl(card) {
   card.classList.toggle('on');
+  card.setAttribute('aria-checked', card.classList.contains('on') ? 'true' : 'false');
   const type = card.getAttribute('data-type');
   if (card.classList.contains('on')) state.selectedTypes.add(type);
   else state.selectedTypes.delete(type);
@@ -1897,8 +1898,9 @@ function toggleCl(card) {
 
 // ── RATING SELECT ─────────────────────────────────────────────────────────────
 function selectR(card) {
-  document.querySelectorAll('.rc').forEach(c => c.classList.remove('on'));
+  document.querySelectorAll('.rc').forEach(c => { c.classList.remove('on'); c.setAttribute('aria-checked', 'false'); });
   card.classList.add('on');
+  card.setAttribute('aria-checked', 'true');
   state.rating = card.getAttribute('data-d');
   ['full','subs','part','min'].forEach(d => {
     const el = document.getElementById('dp-' + d);
@@ -2030,12 +2032,14 @@ function updatePathways() {
     contentsEl.appendChild(content);
     firstTab = false;
   });
+  enhanceKeyboardControls();
 }
 
 function activateTab(tab, prefix) {
-  document.querySelectorAll(`#ptabs-${prefix} .ptab`).forEach(t => t.classList.remove('on'));
+  document.querySelectorAll(`#ptabs-${prefix} .ptab`).forEach(t => { t.classList.remove('on'); t.setAttribute('aria-selected', 'false'); });
   document.querySelectorAll(`#pcontents-${prefix} .pcontent`).forEach(c => c.classList.remove('show'));
   tab.classList.add('on');
+  tab.setAttribute('aria-selected', 'true');
   state.selectedLens = tab.getAttribute('data-type');
   const content = document.getElementById(tab.getAttribute('data-cid'));
   if (content) content.classList.add('show');
@@ -2043,8 +2047,9 @@ function activateTab(tab, prefix) {
 
 // ── SAIL SELECT ───────────────────────────────────────────────────────────────
 function selectSail(row, level) {
-  document.querySelectorAll('.sail-row').forEach(r => r.classList.remove('on'));
+  document.querySelectorAll('.sail-row').forEach(r => { r.classList.remove('on'); r.setAttribute('aria-checked', 'false'); });
   row.classList.add('on');
+  row.setAttribute('aria-checked', 'true');
   state.sailLevel = level;
 }
 
@@ -2082,6 +2087,7 @@ function handleFiles(files) {
     list.appendChild(item);
   });
   markDone(2, state.uploads.length > 0);
+  enhanceKeyboardControls();
   document.getElementById('fileIn').value = '';
 }
 
@@ -2182,7 +2188,7 @@ function rebuildDeepDive() {
   const m1 = makeDDSection(ES?'Paso 1 \u00b7 \u00bfQu\u00e9 puede hacer la IA con tu tarea?':'Step 1 \u00b7 What can AI do with your task?', ES?'Descubre qu\u00e9 produce realmente una IA cuando se enfrenta a tu tarea \u2014 en tu materia, con tu contenido.':'Find out what AI actually produces when it meets your task \u2014 in your subject, with your content.');
   const you1 = document.createElement('div');
   you1.style.cssText='background:var(--lgold);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px';
-  you1.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px">${ES?'\u270d\ufe0f T\u00fa primero \u2014 sin IA':'\u270d\ufe0f You first \u2014 no AI yet'}</div><div style="font-size:13.5px;color:var(--navy);font-weight:500;line-height:1.5;margin-bottom:10px">${ES?'Antes de abrir la IA: \u00bfqu\u00e9 esperas que haga bien, y d\u00f3nde crees que se quedar\u00e1 corta en tu materia?':'Before you open AI: what do you expect it to do well, and where do you think it\u2019ll fall short in your subject?'}</div><textarea class="rf-area" id="ddYou1" style="width:100%;min-height:140px" placeholder="${ES?'Tu predicci\u00f3n honesta. La compararemos con lo que realmente pase.':'Your honest prediction. We\u2019ll compare it to what actually happens.'}"></textarea>`;
+  you1.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px">${ES?'\u270d\ufe0f T\u00fa primero \u2014 sin IA':'\u270d\ufe0f You first \u2014 no AI yet'}</div><div style="font-size:13.5px;color:var(--navy);font-weight:500;line-height:1.5;margin-bottom:10px">${ES?'Antes de abrir la IA: \u00bfqu\u00e9 esperas que haga bien, y d\u00f3nde crees que se quedar\u00e1 corta en tu materia?':'Before you open AI: what do you expect it to do well, and where do you think it\u2019ll fall short in your subject?'}</div><textarea class="rf-area" id="ddYou1" aria-label="${ES?'Tu predicción antes de usar IA':'Your prediction before using AI'}" style="width:100%;min-height:140px" placeholder="${ES?'Tu predicci\u00f3n honesta. La compararemos con lo que realmente pase.':'Your honest prediction. We\u2019ll compare it to what actually happens.'}"></textarea>`;
   m1.appendChild(you1);
   const ai1 = document.createElement('div');
   ai1.style.cssText='background:var(--light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px';
@@ -2261,7 +2267,7 @@ function rebuildDeepDive() {
   const sailBlock = state.sailLevel
     ? `<div style="background:#fff;border:1px solid var(--border);border-radius:7px;padding:10px 13px;font-size:11.5px;color:var(--muted)">${ES?'Tu nivel SAIL de la Auditor\u00eda Inicial':'Your SAIL level from the Initial Audit'}: <strong style="color:var(--navy)">${state.sailLevel}</strong>. ${ES?'\u00bfSigue teniendo sentido despu\u00e9s de lo que viste en los Pasos 1\u20133?':'Does it still hold after what you just saw in Steps 1\u20133?'}</div>`
     : `<div style="background:#fff;border:1px solid var(--border);border-radius:7px;padding:10px 13px;font-size:11.5px;color:var(--muted)">
-        <div style="margin-bottom:6px">${ES?'<strong>\u00bfYa hiciste la Auditor\u00eda Inicial?</strong> Ingresa el nivel SAIL que elegiste:':'<strong>Already ran an Initial Audit?</strong> Enter the SAIL level you chose:'} <input id="ahtrsail" type="text" placeholder="L1\u2013L5" style="width:70px;border:1px solid var(--border);border-radius:4px;padding:3px 7px;font-size:12px;font-family:\'DM Mono\',monospace" oninput="this.value=this.value.toUpperCase()"> ${ES?'\u00bfSigue teniendo sentido despu\u00e9s de lo que viste?':'Does it still hold after what you just saw?'}</div>
+        <div style="margin-bottom:6px">${ES?'<strong>\u00bfYa hiciste la Auditor\u00eda Inicial?</strong> Ingresa el nivel SAIL que elegiste:':'<strong>Already ran an Initial Audit?</strong> Enter the SAIL level you chose:'} <input id="ahtrsail" type="text" aria-label="${ES?'Nivel SAIL, L1 a L5':'SAIL level, L1 through L5'}" placeholder="L1\u2013L5" style="width:70px;border:1px solid var(--border);border-radius:4px;padding:3px 7px;font-size:12px;font-family:\'DM Mono\',monospace" oninput="this.value=this.value.toUpperCase()"> ${ES?'\u00bfSigue teniendo sentido despu\u00e9s de lo que viste?':'Does it still hold after what you just saw?'}</div>
         <div style="color:var(--teal);font-style:italic">${ES?'\u00bfEstas corriendo esta rutina por tu cuenta? Elige el nivel que encaje seg\u00fan los Pasos 1\u20133 \u2014 puedes formalizarlo en una Auditor\u00eda Inicial despu\u00e9s.':'Running this on its own? Pick the level that fits based on Steps 1\u20133 \u2014 you can formalize it in an Initial Audit later.'}</div>
       </div>`;
   you4.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px">${ES?'\u270d\ufe0f T\u00fa decides':'\u270d\ufe0f Your call'}</div><div style="font-size:13.5px;color:var(--navy);font-weight:500;line-height:1.5;margin-bottom:8px">${ES?'Basándote en los tres pasos anteriores: \u00bfqu\u00e9 parte del trabajo puede ayudar a hacer la IA, y qu\u00e9 parte DEBE hacer el estudiante con su propia cabeza para que el aprendizaje ocurra?':'Based on the last three steps: which part of the work can AI help with, and which part MUST the student do with their own mind for the learning to happen?'}</div>
@@ -2665,17 +2671,55 @@ function rebuildRefs() {
 
 document.getElementById('fdate').value = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 
-// ── A.6 LABEL ASSOCIATION ─────────────────────────────────────────────────────
+// ── ACCESSIBLE LABELS + KEYBOARD CONTROLS ─────────────────────────────────────
 function associateLabels() {
   document.querySelectorAll('textarea[id], input[type="text"][id]').forEach(el => {
-    if (el.getAttribute('aria-labelledby')) return;
-    const parent = el.closest('.rfb,.tf-wrap,.sfb,.min-card');
-    if (!parent) return;
-    const lbl = parent.querySelector('.rf-label,.tf-label,.sf-label');
-    if (!lbl) return;
-    const lid = el.id + '_lbl';
-    lbl.id = lid;
-    el.setAttribute('aria-labelledby', lid);
+    if (el.labels?.length || el.getAttribute('aria-labelledby') || el.getAttribute('aria-label')) return;
+    const parent = el.closest('.rfb,.tf-wrap,.sfb,.min-card,.tfield,.sail-justify,.min-q');
+    const lbl = parent?.querySelector('.rf-label,.tf-label,.sf-label,.sj-label,.min-ql');
+    if (lbl) {
+      const lid = el.id + '_lbl';
+      lbl.id = lid;
+      el.setAttribute('aria-labelledby', lid);
+    } else {
+      el.setAttribute('aria-label', el.getAttribute('placeholder') || el.id);
+    }
+  });
+  enhanceKeyboardControls();
+}
+
+function makeKeyboardClickable(el, role='button') {
+  if (!el || el.dataset.keyboardReady === 'true') return;
+  el.dataset.keyboardReady = 'true';
+  el.setAttribute('role', role);
+  el.setAttribute('tabindex', '0');
+  el.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      el.click();
+    }
+  });
+}
+
+function enhanceKeyboardControls() {
+  document.querySelectorAll('.nav-brand,.nav-lang,.nav-tab,.path-card,.sc-card,.upload-zone,.ui-remove').forEach(el => {
+    makeKeyboardClickable(el, el.classList.contains('nav-tab') ? 'tab' : 'button');
+  });
+  document.querySelectorAll('.cl-card').forEach(el => {
+    makeKeyboardClickable(el, 'checkbox');
+    el.setAttribute('aria-checked', el.classList.contains('on') ? 'true' : 'false');
+  });
+  document.querySelectorAll('.rc,.sail-row').forEach(el => {
+    makeKeyboardClickable(el, 'radio');
+    el.setAttribute('aria-checked', el.classList.contains('on') ? 'true' : 'false');
+  });
+  document.querySelectorAll('.ptab').forEach(el => {
+    makeKeyboardClickable(el, 'tab');
+    el.setAttribute('aria-selected', el.classList.contains('on') ? 'true' : 'false');
+  });
+  document.querySelectorAll('.upload-zone').forEach(el => {
+    el.setAttribute('aria-label', el.querySelector('.upload-title')?.textContent || 'Choose PDF');
+    el.setAttribute('aria-controls', 'fileIn');
   });
 }
 rebuildAudit();
