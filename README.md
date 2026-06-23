@@ -1,158 +1,118 @@
 # VISTA Fellowship — CNG AI Innovation Fellowship 2026–2027
 
-**Designing Human-Centered Learning in AI-Rich Classrooms**  
+Static website and assessment-design tool for the CNG AI Innovation Fellowship.
+
 Andrew Cajina · High School Mathematics · Colegio Nueva Granada · Bogotá, Colombia
 
----
+## Production
 
-## What This Is
+- Live site: https://v2-vista-fellowship.vercel.app
+- GitHub: `AJ-AIEd/vista-fellowship`
+- Production branch: `main`
+- Vercel project: `v2-vista-fellowship`
 
-A static website for the CNG AI Innovation Fellowship 2026–2027. Two pages:
+Do not deploy this repository to the old `vista-fellowship` Vercel project. Its root-directory configuration is broken.
 
-| Page | File | Purpose |
-|------|------|---------|
-| Fellowship Hub | `index.html` | Public landing page — about the fellowship, timeline, cycles, VISTA explainer, downloads |
-| VISTA Protocol | `vista.html` | The assessment audit tool — Initial Audit, AI Stress-Test, Final Audit, References |
+## Routes
 
-No build step. No framework. Pure HTML/CSS/JS — deploy anywhere static files are served.
+| URL | File | Audience |
+|---|---|---|
+| `/` | `index.html` | Launch page |
+| `/teacher-hub` | `teacher-hub.html` | Fellowship teachers |
+| `/vista` | `vista.html` | Interactive VISTA protocol |
+| `/vista-print` | `vista-print.html` | Printable protocol |
+| `/proposal` | `proposal.html` | Administrators and reviewers |
+| `/es` | `es.html` | Spanish proposal |
+| `/launch` | Redirects to `/` | Legacy route |
 
----
+`vercel.json` enables clean URLs, so `/vista` serves `vista.html`.
 
-## Project Structure
+## Technology
 
+- Static HTML, CSS, and vanilla JavaScript
+- No framework and no build step
+- Shared design tokens in `css/shared.css`
+- Page-specific CSS and JavaScript remain inline
+- Google Fonts: Fraunces, DM Sans, and DM Mono
+- Vercel Web Analytics script on public pages
+
+## VISTA workflow
+
+The interactive tool has four views:
+
+1. Initial Audit — describe a task, classify learning vulnerability, rate cognitive offloading, choose a SAIL level, and record a final flag.
+2. Augmented Human Thinking Routine — four teacher-first moves for testing the task with AI and recording a redesign decision.
+3. Final Audit — nine reflection questions completed after enactment.
+4. References — bibliography grouped by research area.
+
+### Protected decision engine
+
+Do not casually refactor or restyle:
+
+- Initial Audit vulnerability cards
+- Cognitive Offloading ratings and decision banners
+- Discipline-specific redesign pathways
+- The Minimally-rated reflection/exemplar path
+- Classifier/rating/pathway coupling
+
+Changes to those areas require explicit scope and regression testing.
+
+## Draft storage and privacy
+
+Drafts are stored only in the current browser under:
+
+```text
+dlp_draft_v2
 ```
-vista-fellowship/
-├── index.html              ← Fellowship Hub (main landing page)
-├── vista.html              ← VISTA Protocol tool
-├── vercel.json             ← Vercel routing + headers config
-├── .gitignore
-├── README.md
-├── css/
-│   └── shared.css          ← Shared design tokens (colours, fonts, base reset)
-├── js/
-│   └── (empty — JS is inline in each page for portability)
-└── public/
-    └── docs/
-        ├── CNG_Fellowship_Complete.docx         ← 2-pager + full proposal (combined)
-        ├── CNG_Fellowship_Submission_Final.docx ← 2-page executive submission only
-        ├── CNG_Fellowship_Proposal_v6.docx      ← Full 10+ page proposal only
-        └── Journal_Article_Draft.docx           ← Practitioner article draft
+
+There is no backend, login, database, or shared Knowledge Hub submission. The Save buttons write one draft to localStorage on the current device. Clearing browser data removes it.
+
+Uploaded PDFs are not transmitted or persisted. Teachers should not select documents that identify individual students.
+
+If shared submission is added later, define authentication, permissions, retention, deletion, and student-data governance before implementation.
+
+## Documents
+
+Downloadable proposal files live in `public/docs/`. The current public PDF is:
+
+```text
+public/docs/CNG_Fellowship_Proposal_v7.pdf
 ```
 
----
+## Deployment workflow
 
-## Deploy to Vercel
-
-### Option A — Vercel CLI (fastest)
+Work directly on `main` for the current project workflow:
 
 ```bash
-# Install Vercel CLI if you don't have it
-npm i -g vercel
-
-# From the project root
-cd vista-fellowship
-vercel
-
-# Follow the prompts:
-# - Set up and deploy: Y
-# - Which scope: your account
-# - Link to existing project: N
-# - Project name: vista-fellowship (or whatever you want)
-# - Directory: ./  (current)
-# - Override settings: N
+git add -A
+git commit -m "Describe the change"
+git push
+npx vercel --prod
 ```
 
-Your site will be live at `https://vista-fellowship.vercel.app` (or your chosen name).
+Before accepting the deployment, confirm the CLI reports:
 
-### Option B — GitHub + Vercel (recommended for ongoing updates)
+```text
+Deploying aj-aieds-projects/v2-vista-fellowship
+```
 
-1. **Create a new GitHub repo** (e.g. `vista-fellowship`)
+Production must alias to:
 
-2. **Push this project:**
-   ```bash
-   cd vista-fellowship
-   git init
-   git add .
-   git commit -m "Initial deploy — CNG AI Innovation Fellowship 2026-2027"
-   git branch -M main
-   git remote add origin https://github.com/YOUR_USERNAME/vista-fellowship.git
-   git push -u origin main
-   ```
+```text
+https://v2-vista-fellowship.vercel.app
+```
 
-3. **Connect to Vercel:**
-   - Go to [vercel.com](https://vercel.com) → New Project
-   - Import your GitHub repo
-   - Framework: **Other** (no framework)
-   - Root directory: `./`
-   - Build command: *(leave empty)*
-   - Output directory: `./`
-   - Click Deploy
+## Verification checklist
 
-4. **Custom domain (optional):**
-   - In Vercel project settings → Domains
-   - Add your domain (e.g. `vista.cng.edu.co` or `fellowship.cng.edu.co`)
-   - Add the DNS records Vercel provides to your domain registrar
+- All primary routes return HTTP 200.
+- `/launch` redirects to `/`.
+- Teacher Hub proposal link opens the current PDF.
+- VISTA keyboard controls work with Enter and Space.
+- Initial Audit task and SAIL level appear correctly in AHTR.
+- Saved drafts restore Initial Audit, AHTR, and Final Audit fields.
+- Page layouts do not create document-level horizontal overflow at phone width.
+- Browser console contains no errors.
 
-Every `git push` to `main` will automatically redeploy.
+## Current architecture constraint
 
----
-
-## Making Updates
-
-### Edit content
-- **Hub page:** edit `index.html` directly
-- **VISTA tool:** edit `vista.html` directly
-- **Shared styles:** edit `css/shared.css`
-
-### Update downloadable docs
-Replace files in `public/docs/` — same filenames, just drop in the new versions.
-
-### Add a new page
-1. Create `yourpage.html` in the root
-2. Add a route in `vercel.json` if you want a clean URL (e.g. `/about` → `about.html`)
-
----
-
-## URL Structure
-
-| URL | Content |
-|-----|---------|
-| `/` | Fellowship Hub |
-| `/vista` | VISTA Protocol tool |
-| `/protocol` | Alias for VISTA tool |
-| `/docs/CNG_Fellowship_Complete.docx` | Combined submission + proposal download |
-| `/docs/CNG_Fellowship_Submission_Final.docx` | 2-page submission download |
-| `/docs/CNG_Fellowship_Proposal_v6.docx` | Full proposal download |
-| `/docs/Journal_Article_Draft.docx` | Practitioner article download |
-
----
-
-## Tech Stack
-
-| Layer | Choice | Why |
-|-------|--------|-----|
-| HTML | Vanilla | No build step, works everywhere |
-| CSS | Custom properties | Full design system in `css/shared.css` |
-| Fonts | Google Fonts (Fraunces, DM Sans, DM Mono) | Loaded from CDN |
-| JS | Vanilla inline | VISTA tool is a complex single-file app — keeping it portable |
-| Draft persistence | `localStorage` | Saves VISTA audit drafts in the browser; no server needed |
-| Hosting | Vercel | Free tier, instant deploys, custom domains |
-
----
-
-## VISTA Tool Notes
-
-The VISTA Protocol tool (`vista.html`) saves draft audits to `localStorage` in the user's browser. This means:
-- Drafts persist between sessions on the same device/browser
-- No data is sent to any server
-- Clearing browser data will clear saved drafts
-- Teachers should use the "Save Draft" button and note that data is local only
-
-If you ever want server-side persistence (e.g. Cajina can see submitted audits), this would require adding a backend — a future enhancement.
-
----
-
-## Contact
-
-Andrew Cajina · acajina@cng.edu.co  
-High School Mathematics · Colegio Nueva Granada · Bogotá, Colombia
+`vista.html` is a large single-file application. Prefer small, targeted edits. Extract content or configuration only when protected pathway behavior is covered by tests.
