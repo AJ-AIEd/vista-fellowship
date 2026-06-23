@@ -76,6 +76,40 @@ a:focus-visible{outline-color:var(--gold)}
 /* DIVIDERS */
 .section-divider{height:1px;background:var(--border);max-width:740px;margin:0 auto}
 
+/* SECTION 5 — stats */
+.stats-bar{max-width:900px;margin:0 auto;padding:34px 32px;display:grid;grid-template-columns:1fr 1fr 1.35fr;gap:0;background:var(--teal);border-radius:14px;color:#fff}
+.stat{text-align:center;padding:8px 24px;border-right:1px solid rgba(255,255,255,.18)}
+.stat:last-child{border-right:0}
+.stat strong{display:block;font-family:'Fraunces',serif;font-size:clamp(30px,5vw,46px);line-height:1;color:#fff;margin-bottom:9px}
+.stat span{font-size:12px;line-height:1.5;color:rgba(255,255,255,.76)}
+@media(max-width:680px){.stats-bar{grid-template-columns:1fr;padding:20px 24px}.stat{border-right:0;border-bottom:1px solid rgba(255,255,255,.18);padding:22px 8px}.stat:last-child{border-bottom:0}}
+
+/* SECTION 6 — year table */
+.wide-section{padding:80px 32px;max-width:980px;margin:0 auto}
+.wide-section h2,.content-section h2{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--navy);line-height:1.15;letter-spacing:-.02em;margin-bottom:22px}
+.year-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--paper);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.year-table th{text-align:left;background:var(--navy);color:#fff;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:13px 18px}
+.year-table td{padding:14px 18px;border-bottom:1px solid var(--border);font-size:13.5px;line-height:1.55;vertical-align:top}
+.year-table tr:last-child td{border-bottom:0}
+.year-table td:first-child{width:110px;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--teal);white-space:nowrap}
+.year-note{margin-top:18px;font-size:13px;color:var(--muted);font-style:italic;line-height:1.6}
+@media(max-width:600px){.wide-section{padding:64px 20px}.year-table th,.year-table td{padding:12px 10px}.year-table td:first-child{width:78px;white-space:normal}}
+
+/* SECTIONS 7, 9, 10 & 13 */
+.content-section{padding:80px 32px;max-width:740px;margin:0 auto}
+.content-section p{font-size:16px;line-height:1.75;color:var(--text);margin-bottom:16px}
+.example-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 20px}
+.example-card{background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:20px;font-size:14px;line-height:1.6}
+.example-card strong{display:block;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;color:var(--red)}
+.example-card.with strong{color:var(--green)}
+.tool-card{background:var(--navy);border-radius:14px;padding:38px 36px;color:#fff}
+.tool-card h2{color:#fff}
+.tool-card p{color:rgba(255,255,255,.74)}
+.tool-card a{color:var(--gold)}
+.tool-link{display:inline-block;margin:4px 0 22px;padding:13px 20px;background:var(--gold);color:var(--navy)!important;border-radius:6px;text-decoration:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.orientation{margin-top:28px;padding:18px 20px;background:rgba(255,255,255,.07);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;font-size:13.5px;line-height:1.7;color:rgba(255,255,255,.78)}
+@media(max-width:600px){.content-section{padding:64px 24px}.example-pair{grid-template-columns:1fr}.tool-card{padding:30px 24px}}
+
 footer{background:var(--navy);color:rgba(255,255,255,.3);text-align:center;padding:28px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
 </style>
 </head>
@@ -138,7 +172,76 @@ footer{background:var(--navy);color:rgba(255,255,255,.3);text-align:center;paddi
   </div>
 </div>
 
-<!-- ⛔ STOP — Sections 5–13 not yet built. Awaiting tone review of Sections 1–4. -->
+<!-- SECTION 5 — STATS -->
+<div style="padding:16px 32px 80px">
+  <div class="stats-bar">
+    <div class="stat"><strong>6</strong><span>teachers doing this with you</span></div>
+    <div class="stat"><strong>2</strong><span>times you'll do this for real</span></div>
+    <div class="stat"><strong>~4–5 hours</strong><span>spread across the whole year, outside of normal meetings</span></div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 6 — YOUR YEAR -->
+<section class="wide-section" id="year-at-a-glance">
+  <div class="section-eyebrow">The whole year</div>
+  <h2>Your Year, at a Glance</h2>
+  <table class="year-table">
+    <thead><tr><th>When</th><th>What you do</th></tr></thead>
+    <tbody>
+      <tr><td>Aug</td><td>Watch me audit my own task live, then practice yourself on a different one, with a partner. Pick your own task for after. ~60 min, whole group.</td></tr>
+      <tr><td>Sep</td><td>Bring your finished audit to lunch. Compare notes with the group. ~60 min, lunch.</td></tr>
+      <tr><td>Oct</td><td>Teach the redesigned task. Cajina may co-teach or just watch, your call.</td></tr>
+      <tr><td>Late Oct</td><td>Lunch — share what the student work actually showed. ~60 min.</td></tr>
+      <tr><td>Nov</td><td>One-on-one with Cajina: watch a short clip of your own class. What did you expect, what actually happened? ~30 min.</td></tr>
+      <tr><td>Dec</td><td>Lunch — whole group compares what Cycle 1 revealed. ~60 min.</td></tr>
+      <tr><td>Jan</td><td>On your own this time: audit a second task, no co-planning. Cajina gives written feedback once, before you teach it.</td></tr>
+      <tr><td>Feb</td><td>Lunch — bring your Cycle 2 redesign for peer feedback. ~60 min.</td></tr>
+      <tr><td>Feb–Mar</td><td>Teach it, independently.</td></tr>
+      <tr><td>Mar</td><td>Your pair partner runs your reflection clip session this time — Cajina just listens. ~30 min.</td></tr>
+      <tr><td>Apr</td><td>Lunch — compare your two cycles side by side. ~60 min.</td></tr>
+      <tr><td>May</td><td>Lunch — get ready to bring this to your department. ~60 min.</td></tr>
+      <tr><td>Jun</td><td>Show your year to the whole CNG community. Hand off what you learned.</td></tr>
+    </tbody>
+  </table>
+  <p class="year-note">Everything outside these listed sessions is async and adds up to about 4–5 hours total across the year.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 7 — WHY TWICE -->
+<section class="content-section">
+  <div class="section-eyebrow">Supported, then independent</div>
+  <h2>Why Twice, Not Once</h2>
+  <p>The first time, you've got support — co-planning, co-teaching if you want it, feedback before you act. The second time, you're on your own. That gap between supported and independent is the whole point: it's how we find out whether this actually became part of how you teach, not just something you did once with help.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 9 — WHAT YOU'RE LOOKING FOR -->
+<section class="content-section">
+  <div class="section-eyebrow">Evidence you can grade</div>
+  <h2>What You're Actually Looking For</h2>
+  <p>Most assignments only show you the finished thing. What you're after is the stuff around it — where a student changed their mind, where they got stuck, where AI actually helped versus where it just did the work.</p>
+  <div class="example-pair">
+    <div class="example-card"><strong>Without this</strong>A polished essay. You have no idea if AI wrote half of it.</div>
+    <div class="example-card with"><strong>With this</strong>The same essay, plus a quick note on what changed while they wrote it, whether AI was involved and how, and a 90-second voice note explaining one decision they made.</div>
+  </div>
+  <p>That second version is gradable in a way the first one isn't.</p>
+</section>
+
+<!-- SECTIONS 10 & 13 — TOOL ORIENTATION -->
+<div style="padding:0 32px 80px">
+  <div class="tool-card" style="max-width:740px;margin:0 auto">
+    <div class="section-eyebrow" style="color:var(--gold)">Your next step</div>
+    <h2>What You Need</h2>
+    <a href="/vista" class="tool-link">Open the VISTA tool →</a>
+    <p>This is the one you'll actually use. Start with the Initial Audit.</p>
+    <p>Curious about the full thinking behind this? <a href="#">The complete proposal (PDF)</a> has all of it — but you don't need to read it to do the work.</p>
+    <div class="orientation">Inside the tool: start with the <strong>Initial Audit</strong> (do this alone). Later, you'll use the <strong>Thinking Routine</strong> — with Cajina in Cycle 1, on your own in Cycle 2. After you teach the task, come back for the <strong>Final Audit</strong>.</div>
+  </div>
+</div>
 
 <footer>Colegio Nueva Granada · Bogotá · CNG AI Innovation Fellowship 2026–2027</footer>
 
