@@ -403,6 +403,7 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
     <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
     <button class="nav-pdf" onclick="window.open('/vista-print','_blank')" data-k="nav_pdf">PDF</button>
     <button class="nav-save" onclick="saveDraft()" data-k="nav_save">Save Draft</button>
+    <span id="saveIndicator" style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);margin-left:6px;letter-spacing:.04em"></span>
   </div>
 </nav>
 <div class="prog"><div class="prog-fill" id="pf"></div></div>
@@ -2382,6 +2383,8 @@ function saveDraft() {
   try {
     localStorage.setItem('dlp_draft_v2', JSON.stringify(draft));
     showToast(lang==='es'?'Borrador guardado ✓':'Draft saved ✓');
+    const ind = document.getElementById('saveIndicator');
+    if (ind) { ind.textContent = lang==='es'?'guardado ahora':'saved just now'; const ts = Date.now(); const tick = setInterval(() => { const m = Math.round((Date.now()-ts)/60000); if (m < 1) return; ind.textContent = lang==='es'?`hace ${m} min`:`${m} min ago`; if (m >= 60) clearInterval(tick); }, 30000); }
   } catch(e) { showToast('Save failed — localStorage may be full'); }
 }
 
