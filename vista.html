@@ -1428,6 +1428,7 @@ function buildUploadTop() {
     </div>
     <input type="file" id="fileIn" accept=".pdf,application/pdf" style="display:none" onchange="handleFiles(this.files)">
     <div class="upload-list" id="uploadList"></div>
+    <div style="margin-top:8px;font-size:11px;color:var(--muted);font-style:italic">${lang==='es'?'Por favor no subas trabajo que identifique estudiantes individuales.':'Please don\'t upload work that identifies individual students.'}</div>
   `;
   return wrap;
 }
