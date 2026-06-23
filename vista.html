@@ -629,7 +629,7 @@ const STRINGS = {
     final_q9: "What would you say to a skeptical colleague in your department who hasn't started this work?",
     final_q9_ph: "Not a pitch for the fellowship. An honest account of what you found hard, what surprised you, and what you would want them to know before they start. This becomes part of your transfer session.",
 
-    final_submit_note: "Submitting this Final Audit completes your cycle record. It will be added to your portfolio in the Cognitive Agency Knowledge Hub alongside your Initial Audit and Augmented Human Thinking Routine for comparison across iterations.",
+    final_submit_note: "Saving this Final Audit completes the cycle record stored in this browser. Nothing is sent to Cajina or a shared Knowledge Hub.",
     nav_save: "Save Draft",
     nav_pdf: "PDF",
     lang_toggle: "🇪🇸 Español",
@@ -688,9 +688,9 @@ const STRINGS = {
     upload_sub: "Assessment task · Student work samples · Iteration notes · Photos",
     upload_sub2: "PDF, Word, images — up to 20MB each",
     upload_btn: "Choose Files",
-    submit_ready: "Ready to submit? Complete Steps 1–6 to submit your audit to the Knowledge Hub.",
+    submit_ready: "Ready to save this audit on this device? Complete the core steps first.",
     btn_draft: "Save Draft",
-    btn_submit: "Submit Audit →",
+    btn_submit: "Save Audit Locally →",
     
     sail_col1: "Level",
     sail_col2: "What AI may do (CNG SAIL)",
@@ -847,7 +847,7 @@ const STRINGS = {
     final_q9: "¿Qué le dirías a un colega escéptico en tu departamento que no ha comenzado este trabajo?",
     final_q9_ph: "No un argumento de venta para el fellowship. Un relato honesto de lo que encontraste difícil, lo que te sorprendió, y lo que querrías que supieran antes de comenzar.",
 
-    final_submit_note: "Enviar esta Auditoría Final completa tu registro de ciclo. Se añadirá a tu portafolio en el Knowledge Hub junto con tu Auditoría Inicial y la Rutina de Pensamiento Humano Aumentado para comparación entre iteraciones.",
+    final_submit_note: "Guardar esta Auditoría Final completa el registro del ciclo almacenado en este navegador. Nada se envía a Cajina ni a un Knowledge Hub compartido.",
     nav_save: "Guardar Borrador",
     nav_pdf: "PDF",
     lang_toggle: "🇺🇸 English",
@@ -906,9 +906,9 @@ const STRINGS = {
     upload_sub: "Tarea · Muestras de trabajo · Notas de iteración · Fotos",
     upload_sub2: "PDF, Word, imágenes — hasta 20MB cada uno",
     upload_btn: "Elegir Archivos",
-    submit_ready: "¿Listo para enviar? Completa los Pasos 1–6 para enviar tu auditoría al Knowledge Hub.",
+    submit_ready: "¿Listo para guardar esta auditoría en este dispositivo? Completa primero los pasos principales.",
     btn_draft: "Guardar Borrador",
-    btn_submit: "Enviar Auditoría →",
+    btn_submit: "Guardar Auditoría Localmente →",
     
     sail_col1: "Nivel",
     sail_col2: "Qué puede hacer la IA (SAIL CNG)",
@@ -1518,7 +1518,7 @@ function rebuildFinal() {
     <div class="submit-status"><strong>${s.final_submit_note ? lang==='es'?'Auditoría Final':'Final Audit' : ''}</strong> ${s.final_submit_note || ''}</div>
     <div class="submit-actions">
       <button class="btn-draft-sm" onclick="saveDraft()">${s.btn_draft}</button>
-      <button class="btn-sub" style="background:#5C1A6B" onclick="submitFinal()">${lang==='es'?'Enviar Auditoría Final →':'Submit Final Audit →'}</button>
+      <button class="btn-sub" style="background:#5C1A6B" onclick="submitFinal()">${lang==='es'?'Guardar Auditoría Final Localmente →':'Save Final Audit Locally →'}</button>
     </div>
   </div>`;
   body.appendChild(submitWrap);
@@ -1554,7 +1554,7 @@ function buildFinalSection(title, sub, accentColor, questions) {
 
 function submitFinal() {
   saveDraft();
-  showToast(lang==='es'?'Auditoría Final enviada al Knowledge Hub ✓':'Final Audit submitted to Knowledge Hub ✓');
+  showToast(lang==='es'?'Auditoría Final guardada en este dispositivo ✓':'Final Audit saved on this device ✓');
 }
 
 function rebuildAudit() {
@@ -2125,8 +2125,8 @@ function updateSubmitStatus() {
   if (!el) return;
   const n = state.completedSteps.size;
   if (n < 4) el.innerHTML = `<strong>${n}/${TOTAL_STEPS} ${lang==='es'?'pasos':'steps'}</strong> — ${t('submit_ready')}`;
-  else if (n < 7) el.innerHTML = `<strong>${n}/${TOTAL_STEPS} ${lang==='es'?'pasos':'steps'} ✓</strong> — ${lang==='es'?'Casi listo — puedes enviar ahora.':'Looking good — you can submit now.'}`;
-  else el.innerHTML = `<strong>${lang==='es'?'Todos los pasos completos ✓':'All steps complete ✓'}</strong> — ${lang==='es'?'Listo para enviar al Knowledge Hub.':'Ready to submit to the Knowledge Hub.'}`;
+  else if (n < 7) el.innerHTML = `<strong>${n}/${TOTAL_STEPS} ${lang==='es'?'pasos':'steps'} ✓</strong> — ${lang==='es'?'Casi listo — puedes guardar localmente ahora.':'Looking good — you can save locally now.'}`;
+  else el.innerHTML = `<strong>${lang==='es'?'Todos los pasos completos ✓':'All steps complete ✓'}</strong> — ${lang==='es'?'Listo para guardar en este dispositivo.':'Ready to save on this device.'}`;
 }
 
 // ── DEEP DIVE BUILDER ─────────────────────────────────────────────────────────
@@ -2426,11 +2426,11 @@ function submitAudit() {
   }
   saveDraft();
   showToast(lang==='es'?
-    'Auditoría enviada al Knowledge Hub ✓ — Cajina revisará antes de tu próxima sesión de PLC':
-    'Audit submitted to Knowledge Hub ✓ — Cajina will review before your next PLC session');
+    'Auditoría guardada en este dispositivo ✓ — no se envió nada':
+    'Audit saved on this device ✓ — nothing was sent');
   setTimeout(() => {
     const btn = document.querySelector('.btn-sub');
-    if (btn) { btn.textContent = lang==='es'?'Enviado ✓':'Submitted ✓'; btn.style.background='var(--green)'; btn.disabled=true; }
+    if (btn) { btn.textContent = lang==='es'?'Guardado localmente ✓':'Saved locally ✓'; btn.style.background='var(--green)'; btn.disabled=true; }
   }, 1000);
 }
 
