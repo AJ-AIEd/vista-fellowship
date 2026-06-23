@@ -1330,6 +1330,7 @@ let state = {
   selectedTypes: new Set(),
   rating: null,
   sailLevel: null,
+  selectedLens: null,
   uploads: [],
   completedSteps: new Set(),
   draft: {}
@@ -1992,18 +1993,20 @@ function updatePathways() {
 
     // Tab — selected types get a highlighted style
     const tab = document.createElement('div');
-    tab.className = 'ptab' + (firstTab ? ' on' : '') + (isSelected ? ' ptab-selected' : '');
+    const isActiveLens = state.selectedLens ? type === state.selectedLens : firstTab;
+    tab.className = 'ptab' + (isActiveLens ? ' on' : '') + (isSelected ? ' ptab-selected' : '');
     tab.innerHTML = isSelected
       ? `${label} <span class="ptab-check">✓</span>`
       : label;
     tab.setAttribute('data-cid', contentId);
     tab.setAttribute('data-pre', prefix);
+    tab.setAttribute('data-type', type);
     tab.onclick = () => activateTab(tab, prefix);
     tabsEl.appendChild(tab);
 
     // Content panel
     const content = document.createElement('div');
-    content.className = 'pcontent' + (firstTab ? ' show' : '');
+    content.className = 'pcontent' + (isActiveLens ? ' show' : '');
     content.id = contentId;
     const goal = data[`goal_${lang}`];
     const items = data[`items_${lang}`].map(([name, desc]) =>
@@ -2025,6 +2028,7 @@ function activateTab(tab, prefix) {
   document.querySelectorAll(`#ptabs-${prefix} .ptab`).forEach(t => t.classList.remove('on'));
   document.querySelectorAll(`#pcontents-${prefix} .pcontent`).forEach(c => c.classList.remove('show'));
   tab.classList.add('on');
+  state.selectedLens = tab.getAttribute('data-type');
   const content = document.getElementById(tab.getAttribute('data-cid'));
   if (content) content.classList.add('show');
 }
