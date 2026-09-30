@@ -13,20 +13,29 @@ const base = process.env.VISTA_URL || 'http://127.0.0.1:8765';
   for (const type of ['proc','conc','eval','crea','emb']) {
     await page.locator(`.cl-card[data-type="${type}"]`).press('Enter');
   }
+  await page.locator('#learningEvidence').fill('Independent explanation of an unfamiliar data set.');
+  await page.locator('#humanAI').fill('AI can fit a model; students must justify the choice and explain limits.');
   for (const rating of ['full','subs','part']) {
     await page.locator(`.rc[data-d="${rating}"]`).press('Space');
     await page.waitForFunction(r => document.getElementById('dp-'+r).classList.contains('show'),rating);
+    await page.locator('#navDeep').click();
     assert.equal(await page.locator(`#ptabs-${rating} .ptab`).count(),5);
     for (const type of ['proc','conc','eval','crea','emb']) {
       await page.locator(`#ptabs-${rating} .ptab[data-type="${type}"]`).press('Enter');
       assert.equal(await page.locator(`#pcontent-${rating}-${type}`).evaluate(e=>e.classList.contains('show')),true);
       assert.ok(await page.locator(`#pcontent-${rating}-${type} .pi`).count());
     }
+    await page.locator('#navInitial').click();
   }
   await page.locator('.rc[data-d="min"]').click();
-  await page.locator('#min_r1').fill('Students explain a new model independently.');
-  for (const id of ['min_r2','min_r3','min_r4','min_exemplar_text']) await page.locator('#'+id).fill('Saved reflection '+id);
+  await page.locator('#navDeep').click();
+  await page.locator('#min_r4').fill('Students may rehearse an explanation without understanding.');
+  await page.locator('#min_exemplar_text').fill('Check transfer to a new data set.');
+  assert.equal(await page.locator('#dp-min blockquote').count(),0);
+  await page.locator('#navInitial').click();
   await page.locator('.sail-row[data-level="L3"]').press('Enter');
+  await page.locator('.sail-row[data-level="L1"]').press('Space');
+  assert.equal(await page.locator('.sail-row.on').count(),2);
   await page.locator('#sailJustify').fill('Students choose and justify the model before AI edits their explanation.');
   await page.locator('#lr1').fill('Check their explanation on a new data set.');
   await page.locator('#view-initial .btn-sub').click();
@@ -45,9 +54,11 @@ const base = process.env.VISTA_URL || 'http://127.0.0.1:8765';
   await page.locator('#langToggle').click();
   await page.reload();
   await page.locator('#navInitial').click();
-  assert.equal(await page.locator('#min_r1').inputValue(),'Students explain a new model independently.');
+  assert.equal(await page.locator('#humanAI').inputValue(),'AI can fit a model; students must justify the choice and explain limits.');
+  assert.equal(await page.locator('.sail-row.on').count(),2);
   assert.equal(await page.locator('#sailJustify').inputValue(),'Students choose and justify the model before AI edits their explanation.');
   await page.locator('#navDeep').click();
+  assert.equal(await page.locator('#min_r4').inputValue(),'Students may rehearse an explanation without understanding.');
   assert.equal(await page.locator('#dd4').inputValue(),'Routine note dd4');
   await page.screenshot({path:'/tmp/vista-routine-desktop.png',fullPage:true});
   await page.locator('#navFinal').click();
