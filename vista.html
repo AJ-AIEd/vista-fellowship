@@ -408,6 +408,7 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
 .cl-card:focus-visible,.sail-row:focus-visible,.ptab:focus-visible,.path-card:focus-visible,.llm-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </style>
+<link rel="stylesheet" href="/protocol-research.css">
 </head>
 <body>
 
@@ -619,31 +620,31 @@ const STRINGS = {
     final_instr_callout: "Have your original task, revised task, and a few anonymized examples ready. Brief notes are enough. If the evidence is unclear, say what you still need to check.",
 
     final_s1_title: "What Actually Happened",
-    final_s1_sub: "Compare the learning you intended with the evidence you collected.",
-    final_q1: "What did students say or do that you had not expected?",
-    final_q1_ph: "Describe one example of understanding, confusion, or a changed approach.",
+    final_s1_sub: "Compare what you intended — formally audited or not — with what you observed in the classroom.",
+    final_q1: "What did the student reasoning artifacts reveal that your initial audit didn't anticipate?",
+    final_q1_ph: "Be specific. Name one thing that appeared in the student work — a misconception, a moment of genuine understanding, a pattern — that you didn't predict when you redesigned the task.",
     final_q2: "Where did AI support the intended thinking, and where might it have replaced it?",
-    final_q2_ph: "Use a specific example. What could students explain or do without AI? If you did not check, note that.",
-    final_q3: "What does your evidence show about student understanding? What remains unclear?",
-    final_q3_ph: "A strong product or reflection alone may leave questions. Name any follow-up you need.",
+    final_q2_ph: "Compare a specific AI-assisted response with what the learner could explain, revise, perform, or transfer independently. What supports your interpretation? What other explanation fits? If you did not check, keep the claim open.",
+    final_q3: "What did the visible reasoning protocol actually make visible — and what did it still hide?",
+    final_q3_ph: "Honest accounting. What did you learn from the reasoning artifacts that you couldn't have learned from the product alone? And what questions about student understanding still weren't answered?",
 
     final_s2_title: "Tensions and Unresolved Questions",
-    final_s2_sub: "Record any uncertainty that matters for your next lesson.",
-    final_q4: "What was difficult to balance when using AI in this subject?",
-    final_q4_ph: "For example: independent practice and timely help, or feedback and student authorship. If none arose, say so.",
+    final_s2_sub: "The most important professional learning often lives in the questions that don't resolve cleanly. Name them.",
+    final_q4: "What disciplinary tension did this cycle surface that you are still sitting with?",
+    final_q4_ph: "Name a tension between what your discipline values and what AI makes possible: authorship and feedback, fluency and productive struggle, access and independent judgment. What did you gain, what did you risk, and what remains unresolved?",
     final_q5: "What did this cycle reveal about your own assumptions — about students, learning, or AI?",
-    final_q5_ph: "Name an expectation that the evidence confirmed or challenged.",
-    final_q6: "What question will you investigate next?",
-    final_q6_ph: "Name the question and one observation or task that could help you answer it.",
+    final_q5_ph: "Return to your initial prediction. Which belief about students, learning, or AI did the evidence complicate? Identify the moment you noticed this, how you responded, and how you interpret it now.",
+    final_q6: "What question about AI and your discipline are you now carrying that you weren't carrying before?",
+    final_q6_ph: "State the new question precisely. What evidence would help distinguish two plausible answers? Choose a manageable observation or next task that could challenge your current explanation.",
 
-    final_s3_title: "What You Will Carry Forward",
-    final_s3_sub: "Choose your next adjustment and what you would share with a colleague.",
+    final_s3_title: "How Your Thinking Has Changed",
+    final_s3_sub: "This is the heart of what you learned. Not what you did differently — what you now understand differently about teaching with AI.",
     final_q7: "How has your understanding of what AI can and cannot do in your discipline changed?",
-    final_q7_ph: "Refer to the task you tested. What did AI handle well, and where did it need checking?",
-    final_q8: "What will you keep or change next time, and why?",
-    final_q8_ph: "Link one decision to the student evidence.",
-    final_q9: "What would be useful for a colleague trying a similar task?",
-    final_q9_ph: "Share one practical insight, example, or unresolved question.",
+    final_q7_ph: "Specific to your subject. Not a general statement about AI limitations — a disciplinary one. What does AI handle well in [your subject] and where does it break down in ways that matter for learning?",
+    final_q8: "If you were to redesign this task again for next year, what would you change and why?",
+    final_q8_ph: "Backwards design from what you actually observed. Start from the evidence you collected — what does it tell you about what the task should have asked for instead?",
+    final_q9: "What would you say to a skeptical colleague in your department who hasn't started this work?",
+    final_q9_ph: "Not a pitch for the fellowship. An honest account of what you found hard, what surprised you, and what you would want them to know before they start. This becomes part of your transfer session.",
 
     final_submit_note: "Save keeps one draft in this browser on this device. Copy your notes elsewhere before starting another task.",
     nav_save: "Save Draft",
@@ -659,8 +660,8 @@ const STRINGS = {
     vista_s: "Student",
     vista_t: "Thinking",
     vista_a: "& Agency",
-    launch_q_label: "Start with one task",
-    launch_q: "What do your students need to think through themselves?",
+    launch_q_label: "The question behind your audit",
+    launch_q: "\"If AI can produce the answer, how do we assess the reasoning, interpretation, revision, and judgment behind it?\"",
     launch_bad_head: "Bring",
     launch_bad: "A task you already teach, its learning goal, and any success criteria.",
     launch_good_head: "Leave with",
@@ -670,14 +671,14 @@ const STRINGS = {
     path_a_sub: "Describe the task, identify the thinking students need to do, and choose an initial AI-use level. Work independently before consulting AI.",
     path_a_btn: "Begin Initial Audit →",
     path_b_title: "The Augmented Human Thinking Routine",
-    path_b_sub: "Test the task with AI, check its output, and decide what to adjust before teaching. Allow about 30 minutes.",
+    path_b_sub: "Think first, test your task with AI, then challenge what you see through your subject expertise. Use four moves to decide who does the thinking and what evidence you can trust.",
     path_b_btn: "Begin the Routine →",
     path_note: "Audit → Test and revise → Teach and collect evidence → Reflect. Save before leaving; your draft stays in this browser only.",
     
     step1_title: "Describe Your Task",
-    step1_sub: "Choose one task you plan to teach. Brief notes are enough.",
+    step1_sub: "Start here. Give enough context that someone unfamiliar with your class could understand what students are doing and why.",
     step1_task_label: "What's the task, and what's the specific thinking it's meant to develop?",
-    step1_task_ph: "Include the subject and age group, what students will do, and what they should be able to explain or do independently.",
+    step1_task_ph: "Name the subject, learners, and task. What disciplinary thinking should develop? What could a student who understands do that one who does not could not? Describe the evidence you would look for before considering AI.",
     
     step2_title: "Identify the Learning",
     step2_sub: "Which kinds of learning does this task require? Select all that apply.",
@@ -686,9 +687,9 @@ const STRINGS = {
     step3_sub: "How much of the intended thinking could a student hand over to AI? Make an initial estimate; test it in the routine.",
     
     step4_title: "Choose a SAIL Level",
-    step4_sub: "Use the CNG SAIL levels below to decide how students may use AI for this task.",
+    step4_sub: "Not a default setting — a deliberate pedagogical decision based on this audit. Which level protects the learning you identified? Be ready to justify your choice.",
     step4_justify_label: "Why does this level fit your learning goal?",
-    step4_justify_ph: "Name what students must do themselves and what AI may help with.",
+    step4_justify_ph: "Why this level rather than the one above or below? Connect your learning goal, offloading estimate, and evidence. Name the decisions students must own, what AI may contribute, and what would make you reconsider.",
     
     step5_title: "Discipline Scenarios",
     step5_sub: "Optional: compare your task with a subject example.",
@@ -741,19 +742,19 @@ const STRINGS = {
       min:  {verdict:"Keep and Verify", vclass:"vg", text:"<strong>Keep the features that require students to demonstrate the learning.</strong> Confirm your estimate in the routine and in class."},
     },
     
-    min_reflection_head: "Check What This Task Protects",
-    min_reflection_intro: "You expect students to do the core work themselves. Use these prompts to check that judgment. Brief notes are enough.",
-    min_r1: "What must students demonstrate themselves?",
-    min_r1_ph: "Name the action, reasoning, or performance you will observe directly.",
-    min_r2: "Which learning goal does that demonstration address?",
-    min_r2_ph: "Connect the student action to the skill or understanding you want to develop.",
-    min_r3: "Has this audit changed what you want to look for?",
-    min_r3_ph: "Note any change, or explain what you will keep.",
-    min_r4: "What could still be delegated to AI?",
-    min_r4_ph: "Consider planning, written explanations, or reflections. How will you check whose understanding they show?",
-    min_exemplar_head: "Keep a Useful Example",
-    min_exemplar: "Summarize what you would keep and how you will check learning.",
-    min_exemplar_ph: "Task feature to keep → learning it supports → evidence to collect.",
+    min_reflection_head: "Minimally offloaded — examine the evidence",
+    min_reflection_intro: "You estimate that students must do the core thinking themselves. Treat that as a claim to examine. What might you be overlooking, and what evidence would let you judge the learning with confidence?",
+    min_r1: "Which features make the intended thinking necessary?",
+    min_r1_ph: "Go beyond “hands-on” or “students think.” Name the decision, interpretation, or performance students must demonstrate and the conditions under which you observe it. Could a polished AI-assisted product still hide a gap?",
+    min_r2: "What does this task protect that you hadn't explicitly named before this audit?",
+    min_r2_ph: "What disciplinary capacity does this task develop beyond completing the product? Why does that capacity matter, and which task feature requires students to exercise it?",
+    min_r3: "Has your thinking about this task changed since AI became part of your classroom?",
+    min_r3_ph: "Consider your experience of AI and this assessment so far. Has your understanding of why the task matters changed? What do you now question about the thinking it requires, the evidence you trust, or the value students see in it?",
+    min_r4: "What might your current judgment be missing?",
+    min_r4_ph: "Try to challenge your “Minimally” estimate. Could preparation, rehearsed explanations, hidden help, or familiar task conditions make understanding appear stronger than it is? What evidence would make you revise your rating?",
+    min_exemplar_head: "Plan evidence you can interpret and trust",
+    min_exemplar: "Choose evidence that tests your judgment. Explain what it can show, what it cannot settle, and how you will check a plausible alternative explanation.",
+    min_exemplar_ph: "What will you collect or observe, and when? Which specific learning claim would it support? Why would it reflect the student’s thinking rather than rehearsal, outside help, or surface fluency? What could it miss? Name a proportionate follow-up if uncertainty remains; use existing evidence where it is sufficient.",
 
 
     rating_guidance: {
@@ -793,7 +794,7 @@ const STRINGS = {
     scenario_redesign: "Redesign",
     
     deepdive_intro_title: "The Augmented Human Thinking Routine",
-    deepdive_intro: "Use your audit and the actual task. Work through four steps, then teach your revised version and collect evidence for the Final Audit.",
+    deepdive_intro: "Bring your initial judgment and the actual task. In each move, make your own interpretation before asking AI to challenge or extend it. Record what changes your mind, what you reject, and why.",
     deepdive_prompt_label: "Use this prompt with your AI tool of choice",
     deepdive_send_label: "Or send your audit directly",
     deepdive_llm_label: "Open in...",
@@ -835,31 +836,31 @@ const STRINGS = {
     final_instr_callout: "Ten a mano la tarea original, la revisada y algunos ejemplos anónimos. Bastan notas breves. Si la evidencia no es clara, indica qué falta comprobar.",
 
     final_s1_title: "Lo que Realmente Ocurrió",
-    final_s1_sub: "Compara el aprendizaje esperado con la evidencia recopilada.",
-    final_q1: "¿Qué dijeron o hicieron los estudiantes que no esperabas?",
-    final_q1_ph: "Describe un ejemplo de comprensión, confusión o cambio de estrategia.",
+    final_s1_sub: "Compara lo que pretendías — con o sin auditoría formal — con lo que observaste en el aula.",
+    final_q1: "¿Qué revelaron los artefactos de razonamiento estudiantil que tu auditoría inicial no anticipó?",
+    final_q1_ph: "Sé específico. Nombra una cosa que apareció en el trabajo estudiantil — un malentendido, un momento de comprensión genuina, un patrón — que no predijiste al rediseñar la tarea.",
     final_q2: "¿Dónde apoyó la IA el pensamiento esperado y dónde pudo haberlo reemplazado?",
-    final_q2_ph: "Usa un ejemplo concreto. ¿Qué pudieron explicar o hacer sin IA? Si no lo comprobaste, indícalo.",
-    final_q3: "¿Qué muestra tu evidencia sobre la comprensión estudiantil? ¿Qué sigue sin estar claro?",
-    final_q3_ph: "Un buen producto o una reflexión pueden dejar dudas. Indica qué necesitas comprobar después.",
+    final_q2_ph: "Compara una respuesta apoyada por IA con lo que el estudiante pudo explicar, revisar, realizar o transferir de forma independiente. ¿Qué sustenta tu interpretación? ¿Qué otra explicación encaja? Si no lo comprobaste, deja la conclusión abierta.",
+    final_q3: "¿Qué hizo visible el protocolo de razonamiento visible — y qué todavía ocultó?",
+    final_q3_ph: "Contabilidad honesta. ¿Qué aprendiste de los artefactos de razonamiento que no podrías haber aprendido del producto solo? ¿Y qué preguntas sobre la comprensión estudiantil todavía no se respondieron?",
 
     final_s2_title: "Tensiones y Preguntas Sin Resolver",
-    final_s2_sub: "Anota las dudas que importan para tu próxima clase.",
-    final_q4: "¿Qué fue difícil equilibrar al usar IA en esta materia?",
-    final_q4_ph: "Por ejemplo: práctica independiente y ayuda oportuna, o retroalimentación y autoría. Si no surgió ninguna tensión, indícalo.",
+    final_s2_sub: "El aprendizaje profesional más importante a menudo vive en las preguntas que no se resuelven limpiamente. Nómbralas.",
+    final_q4: "¿Qué tensión disciplinar surgió en este ciclo con la que todavía te sientas?",
+    final_q4_ph: "Nombra una tensión entre lo que valora tu disciplina y lo que permite la IA: autoría y retroalimentación, fluidez y esfuerzo productivo, acceso y juicio independiente. ¿Qué ganaste, qué arriesgaste y qué sigue sin resolverse?",
     final_q5: "¿Qué reveló este ciclo sobre tus propias suposiciones — sobre estudiantes, aprendizaje, o IA?",
-    final_q5_ph: "Nombra una expectativa que la evidencia confirmó o cuestionó.",
-    final_q6: "¿Qué pregunta explorarás después?",
-    final_q6_ph: "Escribe la pregunta y una observación o tarea que podría ayudarte a responderla.",
+    final_q5_ph: "Vuelve a tu predicción inicial. ¿Qué creencia sobre estudiantes, aprendizaje o IA se volvió más compleja con la evidencia? Identifica cuándo lo notaste, cómo respondiste y cómo lo interpretas ahora.",
+    final_q6: "¿Qué pregunta sobre la IA y tu disciplina llevas ahora que no llevabas antes?",
+    final_q6_ph: "Formula la nueva pregunta con precisión. ¿Qué evidencia distinguiría dos respuestas plausibles? Elige una observación o tarea viable que pueda cuestionar tu explicación actual.",
 
-    final_s3_title: "Qué llevarás a tu próxima clase",
-    final_s3_sub: "Elige tu próximo ajuste y qué compartirías con un colega.",
+    final_s3_title: "Cómo Ha Cambiado Tu Pensamiento",
+    final_s3_sub: "Este es el corazón de lo que aprendiste. No qué hiciste diferente — qué ahora entiendes diferente.",
     final_q7: "¿Cómo ha cambiado tu comprensión de lo que la IA puede y no puede hacer en tu disciplina?",
-    final_q7_ph: "Refiérete a la tarea que probaste. ¿Qué hizo bien la IA y qué necesitó verificación?",
-    final_q8: "¿Qué mantendrás o cambiarás la próxima vez y por qué?",
-    final_q8_ph: "Relaciona una decisión con la evidencia estudiantil.",
-    final_q9: "¿Qué le serviría a un colega que pruebe una tarea similar?",
-    final_q9_ph: "Comparte una idea práctica, un ejemplo o una pregunta pendiente.",
+    final_q7_ph: "Específico a tu materia. No una declaración general sobre las limitaciones de la IA — una disciplinar. ¿Qué maneja bien la IA en tu materia y dónde falla de maneras que importan para el aprendizaje?",
+    final_q8: "Si rediseñaras esta tarea nuevamente para el próximo año, ¿qué cambiarías y por qué?",
+    final_q8_ph: "Diseño inverso desde lo que realmente observaste. Comienza desde la evidencia que recopilaste — ¿qué te dice sobre lo que la tarea debería haber pedido?",
+    final_q9: "¿Qué le dirías a un colega escéptico en tu departamento que no ha comenzado este trabajo?",
+    final_q9_ph: "No un argumento de venta para el fellowship. Un relato honesto de lo que encontraste difícil, lo que te sorprendió, y lo que querrías que supieran antes de comenzar.",
 
     final_submit_note: "Guardar conserva un borrador en este navegador y dispositivo. Copia tus notas en otro lugar antes de empezar otra tarea.",
     nav_save: "Guardar Borrador",
@@ -875,8 +876,8 @@ const STRINGS = {
     vista_s: "del",
     vista_t: "Pensamiento",
     vista_a: "y Agencia",
-    launch_q_label: "Empieza con una tarea",
-    launch_q: "¿Qué necesitan pensar tus estudiantes por sí mismos?",
+    launch_q_label: "La pregunta que guía tu auditoría",
+    launch_q: "\"Si la IA puede producir la respuesta, ¿cómo evaluamos el razonamiento, la interpretación, la revisión y el juicio detrás de ella?\"",
     launch_bad_head: "Ten a mano",
     launch_bad: "Una tarea que ya usas, su objetivo de aprendizaje y los criterios de logro.",
     launch_good_head: "Al terminar tendrás",
@@ -886,14 +887,14 @@ const STRINGS = {
     path_a_sub: "Describe la tarea, identifica qué deben pensar los estudiantes y elige un nivel inicial de uso de IA. Trabaja de forma independiente antes de consultar IA.",
     path_a_btn: "Comenzar Auditoría Inicial →",
     path_b_title: "La Rutina de Pensamiento Humano Aumentado",
-    path_b_sub: "Prueba la tarea con IA, verifica su respuesta y decide qué ajustar antes de enseñar. Reserva unos 30 minutos.",
+    path_b_sub: "Piensa primero, prueba tu tarea con IA y cuestiona lo que observas desde tu experiencia disciplinar. Usa cuatro movimientos para decidir quién piensa y qué evidencia puedes interpretar.",
     path_b_btn: "Comenzar la Rutina →",
     path_note: "Audita → Prueba y ajusta → Enseña y recoge evidencia → Reflexiona. Guarda antes de salir; el borrador queda solo en este navegador.",
     
     step1_title: "Describe Tu Tarea",
-    step1_sub: "Elige una tarea que planeas enseñar. Bastan notas breves.",
+    step1_sub: "Comienza aquí. Da suficiente contexto para que alguien ajeno a tu clase pueda entender qué hacen los estudiantes y por qué.",
     step1_task_label: "¿Cuál es la tarea y qué pensamiento específico está diseñada para desarrollar?",
-    step1_task_ph: "Incluye la materia y edad, qué harán los estudiantes y qué deberían poder explicar o hacer de forma independiente.",
+    step1_task_ph: "Nombra la materia, los estudiantes y la tarea. ¿Qué pensamiento disciplinar debe desarrollarse? ¿Qué podría hacer quien comprende que no podría hacer quien no comprende? Describe la evidencia que buscarías antes de considerar la IA.",
     
     step2_title: "Identifica el aprendizaje",
     step2_sub: "¿Qué tipos de aprendizaje requiere esta tarea? Selecciona todos los que correspondan.",
@@ -902,9 +903,9 @@ const STRINGS = {
     step3_sub: "¿Cuánto del pensamiento esperado podría delegar un estudiante a la IA? Haz una estimación inicial; compruébala en la rutina.",
     
     step4_title: "Elige un nivel SAIL",
-    step4_sub: "Usa los niveles SAIL de CNG para decidir cómo podrán usar IA en esta tarea.",
+    step4_sub: "No es una configuración predeterminada — es una decisión pedagógica deliberada. ¿Qué nivel protege el aprendizaje que identificaste? Prepárate para justificar tu elección.",
     step4_justify_label: "¿Por qué este nivel corresponde a tu objetivo de aprendizaje?",
-    step4_justify_ph: "Indica qué deben hacer los estudiantes por sí mismos y en qué puede ayudar la IA.",
+    step4_justify_ph: "¿Por qué este nivel y no uno superior o inferior? Conecta la meta, tu estimación de delegación y la evidencia. Nombra las decisiones del estudiante, lo que puede aportar la IA y qué te haría reconsiderarlo.",
     
     step5_title: "Escenarios Disciplinares",
     step5_sub: "Opcional: compara tu tarea con un ejemplo de una materia.",
@@ -957,26 +958,26 @@ const STRINGS = {
       min:  {verdict:"Mantén y comprueba", vclass:"vg", text:"<strong>Mantén los aspectos que exigen demostrar el aprendizaje.</strong> Confirma tu estimación en la rutina y en clase."},
     },
 
-    min_reflection_head: "Comprueba qué protege esta tarea",
-    min_reflection_intro: "Esperas que los estudiantes hagan el trabajo central por sí mismos. Usa estas preguntas para comprobarlo. Bastan notas breves.",
-    min_r1: "¿Qué deben demostrar los estudiantes por sí mismos?",
-    min_r1_ph: "Indica qué acción, razonamiento o desempeño observarás directamente.",
-    min_r2: "¿A qué objetivo de aprendizaje responde esa demostración?",
-    min_r2_ph: "Relaciona la acción del estudiante con la habilidad o comprensión que quieres desarrollar.",
-    min_r3: "¿Cambió esta auditoría lo que quieres observar?",
-    min_r3_ph: "Anota cualquier cambio o explica qué mantendrás.",
-    min_r4: "¿Qué parte aún podría delegarse a la IA?",
-    min_r4_ph: "Considera la planificación, las explicaciones escritas o las reflexiones. ¿Cómo comprobarás de quién es la comprensión que muestran?",
-    min_exemplar_head: "Conserva un ejemplo útil",
-    min_exemplar: "Resume qué mantendrías y cómo comprobarás el aprendizaje.",
-    min_exemplar_ph: "Aspecto a mantener → aprendizaje que apoya → evidencia a recoger.",
+    min_reflection_head: "Delegación mínima — examina la evidencia",
+    min_reflection_intro: "Estimas que el estudiante debe realizar el pensamiento central. Examina esa afirmación. ¿Qué podrías estar pasando por alto y qué evidencia te permitiría juzgar el aprendizaje con confianza?",
+    min_r1: "¿Qué características hacen necesario el pensamiento esperado?",
+    min_r1_ph: "Ve más allá de «práctico» o «los estudiantes piensan». Nombra la decisión, interpretación o ejecución que deben demostrar y las condiciones de observación. ¿Podría un producto pulido con IA ocultar una brecha?",
+    min_r2: "¿Qué protege esta tarea que no habías nombrado explícitamente antes de esta auditoría?",
+    min_r2_ph: "La pregunta de VISTA frecuentemente saca a la luz algo que los docentes sabían implícitamente pero no habían articulado. ¿Qué descubriste sobre lo que esta tarea está realmente diseñada para desarrollar?",
+    min_r3: "¿Ha cambiado tu manera de pensar sobre esta tarea desde que la IA forma parte de tu aula?",
+    min_r3_ph: "Considera tu experiencia con la IA y esta evaluación hasta ahora. ¿Ha cambiado tu comprensión de por qué importa la tarea? ¿Qué cuestionas ahora sobre el pensamiento que exige, la evidencia en que confías o el valor que le dan los estudiantes?",
+    min_r4: "¿Qué podría estar pasando por alto tu juicio actual?",
+    min_r4_ph: "Cuestiona tu estimación de delegación mínima. ¿Podrían la preparación, explicaciones ensayadas, ayuda no visible o condiciones familiares hacer que la comprensión parezca mayor? ¿Qué evidencia te haría cambiar la estimación?",
+    min_exemplar_head: "Planifica evidencia que puedas interpretar y en la que puedas confiar",
+    min_exemplar: "Elige evidencia que ponga a prueba tu juicio. Explica qué puede mostrar, qué no permite concluir y cómo comprobarás una explicación alternativa plausible.",
+    min_exemplar_ph: "¿Qué recogerás u observarás y cuándo? ¿Qué afirmación concreta sobre el aprendizaje apoyaría? ¿Por qué reflejaría el pensamiento del estudiante y no ensayo, ayuda externa o fluidez superficial? ¿Qué podría ocultar? Propón una comprobación proporcionada si persiste la duda; aprovecha evidencia existente cuando sea suficiente.",
 
     scenarios_label: "Escenarios Disciplinares",
     scenario_audit: "Auditoría",
     scenario_redesign: "Rediseño",
     
     deepdive_intro_title: "La Rutina de Pensamiento Humano Aumentado",
-    deepdive_intro: "Usa tu auditoría y la tarea real. Completa cuatro pasos; luego enseña la versión revisada y recoge evidencia para la Auditoría Final.",
+    deepdive_intro: "Trae tu juicio inicial y la tarea real. En cada movimiento, interpreta primero antes de pedir a la IA que cuestione o amplíe tus ideas. Registra qué te hace cambiar de opinión, qué rechazas y por qué.",
     deepdive_prompt_label: "Usa este prompt con tu herramienta de IA",
     deepdive_send_label: "O envía tu auditoría directamente",
     deepdive_llm_label: "Abrir en...",
@@ -1555,9 +1556,9 @@ function buildFinalSection(title, sub, accentColor, questions) {
     const rfb = document.createElement('div');
     rfb.className = 'rfb' + (q.wide ? ' wide' : '');
     rfb.innerHTML = `
-      <div class="rf-label">${q.label}</div>
+      <div class="rf-label">${q.label}</div><p class="thinking-guide">${q.ph}</p>
       ${q.note ? `<div style="font-size:11px;color:var(--teal);font-style:italic;background:var(--light);padding:6px 10px;border-radius:5px;margin-bottom:4px;line-height:1.45">${q.note}</div>` : ''}
-      <textarea class="rf-area" id="${q.id}" placeholder="${q.ph}" style="min-height:88px"></textarea>
+      <textarea class="rf-area" id="${q.id}" placeholder="${lang==='es'?'Tu análisis y evidencia…':'Your analysis and evidence…'}" style="min-height:88px"></textarea>
     `;
     grid.appendChild(rfb);
   });
@@ -1945,31 +1946,32 @@ function buildMinReflection() {
       <div class="min-rf-grid">
         <div class="min-q">
           <div class="min-ql"><div class="min-qnum">1</div>${s.min_r1}</div>
-          <textarea class="min-area" id="min_r1" placeholder="${s.min_r1_ph}" oninput="markDone(3,true)"></textarea>
+          <p class="thinking-guide">${s.min_r1_ph}</p><textarea class="min-area" id="min_r1" aria-label="${s.min_r1}" placeholder="${lang==='es'?'Tu reflexión…':'Your reflection…'}" oninput="markDone(3,true)"></textarea>
         </div>
         <div class="min-q">
           <div class="min-ql"><div class="min-qnum">2</div>${s.min_r2}</div>
-          <textarea class="min-area" id="min_r2" placeholder="${s.min_r2_ph}"></textarea>
+          <p class="thinking-guide">${s.min_r2_ph}</p><textarea class="min-area" id="min_r2" aria-label="${s.min_r2}" placeholder="${lang==='es'?'Tu reflexión…':'Your reflection…'}"></textarea>
         </div>
         <div class="min-q">
           <div class="min-ql"><div class="min-qnum">3</div>${s.min_r3}</div>
-          <textarea class="min-area" id="min_r3" placeholder="${s.min_r3_ph}"></textarea>
+          <p class="thinking-guide">${s.min_r3_ph}</p><textarea class="min-area" id="min_r3" aria-label="${s.min_r3}" placeholder="${lang==='es'?'Tu reflexión…':'Your reflection…'}"></textarea>
         </div>
         <div class="min-q">
           <div class="min-ql"><div class="min-qnum">4</div>${s.min_r4}</div>
-          <textarea class="min-area" id="min_r4" placeholder="${s.min_r4_ph}"></textarea>
+          <p class="thinking-guide">${s.min_r4_ph}</p><textarea class="min-area" id="min_r4" aria-label="${s.min_r4}" placeholder="${lang==='es'?'Tu reflexión…':'Your reflection…'}"></textarea>
         </div>
         <div class="min-q wide">
           <div class="min-exemplar">
             <div class="min-ex-head">📌 ${s.min_exemplar_head}</div>
             <div class="min-ex-body">${s.min_exemplar}</div>
-            <div class="min-ql"><div class="min-qnum">5</div>${lang==='es'?'Tu documentación del ejemplar':'Your exemplar documentation'}</div>
-            <textarea class="min-area" style="margin-top:6px" id="min_exemplar_text" placeholder="${s.min_exemplar_ph}"></textarea>
+            <div class="min-ql"><div class="min-qnum">5</div>${lang==='es'?'Tu plan de evidencia':'Your evidence plan'}</div>
+            <p class="thinking-guide">${s.min_exemplar_ph}</p><textarea class="min-area" style="margin-top:6px" id="min_exemplar_text" aria-label="${s.min_exemplar_head}" placeholder="${lang==='es'?'Tu plan de evidencia…':'Your evidence plan…'}"></textarea>
           </div>
         </div>
       </div>
     </div>
   `;
+  panel.querySelector('.min-exemplar').appendChild(researchPrompt('learning'));
   const decBox = pw.querySelector('.dec-box');
   if (decBox) decBox.after(panel);
   else pw.appendChild(panel);
@@ -2240,7 +2242,7 @@ function rebuildDeepDive() {
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'\u00bfQu\u00e9 perspectivas o voces faltan en tu respuesta? \u00bfA qui\u00e9n deja fuera?':'What perspectives or voices are missing from your answer? Who does it leave out?'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m2.appendChild(ai2);
   const f2=document.createElement('div'); f2.className='rfb';
-  f2.innerHTML=`<div class="rf-label">${ES?'Anota: \u00bfqu\u00e9 le falt\u00f3 \u2014 el contexto, el matiz, el razonamiento que t\u00fa esperas?':'Note: what did it miss \u2014 the context, nuance, or reasoning you expect?'}</div><textarea class="rf-area" id="dd2" style="min-height:120px" placeholder="${ES?'Lo que un experto ve que falta.':'What an expert sees is missing.'}"></textarea>`;
+  f2.innerHTML=`<div class="rf-label">${ES?'Anota: \u00bfqu\u00e9 le falt\u00f3 \u2014 el contexto, el matiz, el razonamiento que t\u00fa esperas?':'Note: what did it miss \u2014 the context, nuance, or reasoning you expect?'}</div><textarea class="rf-area" id="dd2" style="min-height:120px" placeholder="${ES?'Identifica una afirmación, razonamiento u omisión. ¿Qué criterio disciplinar aplicas? ¿Qué verificaste de forma independiente, qué sigue incierto y cómo podría un estudiante confundir fluidez con comprensión?':'Identify a specific claim, reasoning move, or omission. Which disciplinary standard are you using? What did you verify independently, what remains uncertain, and how might a learner mistake fluency for understanding?'}"></textarea>`;
   m2.appendChild(f2);
   body.appendChild(m2);
 
@@ -2261,8 +2263,9 @@ function rebuildDeepDive() {
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'Mis estudiantes son [describe: nivel, edad, contexto]. Mu\u00e9strame tres formas distintas en que podr\u00edan usar IA en esta tarea: una superficial, una razonable y una muy astuta.':'My students are [describe: level, age, context]. Show me three different ways they might use AI on this task: one shallow, one reasonable, one very clever.'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m3.appendChild(ai3);
   const f3=document.createElement('div'); f3.className='rfb';
-  f3.innerHTML=`<div class="rf-label">${ES?'Anota: en TU sal\u00f3n, \u00bfd\u00f3nde es realmente vulnerable esta tarea?':'Note: in YOUR room, where is this task genuinely vulnerable?'}</div><textarea class="rf-area" id="dd3" style="min-height:120px" placeholder="${ES?'Conecta lo que viste con tus estudiantes reales.':'Connect what you saw to your real students.'}"></textarea>`;
+  f3.innerHTML=`<div class="rf-label">${ES?'Anota: en TU sal\u00f3n, \u00bfd\u00f3nde es realmente vulnerable esta tarea?':'Note: in YOUR room, where is this task genuinely vulnerable?'}</div><textarea class="rf-area" id="dd3" style="min-height:120px" placeholder="${ES?'Considera estudiantes y usos distintos. ¿Quién ganaría acceso, quién evitaría práctica necesaria y quién quedaría en desventaja? ¿Qué supones sobre conocimientos previos, idioma, acceso y disposición a usar IA? ¿Cómo lo comprobarías?':'Consider contrasting learners and likely uses. Who might gain access, who might bypass needed practice, and who might be disadvantaged? What assumptions are you making about their prior knowledge, language, access, and willingness to use AI? How could you check?'}"></textarea>`;
   m3.appendChild(f3);
+  m3.appendChild(researchPrompt('context'));
   body.appendChild(m3);
 
   // ── MOVE 4 ──────────────────────────────────────────────────────────────
@@ -2285,11 +2288,16 @@ function rebuildDeepDive() {
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'De esas tres, \u00bfcu\u00e1l da la evidencia m\u00e1s clara de que el estudiante pens\u00f3 de verdad \u2014 y cu\u00e1l es m\u00e1s f\u00e1cil de calificar para m\u00ed?':'Of those three, which gives the clearest evidence the student actually thought \u2014 and which is easiest for me to grade?'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m4.appendChild(ai4);
   const f4=document.createElement('div'); f4.className='rfb';
-  f4.innerHTML=`<div class="rf-label">${ES?'Tu decisi\u00f3n de rediseño \u2014 esto es lo que llevas a tu pr\u00f3xima versi\u00f3n de la tarea:':'Your redesign decision \u2014 this is what you carry into your next version of the task:'}</div><textarea class="rf-area" id="dd4" style="min-height:120px" placeholder="${ES?'Anota el nivel SAIL final, el cambio a la tarea y cómo comprobarás qué pueden hacer los estudiantes de forma independiente.':'Record your final SAIL level, the task change, and how you will check what students can do independently.'}"></textarea>`;
+  f4.innerHTML=`<div class="rf-label">${ES?'Tu decisi\u00f3n de rediseño \u2014 esto es lo que llevas a tu pr\u00f3xima versi\u00f3n de la tarea:':'Your redesign decision \u2014 this is what you carry into your next version of the task:'}</div><textarea class="rf-area" id="dd4" style="min-height:120px" placeholder="${ES?'Anota el nivel SAIL final, el cambio a la tarea y cómo comprobarás qué pueden hacer los estudiantes de forma independiente.':'Justify your final SAIL level. What will students decide, what may AI do, and what learning does that division protect? Compare an alternative redesign and name the trade-off. Specify the evidence you will use, why you can trust it, what it could miss, and the equivalent route without AI.'}"></textarea>`;
+  const evidenceGuide=document.createElement('details');
+  evidenceGuide.className='evidence-guide';
+  evidenceGuide.innerHTML=ES?`<summary>Elige evidencia que resuelva tu duda</summary><p><strong>¿Qué no puedes inferir todavía del trabajo?</strong> Elige la evidencia que cierre esa brecha.</p><ul><li>Decisiones: examina qué aceptó, rechazó o revisó el estudiante y sus razones.</li><li>Comprensión independiente: usa una breve explicación, demostración o aplicación a una situación nueva.</li><li>Cambio en el pensamiento: compara un intento anterior con una revisión justificada.</li><li>Si la tarea ya aporta evidencia suficiente, no añadas otro registro.</li></ul><p>Permite una vía sin IA con la misma exigencia intelectual y modos de expresión adecuados al aprendizaje.</p>`:`<summary>Choose evidence that resolves your uncertainty</summary><p><strong>What can you still not infer from the work?</strong> Choose evidence that closes that gap.</p><ul><li>Decision-making: examine what the student accepted, rejected, or revised and their reasons.</li><li>Independent understanding: use a brief explanation, demonstration, or application in a new situation.</li><li>Change in thinking: compare an earlier attempt with a justified revision.</li><li>If the task already provides sufficient evidence, add no extra record.</li></ul><p>Offer a non-AI route with equivalent intellectual demand and modes of expression suited to the learning.</p>`;
+  m4.appendChild(evidenceGuide);
   m4.appendChild(f4);
   const f4b = document.createElement('div'); f4b.className='rfb';
   f4b.innerHTML=`<div class="rf-label" style="color:var(--muted);font-weight:400">${ES?'Pega o enlaza tu tarea rediseñada (opcional) — para tenerla a mano cuando la reflexiones más tarde.':'Paste or link your redesigned task (optional) — so you have it on hand when you reflect on it later.'}</div><textarea class="rf-area" id="dd4redesign" style="min-height:80px" placeholder="${ES?'Tarea rediseñada, enlace, o notas rápidas.':'Redesigned task, a link, or quick notes.'}"></textarea>`;
   m4.appendChild(f4b);
+  m4.appendChild(researchPrompt('feedback'));
   body.appendChild(m4);
 
   // ── CLOSING ─────────────────────────────────────────────────────────────
@@ -2301,6 +2309,23 @@ function rebuildDeepDive() {
   document.querySelectorAll('.dd-section').forEach(el => visObs.observe(el));
   restoreState();
 }
+// Short excerpts checked against original publications; questions are VISTA applications.
+function researchPrompt(key) {
+ const quotes={
+  learning:{quote:'improvements in performance can fail to yield significant learning',translation:'las mejoras en el desempeño pueden no producir un aprendizaje significativo',source:'Soderstrom & Bjork (2015), p. 176 · Abstract',url:'https://doi.org/10.1177/1745691615569000',context:['Review of motor and verbal learning; distinguishes immediate performance from retention and transfer.','Revisión del aprendizaje motor y verbal; distingue el desempeño inmediato de la retención y la transferencia.'],question:['What would distinguish a successful performance today from understanding students can use later? What could they explain, adapt, or do without the same support—and what would that check still leave uncertain?','¿Qué distinguiría un buen desempeño hoy de una comprensión que puedan usar después? ¿Qué podrían explicar, adaptar o hacer sin la misma ayuda, y qué dejaría incierto esa comprobación?']},
+  context:{quote:'Different situations, contexts, and pedagogical strategies promote different types of learning.',translation:'Distintas situaciones, contextos y estrategias pedagógicas promueven distintos tipos de aprendizaje.',source:'National Academies of Sciences, Engineering, and Medicine (2018), Summary · Types and Processes of Learning, p. 3',url:'https://www.nationalacademies.org/read/24783/chapter/2',context:['Research synthesis across the lifespan and learning settings.','Síntesis de investigación a lo largo de la vida y en distintos entornos de aprendizaje.'],question:['For whom might your proposed AI use open access—and for whom might it bypass needed practice? Compare two learner situations. Which assumption about prior knowledge, language, or support will you check before teaching?','¿Para quién podría tu uso de IA facilitar el acceso y para quién podría evitar práctica necesaria? Compara dos situaciones de aprendizaje. ¿Qué supuesto sobre conocimientos previos, idioma o apoyo comprobarás antes de enseñar?']},
+  feedback:{quote:'One of the most consistent findings about the power of feedback is the remarkable variability of effects.',translation:'Uno de los hallazgos más constantes sobre el poder de la retroalimentación es la notable variabilidad de sus efectos.',source:'Wisniewski, Zierer & Hattie (2020), Introduction · The Present Study',url:'https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.03087/full',context:['Meta-analysis of educational feedback; not a study of generative AI feedback.','Metaanálisis de retroalimentación educativa; no es un estudio de retroalimentación con IA generativa.'],question:['If AI gives feedback, what must the student do with it? What would show that they understood, tested, or rejected a suggestion rather than simply accepted a better answer?','Si la IA ofrece retroalimentación, ¿qué debe hacer el estudiante con ella? ¿Qué mostraría que comprendió, comprobó o rechazó una sugerencia en lugar de aceptar una respuesta mejor?']}
+ };
+ const q=quotes[key],es=lang==='es',aside=document.createElement('aside');aside.className='research-prompt';aside.dataset.research=key;
+ const heading=document.createElement('div');heading.className='research-kicker';heading.textContent=es?'Una idea para examinar tu decisión':'A lens for your decision';aside.append(heading);
+ const quote=document.createElement('blockquote');quote.textContent='“'+q.quote+'”';aside.append(quote);
+ if(es){const translation=document.createElement('p');translation.className='research-context';translation.textContent='Traducción para esta guía: '+q.translation;aside.append(translation);}
+ const link=document.createElement('a');link.href=q.url;link.target='_blank';link.rel='noopener';link.textContent=q.source;aside.append(link);
+ const context=document.createElement('p');context.className='research-context';context.textContent=q.context[es?1:0];aside.append(context);
+ const question=document.createElement('p');question.className='research-question';question.textContent=q.question[es?1:0];aside.append(question);
+ return aside;
+}
+
 function makeDDSection(title, sub) {
   const div = document.createElement('div');
   div.className = 'dd-section';
@@ -2744,5 +2769,6 @@ applyStrings();
 renderBibliography();
 
 </script>
+
 </body>
 </html>
