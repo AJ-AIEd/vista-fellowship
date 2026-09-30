@@ -408,9 +408,9 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
 .cl-card:focus-visible,.sail-row:focus-visible,.ptab:focus-visible,.path-card:focus-visible,.llm-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </style>
-<link rel="stylesheet" href="/protocol-research.css">
+<link rel="stylesheet" href="/account.css">
 </head>
-<body>
+<body class="account-locked">
 
 <!-- NAV -->
 <nav>
@@ -612,8 +612,8 @@ const STRINGS = {
     path_c_sub: "After teaching, use student work and observations to decide what to keep or change.",
     path_c_btn: "Begin Final Audit →",
 
-    upload_section_title: "Task PDF (optional)",
-    upload_section_sub: "Keep your task open for reference. Selecting a PDF here only lists its name for this visit; the file is not saved.",
+    upload_section_title: "Full submission (optional)",
+    upload_section_sub: "You may submit your responses as text, a document, or audio. Use the same questions to guide your thinking, then review the imported text.",
 
     final_header_title: "Final Audit",
     final_header_sub: "Complete after teaching the task. Use your notes and student work to review what happened.",
@@ -646,7 +646,7 @@ const STRINGS = {
     final_q9: "What would you share with a colleague, including what you are still unsure about?",
     final_q9_ph: "Not a pitch for the fellowship. An honest account of what you found hard, what surprised you, and what you would want them to know before they start. This becomes part of your transfer session.",
 
-    final_submit_note: "Save keeps one draft in this browser on this device. Copy your notes elsewhere before starting another task.",
+    final_submit_note: "Save a report to preserve this stage of your thinking before beginning the next cycle.",
     nav_save: "Save Draft",
     nav_pdf: "PDF",
     lang_toggle: "🇪🇸 Español",
@@ -673,7 +673,7 @@ const STRINGS = {
     path_b_title: "The Augmented Human Thinking Routine",
     path_b_sub: "Think first, test your task with AI, then challenge what you see through your subject expertise. Use four moves to decide who does the thinking and what evidence you can trust.",
     path_b_btn: "Begin the Routine →",
-    path_note: "Audit → Test and revise → Teach and collect evidence → Reflect. Save before leaving; your draft stays in this browser only.",
+    path_note: "Audit → Test and revise → Teach and collect evidence → Reflect. Save a report at each stage.",
     
     step1_title: "Describe Your Task",
     step1_sub: "Start here. Give enough context that someone unfamiliar with your class could understand what students are doing and why.",
@@ -700,14 +700,14 @@ const STRINGS = {
     step6_flag_ph: "One line is fine. Skip if nothing comes to mind.",
     
     step7_title: "Upload Evidence & Submit",
-    step7_sub: "Attach the task, any student work samples, or iteration notes. They remain in this browser as part of your local record; nothing is uploaded.",
+    step7_sub: "Attach the task, any student work samples, or iteration notes. Accepted submissions are saved privately to your account.",
     upload_title: "Drop files here or click to upload",
     upload_sub: "Assessment task · Student work samples · Iteration notes · Photos",
     upload_sub2: "PDF, Word, images — up to 20MB each",
     upload_btn: "Choose Files",
     submit_ready: "Save a draft at any time. To finish the audit, describe the task, identify the learning, explain your evidence and AI predictions, estimate offloading, and justify your SAIL choices.",
     btn_draft: "Save Draft",
-    btn_submit: "Save Audit Locally →",
+    btn_submit: "Save Initial Audit Report →",
     
     sail_col1: "Level",
     sail_col2: "What AI may do (CNG SAIL)",
@@ -828,8 +828,8 @@ const STRINGS = {
     path_c_sub: "Después de enseñar, usa trabajos y observaciones para decidir qué mantener o cambiar.",
     path_c_btn: "Comenzar Auditoría Final →",
 
-    upload_section_title: "PDF de la tarea (opcional)",
-    upload_section_sub: "Ten tu tarea abierta como referencia. Seleccionar un PDF aquí solo muestra su nombre durante esta visita; el archivo no se guarda.",
+    upload_section_title: "Entrega completa (opcional)",
+    upload_section_sub: "Puedes entregar tus respuestas por texto, documento o audio. Usa las mismas preguntas para orientar tu reflexión y revisa el texto importado.",
 
     final_header_title: "Auditoría Final",
     final_header_sub: "Completa después de enseñar la tarea. Revisa lo ocurrido con tus notas y trabajos estudiantiles.",
@@ -862,7 +862,7 @@ const STRINGS = {
     final_q9: "¿Qué compartirías con un colega, incluyendo tus dudas?",
     final_q9_ph: "No un argumento de venta para el fellowship. Un relato honesto de lo que encontraste difícil, lo que te sorprendió, y lo que querrías que supieran antes de comenzar.",
 
-    final_submit_note: "Guardar conserva un borrador en este navegador y dispositivo. Copia tus notas en otro lugar antes de empezar otra tarea.",
+    final_submit_note: "Guarda un informe para conservar esta etapa de tu reflexión antes del siguiente ciclo.",
     nav_save: "Guardar Borrador",
     nav_pdf: "PDF",
     lang_toggle: "🇺🇸 English",
@@ -889,7 +889,7 @@ const STRINGS = {
     path_b_title: "La Rutina de Pensamiento Humano Aumentado",
     path_b_sub: "Piensa primero, prueba tu tarea con IA y cuestiona lo que observas desde tu experiencia disciplinar. Usa cuatro movimientos para decidir quién piensa y qué evidencia puedes interpretar.",
     path_b_btn: "Comenzar la Rutina →",
-    path_note: "Audita → Prueba y ajusta → Enseña y recoge evidencia → Reflexiona. Guarda antes de salir; el borrador queda solo en este navegador.",
+    path_note: "Audita → Prueba y revisa → Enseña y recoge evidencia → Reflexiona. Guarda un informe en cada etapa.",
     
     step1_title: "Describe Tu Tarea",
     step1_sub: "Comienza aquí. Da suficiente contexto para que alguien ajeno a tu clase pueda entender qué hacen los estudiantes y por qué.",
@@ -923,7 +923,7 @@ const STRINGS = {
     upload_btn: "Elegir Archivos",
     submit_ready: "Puedes guardar un borrador en cualquier momento. Para terminar, describe la tarea, selecciona los aprendizajes, califica y elige y explica un nivel SAIL.",
     btn_draft: "Guardar Borrador",
-    btn_submit: "Guardar Auditoría Localmente →",
+    btn_submit: "Guardar informe inicial →",
     
     sail_col1: "Nivel",
     sail_col2: "Qué puede hacer la IA (SAIL CNG)",
@@ -1445,21 +1445,9 @@ const visObs = new IntersectionObserver(entries => {
 // ── AUDIT BUILDER ─────────────────────────────────────────────────────────────
 // ── UPLOAD (task document only, optional) ─────────────────────────────────────
 function buildUploadTop() {
-  const wrap = document.createElement('div');
-  wrap.innerHTML = `
-    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileIn').click()"
-         ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
-      <div class="upload-icon">📄</div>
-      <div class="upload-title">${lang==='es'?'Arrastra el PDF aquí o haz clic para buscar':'Drag PDF here or click to browse'}</div>
-      <div class="upload-sub">${lang==='es'?'Solo el documento de la tarea · PDF · Opcional':'Task document only · PDF · Optional'}</div>
-      <div class="upload-sub2">${lang==='es'?'Máximo 20MB':'Max 20MB'}</div>
-      <div class="upload-btn-ui">${lang==='es'?'Elegir PDF':'Choose PDF'}</div>
-    </div>
-    <input type="file" id="fileIn" accept=".pdf,application/pdf" style="display:none" onchange="handleFiles(this.files)">
-    <div class="upload-list" id="uploadList"></div>
-    <div style="margin-top:8px;font-size:11px;color:var(--muted);font-style:italic">${lang==='es'?'Por favor no subas trabajo que identifique estudiantes individuales.':'Please don\'t upload work that identifies individual students.'}</div>
-  `;
-  return wrap;
+ const wrap=document.createElement('div');
+ wrap.innerHTML=`<button class="btn-draft-sm" onclick="window.VistaCloud?.import('initial')">${lang==='es'?'Enviar respuestas por texto, documento o audio':'Submit responses as text, a document, or audio'}</button>`;
+ return wrap;
 }
 
 // ── LIGHT REFLECTION (Initial Audit only — one optional flag) ─────────────
@@ -1539,7 +1527,7 @@ function rebuildFinal() {
     <div class="submit-status"><strong>${s.final_submit_note ? lang==='es'?'Auditoría Final':'Final Audit' : ''}</strong> ${s.final_submit_note || ''}</div>
     <div class="submit-actions">
       <button class="btn-draft-sm" onclick="saveDraft()">${s.btn_draft}</button>
-      <button class="btn-sub" style="background:#5C1A6B" onclick="submitFinal()">${lang==='es'?'Guardar Auditoría Final Localmente →':'Save Final Audit Locally →'}</button>
+      <button class="btn-sub" style="background:#5C1A6B" onclick="submitFinal()">${lang==='es'?'Guardar informe final →':'Save Final Audit Report →'}</button>
     </div>
   </div>`;
   body.appendChild(submitWrap);
@@ -1573,10 +1561,7 @@ function buildFinalSection(title, sub, accentColor, questions) {
   return div;
 }
 
-function submitFinal() {
-  if (!saveDraft()) return;
-  showToast(lang==='es'?'Auditoría Final guardada en este dispositivo ✓':'Final Audit saved on this device ✓');
-}
+function submitFinal() { window.VistaCloud?.report('final'); }
 
 function rebuildAudit() {
   const body = document.getElementById('auditBody');
@@ -2395,7 +2380,7 @@ function copyText(btn) {
 }
 
 // ── SAVE / SUBMIT ─────────────────────────────────────────────────────────────
-function saveDraft(silent = false) {
+function captureDraft() {
   const draft = {
     lang, meta: {
       teacher: document.getElementById('ft')?.value,
@@ -2454,29 +2439,16 @@ function saveDraft(silent = false) {
     },
     savedAt: new Date().toISOString()
   };
-  try {
-    localStorage.setItem('dlp_draft_v2', JSON.stringify(draft));
-    if (!silent) showToast(lang==='es'?'Borrador guardado en este navegador ✓':'Draft saved in this browser ✓');
-    const ind = document.getElementById('saveIndicator');
-    if (ind) { ind.textContent = lang==='es'?'guardado ahora':'saved just now'; const ts = Date.now(); const tick = setInterval(() => { const m = Math.round((Date.now()-ts)/60000); if (m < 1) return; ind.textContent = lang==='es'?`hace ${m} min`:`${m} min ago`; if (m >= 60) clearInterval(tick); }, 30000); }
-    return true;
-  } catch(e) { showToast(lang==='es'?'No se pudo guardar. Copia tus notas antes de salir.':'Could not save. Copy your notes before leaving.'); return false; }
+  return draft;
+}
+function saveDraft(silent=false) {
+ window.VistaDraft=captureDraft();
+ window.VistaCloud?.changed();
+ if(!silent) window.VistaCloud?.save();
+ return true;
 }
 
-function submitAudit() {
-  if (!auditReady()) {
-    showToast(lang==='es'?'Describe la tarea, selecciona los aprendizajes, califica y elige y explica SAIL.':'Describe the task, select learning types, rate it, and choose and explain SAIL.');
-    return;
-  }
-  if (!saveDraft()) return;
-  showToast(lang==='es'?
-    'Auditoría guardada en este dispositivo ✓ — no se envió nada':
-    'Audit saved on this device ✓ — nothing was sent');
-  setTimeout(() => {
-    const btn = document.querySelector('.btn-sub');
-    if (btn) { btn.textContent = lang==='es'?'Guardado localmente ✓':'Saved locally ✓'; btn.style.background='var(--green)'; btn.disabled=false; }
-  }, 1000);
-}
+function submitAudit() { window.VistaCloud?.report('initial'); }
 
 // ── TOAST ─────────────────────────────────────────────────────────────────────
 function showToast(msg) {
@@ -2489,9 +2461,8 @@ function showToast(msg) {
 // ── RESTORE STATE ─────────────────────────────────────────────────────────────
 function restoreState() {
   try {
-    const saved = localStorage.getItem('dlp_draft_v2');
-    if (!saved) return;
-    const d = JSON.parse(saved);
+    const d = window.VistaDraft;
+    if (!d) return;
     const setValue = (id, value) => {
       const el = document.getElementById(id);
       if (el && value !== undefined && value !== null) el.value = value;
@@ -2786,7 +2757,14 @@ associateLabels();
 applyStrings();
 renderBibliography();
 
+window.VistaForm={capture:captureDraft,load(d){
+ window.VistaDraft=structuredClone(d);
+ state={selectedTypes:new Set(),rating:null,sailLevel:null,selectedLens:null,uploads:[],completedSteps:new Set(),draft:{}};
+ document.querySelectorAll('.view input,.view textarea').forEach(el=>{el.value='';});
+ lang=d.lang==='es'?'es':'en';
+ applyStrings();rebuildAudit();rebuildDeepDive();rebuildFinal();restoreState();
+}};
 </script>
-
+<script type="module" src="/assets/cloud.js"></script>
 </body>
 </html>

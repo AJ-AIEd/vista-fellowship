@@ -1,6 +1,13 @@
 {
   "cleanUrls": true,
   "redirects": [
-    { "source": "/launch", "destination": "/", "permanent": false }
-  ]
+    {
+      "source": "/launch",
+      "destination": "/",
+      "permanent": false
+    }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm ci"
 }
