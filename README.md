@@ -45,6 +45,20 @@ The interactive tool has four views:
 3. Final Audit — nine reflection questions completed after enactment.
 4. References — bibliography grouped by research area.
 
+### Teacher workflow checks
+
+The instructions in English, Spanish, the teacher hub, and printable protocol focus on teacher actions and student evidence. Research references are optional. All rating branches and reflection fields remain available.
+
+Run the browser regression check with Playwright installed and a local server running:
+
+```bash
+python3 -m http.server 8765 --bind 127.0.0.1
+# In another terminal:
+node tests/vista-flow.cjs
+```
+
+Set `VISTA_BROWSER` to an installed Chromium browser executable if needed. Set `VISTA_URL` to check a deployment. The check covers all 15 redesign pathways, keyboard choices, minimally-rated reflections, draft reload, language changes, final-audit navigation, and phone overflow. It uses an isolated browser context and synthetic data.
+
 ### Protected decision engine
 
 Do not casually refactor or restyle:

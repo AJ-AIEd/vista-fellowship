@@ -117,7 +117,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(15,34,54,0.9
 .audit-body{max-width:980px;margin:0 auto;padding:32px 40px}
 
 /* ── STEP BLOCKS ── */
-.step-block{margin-bottom:32px;opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}
+.step-block{margin-bottom:32px}
 .step-block.vis{opacity:1;transform:none}
 .step-block.locked{opacity:1;pointer-events:auto}
 
@@ -302,7 +302,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(15,34,54,0.9
 .dd-title{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:6px}
 .dd-sub{font-size:13px;color:var(--mid);line-height:1.6;max-width:680px}
 .dd-body{max-width:980px;margin:0 auto;padding:32px 40px}
-.dd-section{margin-bottom:48px;opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}
+.dd-section{margin-bottom:32px}
 .dd-section.vis{opacity:1;transform:none}
 .dd-section-head{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--navy);margin-bottom:6px;border-bottom:2px solid var(--border);padding-bottom:8px}
 .dd-section-sub{font-size:13px;color:var(--muted);margin-bottom:20px;font-weight:300}
@@ -354,6 +354,8 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
 .min-ex-head{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;color:#1A6B47;text-transform:uppercase;margin-bottom:6px}
 .min-ex-body{font-size:12px;color:#2A5A3A;line-height:1.55;margin-bottom:10px}
 
+/* Keep task instructions visible immediately, including when returning to a view. */
+.launch-badge,.launch h1,.vista-acronym,.launch-sub,.qcard,.paths,.paths-bottom,.path-note{animation:none;opacity:1}
 /* ── TOAST ── */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#fff;padding:13px 18px;border-radius:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.07em;z-index:999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:380px;line-height:1.4}
 .toast.show{transform:translateY(0);opacity:1}
@@ -368,6 +370,20 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
   .bottom-nav{display:flex}
   .nav-tab,.nav-pdf,.nav-save,.nav-divider{display:none}
   body{padding-bottom:56px}
+  .audit-body,.dd-body{padding:24px 16px}
+  .audit-header{padding-left:16px!important;padding-right:16px!important}
+  .meta-bar{padding:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rs-grid,.cl-grid,.rf-grid,.min-rf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rc,.cl-card,.rfb,.min-q{min-width:0}
+  .submit-bar{flex-direction:column;align-items:stretch;padding:18px}
+  .submit-actions{flex-wrap:wrap}
+  .submit-actions button{flex:1;min-width:100px}
+  .path-card.path-c{flex-direction:column!important;align-items:flex-start!important;gap:14px!important}
+  .sail-hd,.sail-row{grid-template-columns:55px minmax(0,1fr) minmax(0,1fr)}
+  .min-panel,.min-body{padding:14px}
+  .rf-grid,.min-rf-grid{grid-template-columns:minmax(0,1fr)}
+  .toast{bottom:66px;left:16px;right:16px;max-width:none}
+
 }
 
 /* ── PRINT ── */
@@ -439,7 +455,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   <div class="launch">
     <div class="ring"></div><div class="ring"></div><div class="ring"></div>
     <div class="launch-inner">
-      <div class="launch-badge" data-k="launch_badge">CNG AI Innovation Fellowship · Assessment Audit Instrument · v1.0</div>
+      <div class="launch-badge" data-k="launch_badge">CNG AI Innovation Fellowship</div>
       <h1 data-k-split="launch_title_1|launch_title_2"><span id="lh1">VISTA</span><br><em id="lh2">Assessment Protocol</em></h1>
       <div class="launch-sub" data-k="launch_sub">VISTA: Visibility Into Student Thinking and Agency — Colegio Nueva Granada</div>
       <div class="vista-acronym" id="vistaAcronym">
@@ -451,24 +467,24 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
       </div>
       <div style="font-size:11px;color:rgba(139,168,181,.5);text-align:center;margin:-16px auto 22px;font-family:'DM Sans',sans-serif;font-style:italic;letter-spacing:.02em" id="vista-caption">Visibility Into Student Thinking and Agency</div>
       <div class="qcard">
-        <div class="ql" data-k="launch_q_label">Primary Question — The Problem of Practice</div>
-        <div class="qt" data-k="launch_q">"If AI can produce the answer, how do we assess the reasoning, interpretation, revision, and judgment behind it?"</div>
+        <div class="ql" data-k="launch_q_label">Start with one task</div>
+        <div class="qt" data-k="launch_q">What do your students need to think through themselves?</div>
         <div class="qsplit">
-          <div class="qhalf bad"><strong data-k="launch_bad_head">⬛ When the product is all there is</strong><span data-k="launch_bad">AI generates it. The student's reasoning, interpretation, and judgment never had to exist. The assessment has a validity problem.</span></div>
-          <div class="qhalf good"><strong data-k="launch_good_head">🟩 When reasoning is made visible</strong><span data-k="launch_good">The assessment generates evidence of how the student thinks — not just what they produced. That evidence is worth trusting.</span></div>
+          <div class="qhalf bad"><strong data-k="launch_bad_head">⬛ When the product is all there is</strong><span data-k="launch_bad">A task you already teach, its learning goal, and any success criteria.</span></div>
+          <div class="qhalf good"><strong data-k="launch_good_head">🟩 When reasoning is made visible</strong><span data-k="launch_good">A plan for AI use and a way to check what students understand.</span></div>
         </div>
       </div>
       <div class="paths">
         <div class="path-card path-a" onclick="showView('initial')">
           <div class="path-step-badge" data-k="step_badge_1">Step 1</div>
           <div class="path-title" data-k="path_a_title">Initial Audit</div>
-          <div class="path-sub" data-k="path_a_sub">Upload your materials and work through this alone first. Simple, focused, accessible. Your honest baseline — before any AI or conversation.</div>
+          <div class="path-sub" data-k="path_a_sub">Describe the task, identify the thinking students need to do, and choose an initial AI-use level. Work independently before consulting AI.</div>
           <button class="path-btn" data-k="path_a_btn">Begin Initial Audit →</button>
         </div>
         <div class="path-card path-b" onclick="showView('deepdive')">
           <div class="path-step-badge" data-k="step_badge_2">Step 2</div>
           <div class="path-title" data-k="path_b_title">The Augmented Human Thinking Routine</div>
-          <div class="path-sub" data-k="path_b_sub">A structured thinking routine — four moves that build your judgment about AI in your discipline. You think first, then use AI to see further than you could alone. Repeatable on any task. ~30 min.</div>
+          <div class="path-sub" data-k="path_b_sub">Test the task with AI, check its output, and decide what to adjust before teaching. Allow about 30 minutes.</div>
           <button class="path-btn" data-k="path_b_btn">Begin the Routine →</button>
         </div>
       </div>
@@ -478,16 +494,16 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
             <div class="path-step-badge" data-k="step_badge_3">Step 3</div>
             <div class="path-title" data-k="path_c_title" style="font-size:20px;margin-bottom:0">Final Audit</div>
           </div>
-          <div class="path-sub" data-k="path_c_sub" style="margin-bottom:0;flex:1">Complete this at the end of a full cycle. Deeper reflection, real tensions, evidence of how your thinking has changed. For when you are ready to go deep.</div>
+          <div class="path-sub" data-k="path_c_sub" style="margin-bottom:0;flex:1">After teaching, use student work and observations to decide what to keep or change.</div>
           <button class="path-btn" data-k="path_c_btn" style="flex-shrink:0">Begin Final Audit →</button>
         </div>
       </div>
-      <div class="path-note" data-k="path_note">Work through the steps in order. Return here any time.</div>
+      <div class="path-note" data-k="path_note">Audit → Test and revise → Teach and collect evidence → Reflect. Save before leaving; your draft stays in this browser only.</div>
     </div>
   </div>
   <footer>
     <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship 2026–2027 · Andrew Cajina</div>
-    <div class="fr" data-k="footer_right">Grounded in current research on assessment, learning, and AI in education</div>
+    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
   </footer>
 </div>
 
@@ -497,7 +513,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div>
         <div class="ah-label" data-k="nav_initial" style="margin-bottom:2px">Initial Audit</div>
-        <div class="ah-title" style="font-size:14px">Complete this alone, before any AI or conversation</div>
+        <div class="ah-title" id="auditHeaderSub" style="font-size:14px">Start independently, before consulting AI</div>
       </div>
       <div class="ah-progress" id="auditProgress" style="flex-shrink:0;margin-left:24px"></div>
     </div>
@@ -512,7 +528,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   
   <footer>
     <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship</div>
-    <div class="fr" data-k="footer_right">Grounded in current research on assessment, learning, and AI in education</div>
+    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
   </footer>
 </div>
 
@@ -521,12 +537,12 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   <div class="dd-header">
     <div class="dd-badge" data-k="dd_badge">Augmented Human Thinking Routine</div>
     <div class="dd-title" data-k="deepdive_intro_title">The Augmented Human Thinking Routine — Think First, Then Go Deeper</div>
-    <div class="dd-sub" data-k="deepdive_intro">Four moves that build the professional judgment to work with AI in your discipline. <strong style="color:#fff">In Cycle 1</strong>, Cajina walks through this routine with you — using AI-TPACK as the coaching lens on your specific task and discipline. <strong style="color:#fff">In Cycle 2</strong>, you run it alone, on any task, without a coach. That shift from guided to independent is the test of whether the routine has become your own.</div>
+    <div class="dd-sub" data-k="deepdive_intro">Use your audit and the actual task. Work through four steps, then teach your revised version and collect evidence for the Final Audit.</div>
   </div>
   <div class="dd-body" id="deepdiveBody"></div>
   <footer>
     <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship</div>
-    <div class="fr" data-k="footer_right">Grounded in current research on assessment, learning, and AI in education</div>
+    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
   </footer>
 </div>
 
@@ -536,7 +552,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   <div class="audit-header" style="background:linear-gradient(135deg,#1A0A2E,#0F2236)">
     <div class="ah-label" data-k="nav_final">Final Audit</div>
     <div class="ah-title" data-k="final_header_title">Final Audit</div>
-    <div class="ah-sub" data-k="final_header_sub">For the end of a full iteration cycle. The questions here are harder.</div>
+    <div class="ah-sub" data-k="final_header_sub">Complete after teaching the task. Use your notes and student work to review what happened.</div>
     <div class="ah-progress" id="finalProgress"></div>
   </div>
   <div class="meta-bar">
@@ -548,7 +564,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   <div class="audit-body" id="finalBody"></div>
   <footer>
     <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship</div>
-    <div class="fr" data-k="footer_right">Grounded in current research on assessment, learning, and AI in education</div>
+    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
   </footer>
 </div>
 
@@ -568,7 +584,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   </div>
   <footer>
     <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship</div>
-    <div class="fr" data-k="footer_right">APA 7th Edition</div>
+    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
   </footer>
 </div>
 
@@ -592,49 +608,49 @@ const STRINGS = {
     path_a_title: "Initial Audit",
     path_b_title: "The Augmented Human Thinking Routine",
     path_c_title: "Final Audit",
-    path_c_sub: "Complete after a full teach-and-observe cycle. Nine questions on what actually happened vs. what you intended. The most important document in the fellowship.",
+    path_c_sub: "After teaching, use student work and observations to decide what to keep or change.",
     path_c_btn: "Begin Final Audit →",
 
-    upload_section_title: "Attach the task document (optional)",
-    upload_section_sub: "Now that you've described the task, attach the actual document if you have it handy — it makes later steps more concrete. PDF, optional. You can complete the whole audit without it.",
+    upload_section_title: "Task PDF (optional)",
+    upload_section_sub: "Keep your task open for reference. Selecting a PDF here only lists its name for this visit; the file is not saved.",
 
     final_header_title: "Final Audit",
-    final_header_sub: "This is for the end of a full iteration cycle — after you've taught the redesigned assessment and collected student work. The questions here are harder. They ask about what actually happened, not what you planned.",
-    final_instr_callout: "This is not the same as the Initial Audit. You should have already taught the redesigned task and collected student evidence before working through this — whether or not you completed a formal Initial Audit beforehand. Enactment is the only hard prerequisite: if you haven't taught the task yet, come back once you have.",
+    final_header_sub: "Complete after teaching the task. Use your notes and student work to review what happened.",
+    final_instr_callout: "Have your original task, revised task, and a few anonymized examples ready. Brief notes are enough. If the evidence is unclear, say what you still need to check.",
 
     final_s1_title: "What Actually Happened",
-    final_s1_sub: "Compare what you intended — formally audited or not — with what you observed in the classroom.",
-    final_q1: "What did the student reasoning artifacts reveal that your initial audit didn't anticipate?",
-    final_q1_ph: "Be specific. Name one thing that appeared in the student work — a misconception, a moment of genuine understanding, a pattern — that you didn't predict when you redesigned the task.",
-    final_q2: "Where did AI deepen student understanding, and where did it replace it?",
-    final_q2_ph: "Don't generalize. Identify a specific student or moment where you could see which was happening. What was the difference in the evidence?",
-    final_q3: "What did the visible reasoning protocol actually make visible — and what did it still hide?",
-    final_q3_ph: "Honest accounting. What did you learn from the reasoning artifacts that you couldn't have learned from the product alone? And what questions about student understanding still weren't answered?",
+    final_s1_sub: "Compare the learning you intended with the evidence you collected.",
+    final_q1: "What did students say or do that you had not expected?",
+    final_q1_ph: "Describe one example of understanding, confusion, or a changed approach.",
+    final_q2: "Where did AI support the intended thinking, and where might it have replaced it?",
+    final_q2_ph: "Use a specific example. What could students explain or do without AI? If you did not check, note that.",
+    final_q3: "What does your evidence show about student understanding? What remains unclear?",
+    final_q3_ph: "A strong product or reflection alone may leave questions. Name any follow-up you need.",
 
     final_s2_title: "Tensions and Unresolved Questions",
-    final_s2_sub: "The most important professional learning often lives in the questions that don't resolve cleanly. Name them.",
-    final_q4: "What disciplinary tension did this cycle surface that you are still sitting with?",
-    final_q4_ph: "Not a design problem you can fix with a better task. A genuine tension between your discipline's epistemic values and what AI makes possible or unavoidable. Name it directly.",
+    final_s2_sub: "Record any uncertainty that matters for your next lesson.",
+    final_q4: "What was difficult to balance when using AI in this subject?",
+    final_q4_ph: "For example: independent practice and timely help, or feedback and student authorship. If none arose, say so.",
     final_q5: "What did this cycle reveal about your own assumptions — about students, learning, or AI?",
-    final_q5_ph: "Timperley et al. (2007) call this 'adaptive expertise' — the capacity to notice when your own mental models are being challenged. What belief did you hold going in that the evidence complicated?",
-    final_q6: "What question about AI and your discipline are you now carrying that you weren't carrying before?",
-    final_q6_ph: "This is your research contribution. Not a solved problem — an open question that this cycle has sharpened for you.",
+    final_q5_ph: "Name an expectation that the evidence confirmed or challenged.",
+    final_q6: "What question will you investigate next?",
+    final_q6_ph: "Name the question and one observation or task that could help you answer it.",
 
-    final_s3_title: "How Your Thinking Has Changed",
-    final_s3_sub: "This is the heart of what you learned. Not what you did differently — what you now understand differently about teaching with AI.",
+    final_s3_title: "What You Will Carry Forward",
+    final_s3_sub: "Choose your next adjustment and what you would share with a colleague.",
     final_q7: "How has your understanding of what AI can and cannot do in your discipline changed?",
-    final_q7_ph: "Specific to your subject. Not a general statement about AI limitations — a disciplinary one. What does AI handle well in [your subject] and where does it break down in ways that matter for learning?",
-    final_q8: "If you were to redesign this task again for next year, what would you change and why?",
-    final_q8_ph: "Backwards design from what you actually observed. Start from the evidence you collected — what does it tell you about what the task should have asked for instead?",
-    final_q9: "What would you say to a skeptical colleague in your department who hasn't started this work?",
-    final_q9_ph: "Not a pitch for the fellowship. An honest account of what you found hard, what surprised you, and what you would want them to know before they start. This becomes part of your transfer session.",
+    final_q7_ph: "Refer to the task you tested. What did AI handle well, and where did it need checking?",
+    final_q8: "What will you keep or change next time, and why?",
+    final_q8_ph: "Link one decision to the student evidence.",
+    final_q9: "What would be useful for a colleague trying a similar task?",
+    final_q9_ph: "Share one practical insight, example, or unresolved question.",
 
-    final_submit_note: "Saving this Final Audit completes the cycle record stored in this browser. Nothing is sent to Cajina or a shared Knowledge Hub.",
+    final_submit_note: "Save keeps one draft in this browser on this device. Copy your notes elsewhere before starting another task.",
     nav_save: "Save Draft",
     nav_pdf: "PDF",
     lang_toggle: "🇪🇸 Español",
     
-    launch_badge: "CNG AI Innovation Fellowship · Assessment Design Protocol · v1.0",
+    launch_badge: "CNG AI Innovation Fellowship",
     launch_title_1: "VISTA",
     launch_title_2: "Assessment Protocol",
     launch_sub: "VISTA: Visibility Into Student Thinking and Agency — Colegio Nueva Granada",
@@ -643,43 +659,43 @@ const STRINGS = {
     vista_s: "Student",
     vista_t: "Thinking",
     vista_a: "& Agency",
-    launch_q_label: "Primary Question — The Problem of Practice",
-    launch_q: "\"If AI can produce the answer, how do we assess the reasoning, interpretation, revision, and judgment behind it?\"",
-    launch_bad_head: "⬛ When the product is all there is",
-    launch_bad: "AI generates it. The student's reasoning, interpretation, and judgment never had to exist. The assessment has a validity problem.",
-    launch_good_head: "🟩 When reasoning is made visible",
-    launch_good: "The assessment generates evidence of how the student thinks — not just what they produced. That evidence is worth trusting.",
+    launch_q_label: "Start with one task",
+    launch_q: "What do your students need to think through themselves?",
+    launch_bad_head: "Bring",
+    launch_bad: "A task you already teach, its learning goal, and any success criteria.",
+    launch_good_head: "Leave with",
+    launch_good: "A plan for AI use and a way to check what students understand.",
     
     path_a_title: "Initial Audit",
-    path_a_sub: "Work through this alone first. Your honest first pass — before any conversation or AI input. This becomes your baseline for the deep dive.",
+    path_a_sub: "Describe the task, identify the thinking students need to do, and choose an initial AI-use level. Work independently before consulting AI.",
     path_a_btn: "Begin Initial Audit →",
     path_b_title: "The Augmented Human Thinking Routine",
-    path_b_sub: "A structured thinking routine — four moves that build your judgment about AI in your discipline. You think first, then use AI to see further than you could alone. Repeatable on any task. ~30 min.",
+    path_b_sub: "Test the task with AI, check its output, and decide what to adjust before teaching. Allow about 30 minutes.",
     path_b_btn: "Begin the Routine →",
-    path_note: "Do the Initial Audit first. Come back for the Augmented Human Thinking Routine before your redesign session.",
+    path_note: "Audit → Test and revise → Teach and collect evidence → Reflect. Save before leaving; your draft stays in this browser only.",
     
     step1_title: "Describe Your Task",
-    step1_sub: "Start here. Give enough context that someone unfamiliar with your class could understand what students are doing and why.",
+    step1_sub: "Choose one task you plan to teach. Brief notes are enough.",
     step1_task_label: "What's the task, and what's the specific thinking it's meant to develop?",
-    step1_task_ph: "Describe the task in a sentence or two, then name the specific disciplinary thinking — not the topic, the thinking. What could a student who genuinely understands this do that one who doesn't, couldn't?",
+    step1_task_ph: "Include the subject and age group, what students will do, and what they should be able to explain or do independently.",
     
-    step2_title: "Learning Vulnerability Classifier",
-    step2_sub: "What type of learning is at risk in this task? Select all that apply — this shapes your redesign pathway.",
+    step2_title: "Identify the Learning",
+    step2_sub: "Which kinds of learning does this task require? Select all that apply.",
     
-    step3_title: "Cognitive Offloading Rating",
-    step3_sub: "How much of the intended learning could AI bypass? This determines your redesign decision and pathway.",
+    step3_title: "Check What AI Could Do",
+    step3_sub: "How much of the intended thinking could a student hand over to AI? Make an initial estimate; test it in the routine.",
     
-    step4_title: "SAIL Positioning",
-    step4_sub: "Not a default setting — a deliberate pedagogical decision based on this audit. Which level protects the learning you identified? Be ready to justify your choice.",
-    step4_justify_label: "Justify your SAIL positioning",
-    step4_justify_ph: "Why this level and not one above or below? What specifically about your learning goal and vulnerability rating led you here? This is the hardest question in the protocol.",
+    step4_title: "Choose a SAIL Level",
+    step4_sub: "Use the CNG SAIL levels below to decide how students may use AI for this task.",
+    step4_justify_label: "Why does this level fit your learning goal?",
+    step4_justify_ph: "Name what students must do themselves and what AI may help with.",
     
     step5_title: "Discipline Scenarios",
-    step5_sub: "Real classroom tasks, audited. Select the one closest to yours to calibrate your own audit — or use them as conversation starters with Cajina.",
+    step5_sub: "Optional: compare your task with a subject example.",
     
-    step6_title: "Before You Teach",
-    step6_sub: "One optional prompt before enactment. This is not the deep analysis — that comes in the Final Audit.",
-    step6_flag_label: "Anything you want to flag before you teach this? (optional)",
+    step6_title: "Note What to Check",
+    step6_sub: "Optional: record one question to test in the thinking routine.",
+    step6_flag_label: "What are you still unsure about? (optional)",
     step6_flag_ph: "One line is fine. Skip if nothing comes to mind.",
     
     step7_title: "Upload Evidence & Submit",
@@ -688,7 +704,7 @@ const STRINGS = {
     upload_sub: "Assessment task · Student work samples · Iteration notes · Photos",
     upload_sub2: "PDF, Word, images — up to 20MB each",
     upload_btn: "Choose Files",
-    submit_ready: "Ready to save this audit on this device? Complete the core steps first.",
+    submit_ready: "Save a draft at any time. To finish the audit, describe the task, select learning types, rate it, and choose and explain a SAIL level.",
     btn_draft: "Save Draft",
     btn_submit: "Save Audit Locally →",
     
@@ -700,7 +716,7 @@ const STRINGS = {
       ["L2","Ideate","AI can help get ideas. Student thinks and writes themselves.","Student does all substantive work; AI sparks or unsticks. Use when the learning is in the doing, not in knowing where to start."],
       ["L3","Edit","AI helps improve existing student work. Student creates first.","Student retains authorship; AI refines. Use when the learning is in the decisions and substance — not in polish and mechanics."],
       ["L4","Evaluate","AI does the work. Student decides how well it answers the prompt.","Evaluative judgment is the learning. Use when the student's ability to assess quality and explain criteria is the disciplinary goal."],
-      ["L5","Co-Create","AI as learning partner. Student and AI create together — student cites.","Creative leadership and epistemic authority. Use only when this VISTA audit confirms the core learning cannot be bypassed."],
+      ["L5","Co-Create","AI as learning partner. Student and AI create together — student cites.","Students direct the work and explain their choices. Plan a check of their independent understanding."],
     ],
 
     classifier_cards: [
@@ -712,34 +728,32 @@ const STRINGS = {
     ],
 
     rating_cards: [
-      {d:"full", icon:"⬛", label:"Fully", desc:"AI can complete the entire task. The student produces nothing of disciplinary value."},
-      {d:"subs", icon:"🟧", label:"Substantially", desc:"AI does most of the work. Some genuine student input required but not the core thinking."},
-      {d:"part", icon:"🟨", label:"Partially", desc:"AI can scaffold but not complete. Student must make genuine decisions beyond what AI provides."},
-      {d:"min",  icon:"🟩", label:"Minimally", desc:"AI cannot do this for the student. The task requires thinking AI cannot replicate."},
+      {d:"full", icon:"⬛", label:"Fully", desc:"AI could supply the assessed work without the student doing the intended thinking."},
+      {d:"subs", icon:"🟧", label:"Substantially", desc:"AI could do most of the intended thinking; the student makes only minor decisions."},
+      {d:"part", icon:"🟨", label:"Partially", desc:"AI could help with parts; the student still needs to make and explain key decisions."},
+      {d:"min",  icon:"🟩", label:"Minimally", desc:"The core learning is demonstrated by the student under the conditions of this task."},
     ],
 
     decisions: {
-      full: {verdict:"Redesign Required", vclass:"vr", text:"AI can complete this task and the student has been bypassed. <strong>Add a visible reasoning component</strong> that makes the student's thinking the assessable evidence. The task may stay — but something must make the student's process visible."},
-      subs: {verdict:"Redesign Recommended", vclass:"vo", text:"AI does most of the work. <strong>Identify the one moment of genuine student judgment</strong> in the task and make that the assessment. Everything else can remain AI-assisted — but that moment must be visible and protected."},
-      part: {verdict:"Consider Adding a Trace", vclass:"vy", text:"AI can scaffold but the student makes real decisions. <strong>A brief reasoning trace may be sufficient</strong> — a revision note, rejection log, or short reflection documenting student decision-making."},
-      min:  {verdict:"Design is Working", vclass:"vg", text:"The task requires genuine thinking AI cannot replicate. <strong>No redesign required.</strong> Make SAIL positioning explicit — document why this task is AI-resistant and what that protects."},
+      full: {verdict:"Redesign Required", vclass:"vr", text:"<strong>Revise how students demonstrate the learning.</strong> Choose an explanation, decision, or performance you can check directly."},
+      subs: {verdict:"Redesign Recommended", vclass:"vo", text:"<strong>Identify the key decisions students need to make themselves.</strong> Revise the task so you can check those decisions against your learning goal."},
+      part: {verdict:"Consider Adding a Trace", vclass:"vy", text:"<strong>Check the decisions students still make themselves.</strong> Add a brief explanation or demonstration only where your existing evidence leaves a gap."},
+      min:  {verdict:"Keep and Verify", vclass:"vg", text:"<strong>Keep the features that require students to demonstrate the learning.</strong> Confirm your estimate in the routine and in class."},
     },
     
-    min_reflection_head: "Design is Working — Now Reflect on Why",
-    min_reflection_intro: "This task requires genuine thinking AI cannot replicate. That is worth understanding — not just noting and moving on. The reflection below is not a checklist. Research on professional learning (Schön, 1983; Timperley et al., 2007) consistently shows that the most durable teacher knowledge comes from examining what already works and articulating the reasons why — not only from fixing what doesn't. This panel asks you to do that examination seriously.",
-    min_r1: "What specifically makes this task AI-resistant?",
-    min_r1_ph: "Be precise. Not 'hands-on' or 'students need to think'. Which cognitive, embodied, or epistemic operations does this task require that a probabilistic text predictor genuinely cannot perform? What would be missing in any AI reproduction of this task's outputs?",
-    min_r2: "What does this task protect that you hadn't explicitly named before this audit?",
-    min_r2_ph: "VISTA often surfaces something teachers knew implicitly but hadn't articulated. What did you discover about what this task is actually designed to develop — and why that matters for your discipline?",
-    min_r3: "Has your thinking about this task changed since AI became part of your classroom?",
-    min_r3_ph: "Not whether the task changed — whether your understanding of why it matters changed. Has working in an AI-rich environment made you appreciate this design differently? Made you more protective of it? Made you question whether students see its value the way you do?",
-    min_r4: "What would it take for AI to bypass this task — and how would you know?",
-    min_r4_ph: "This is the forward-looking question. What would have to be true about AI's capabilities for this task to lose its learning integrity? What are you watching for? Schön (1983) called this 'knowing in action' — the professional ability to sense when a system is changing around you.",
-    min_exemplar_head: "Document This as a Design Exemplar",
-    min_exemplar: "A task that genuinely resists AI bypass is a rare and valuable thing. Document it as a reference point — for redesigning other tasks, for teaching students what genuine intellectual work looks like, and for future iterations of this audit when AI capabilities have shifted.",
-    min_exemplar_ph: "Describe what this task protects, why the design works, and what makes it difficult for AI to replicate. What would you tell a colleague who asked why this task is worth keeping exactly as it is?",
-    min_r1_research: "Schön (1983) argues that practitioners develop the most sophisticated knowledge by reflecting on what they do well — not only by troubleshooting failure. Naming why this task works is a professional learning act.",
-    min_r3_research: "Research on teacher cognition (Timperley et al., 2007) shows that when teachers examine their own changing relationship to a task, they develop adaptive expertise — the capacity to notice when conditions are shifting and respond deliberately.",
+    min_reflection_head: "Check What This Task Protects",
+    min_reflection_intro: "You expect students to do the core work themselves. Use these prompts to check that judgment. Brief notes are enough.",
+    min_r1: "What must students demonstrate themselves?",
+    min_r1_ph: "Name the action, reasoning, or performance you will observe directly.",
+    min_r2: "Which learning goal does that demonstration address?",
+    min_r2_ph: "Connect the student action to the skill or understanding you want to develop.",
+    min_r3: "Has this audit changed what you want to look for?",
+    min_r3_ph: "Note any change, or explain what you will keep.",
+    min_r4: "What could still be delegated to AI?",
+    min_r4_ph: "Consider planning, written explanations, or reflections. How will you check whose understanding they show?",
+    min_exemplar_head: "Keep a Useful Example",
+    min_exemplar: "Summarize what you would keep and how you will check learning.",
+    min_exemplar_ph: "Task feature to keep → learning it supports → evidence to collect.",
 
 
     rating_guidance: {
@@ -747,31 +761,31 @@ const STRINGS = {
         full: "Procedural tasks are bypassed when AI can execute the steps. Ask: Is the sequence of decisions the learning, or just the outcome? If AI can produce correct steps without the student making any procedural choices, this is fully bypassed.",
         subs: "AI handles the heavy lifting but the student still makes some procedural decisions. Ask: Which specific step requires the student to actually choose? Protect that one.",
         part: "The procedure requires genuine decision-making AI can't replicate. Ask: Is there a moment where the student must adapt the procedure to a constraint AI doesn't know about?",
-        min: "This is embodied or real-time procedural work. AI genuinely cannot do this. Document why and use it as a design exemplar."
+        min: "Identify the procedure students will perform themselves and how you will observe it."
       },
       conc: {
-        full: "Conceptual understanding is the hardest to protect. AI can produce fluent explanations of concepts without having understood them. Ask: Can a student submit AI's explanation and receive credit without understanding anything?",
+        full: "Could a student submit an AI explanation without understanding it? Plan an independent explanation or application to check.",
         subs: "AI handles the explanation but something genuine remains. Ask: Where must the student connect this concept to their own prior knowledge or a specific context AI doesn't have?",
         part: "The student must genuinely make meaning, not just recognize meaning AI has made. Ask: Is there a moment of genuine sense-making — a confusion resolved, an analogy constructed?",
-        min: "This concept requires tacit or experiential understanding AI can't access. Document what makes it AI-resistant."
+        min: "Identify how students will explain or apply this concept independently."
       },
       eval: {
-        full: "Evaluative tasks are almost always bypassable. AI produces confident evaluations. Ask: Can a student submit AI's judgment as their own without exercising any disciplinary evaluation themselves?",
+        full: "Could a student submit an AI evaluation without weighing the evidence? Ask them to apply a criterion to a new example.",
         subs: "AI evaluates but the student must make the final call in a context AI doesn't have. Ask: What specific disciplinary standard must the student apply that AI doesn't know about?",
         part: "The student must exercise genuine judgment but AI scaffolds it. Ask: Is the student's judgment visible — or just the outcome of AI's judgment?",
-        min: "This judgment requires insider knowledge, tacit expertise, or real-time context. AI cannot replicate it."
+        min: "Name the judgment you will observe students make, and the criteria they will use."
       },
       crea: {
         full: "Creative tasks are easily bypassed when the output is the evidence. Ask: Is the creative thinking in the decisions made during creation — or just in the product?",
         subs: "AI produces but the student directs or curates. Ask: What specific creative decision must the student make that AI cannot make for them given their context?",
         part: "AI can generate ideas but the student must select, adapt, and own them. Ask: What makes the student's version genuinely theirs?",
-        min: "The creative work requires embodied, craft, or contextual knowledge AI doesn't have. Strong design."
+        min: "Name the creative choices students will make and how you will check their reasons."
       },
       emb: {
         full: "Embodied tasks are almost never fully bypassed. Ask: Is what's being assessed the physical performance itself, or a written account of it? Written accounts can be generated.",
         subs: "Most of the embodied learning is protected, but something representational can be AI-generated. Ask: What's the weakest link — is it in the physical work or in how it's documented?",
         part: "The physical work is protected; some supporting documentation is vulnerable. A light reasoning trace protects the documentation.",
-        min: "AI cannot perform physical tasks. This is a strong design. Document it."
+        min: "Observe the student performance directly. Check any written account separately."
       }
     },
     scenarios_label: "Discipline Scenarios",
@@ -779,7 +793,7 @@ const STRINGS = {
     scenario_redesign: "Redesign",
     
     deepdive_intro_title: "The Augmented Human Thinking Routine",
-    deepdive_intro: "A structured thinking routine — four moves that build the professional judgment to work with AI in your discipline. You think first. AI extends what you can see. By Cycle 2, you run this alone, on any task, without a coach.",
+    deepdive_intro: "Use your audit and the actual task. Work through four steps, then teach your revised version and collect evidence for the Final Audit.",
     deepdive_prompt_label: "Use this prompt with your AI tool of choice",
     deepdive_send_label: "Or send your audit directly",
     deepdive_llm_label: "Open in...",
@@ -790,12 +804,12 @@ const STRINGS = {
     deepdive_r2: "What did the AI get wrong or miss that you caught?",
     deepdive_r2_ph: "Where was the AI confident but wrong? Where did it miss disciplinary nuance? Where did it produce a plausible-sounding answer that wouldn't work in your classroom?",
     deepdive_r3: "What question are you now sitting with that you weren't before?",
-    deepdive_r3_ph: "The AI session should have surfaced something genuinely uncertain. Name it.",
+    deepdive_r3_ph: "Record a remaining question, if you have one.",
     deepdive_r4: "How did this AI session change — or not change — your SAIL positioning decision?",
-    deepdive_r4_ph: "Did the AI's analysis move your rating? Why or why not? This is the most important question for your growth as a teacher designing with AI.",
+    deepdive_r4_ph: "Record whether your SAIL choice changed and what led to that decision.",
     
     footer_left: "VISTA Protocol · v1.0 · CNG AI Innovation Fellowship 2026–2027 · Andrew Cajina",
-    footer_right: "Grounded in current research on assessment, learning, and AI in education · CNG",
+    footer_right: "Save your notes before leaving this page.",
   },
   es: {
     nav_brand: "VISTA",
@@ -810,49 +824,49 @@ const STRINGS = {
     path_a_title: "Auditoría Inicial",
     path_b_title: "La Rutina de Pensamiento Humano Aumentado",
     path_c_title: "Auditoría Final",
-    path_c_sub: "Completa después de un ciclo completo de enseñanza y observación. Nueve preguntas sobre lo que realmente ocurrió versus lo que pretendiste. El documento más importante del fellowship.",
+    path_c_sub: "Después de enseñar, usa trabajos y observaciones para decidir qué mantener o cambiar.",
     path_c_btn: "Comenzar Auditoría Final →",
 
-    upload_section_title: "Adjunta el documento de la tarea (opcional)",
-    upload_section_sub: "Ahora que describiste la tarea, adjunta el documento real si lo tienes a mano — hace los pasos siguientes más concretos. PDF, opcional. Puedes completar toda la auditoría sin él.",
+    upload_section_title: "PDF de la tarea (opcional)",
+    upload_section_sub: "Ten tu tarea abierta como referencia. Seleccionar un PDF aquí solo muestra su nombre durante esta visita; el archivo no se guarda.",
 
     final_header_title: "Auditoría Final",
-    final_header_sub: "Esta es para el final de un ciclo completo — después de haber enseñado la evaluación rediseñada y recopilado trabajo estudiantil. Las preguntas aquí son más difíciles.",
-    final_instr_callout: "Esta no es la misma que la Auditoría Inicial. Debes haber enseñado la tarea rediseñada y recopilado evidencia estudiantil antes de trabajar en esto — hayas completado o no una Auditoría Inicial formal. La implementación es el único requisito real: si todavía no has enseñado la tarea, regresa cuando lo hayas hecho.",
+    final_header_sub: "Completa después de enseñar la tarea. Revisa lo ocurrido con tus notas y trabajos estudiantiles.",
+    final_instr_callout: "Ten a mano la tarea original, la revisada y algunos ejemplos anónimos. Bastan notas breves. Si la evidencia no es clara, indica qué falta comprobar.",
 
     final_s1_title: "Lo que Realmente Ocurrió",
-    final_s1_sub: "Compara lo que pretendías — con o sin auditoría formal — con lo que observaste en el aula.",
-    final_q1: "¿Qué revelaron los artefactos de razonamiento estudiantil que tu auditoría inicial no anticipó?",
-    final_q1_ph: "Sé específico. Nombra una cosa que apareció en el trabajo estudiantil — un malentendido, un momento de comprensión genuina, un patrón — que no predijiste al rediseñar la tarea.",
-    final_q2: "¿Dónde profundizó la IA la comprensión estudiantil, y dónde la reemplazó?",
-    final_q2_ph: "No generalices. Identifica un estudiante o momento específico donde podías ver cuál estaba ocurriendo. ¿Cuál fue la diferencia en la evidencia?",
-    final_q3: "¿Qué hizo visible el protocolo de razonamiento visible — y qué todavía ocultó?",
-    final_q3_ph: "Contabilidad honesta. ¿Qué aprendiste de los artefactos de razonamiento que no podrías haber aprendido del producto solo? ¿Y qué preguntas sobre la comprensión estudiantil todavía no se respondieron?",
+    final_s1_sub: "Compara el aprendizaje esperado con la evidencia recopilada.",
+    final_q1: "¿Qué dijeron o hicieron los estudiantes que no esperabas?",
+    final_q1_ph: "Describe un ejemplo de comprensión, confusión o cambio de estrategia.",
+    final_q2: "¿Dónde apoyó la IA el pensamiento esperado y dónde pudo haberlo reemplazado?",
+    final_q2_ph: "Usa un ejemplo concreto. ¿Qué pudieron explicar o hacer sin IA? Si no lo comprobaste, indícalo.",
+    final_q3: "¿Qué muestra tu evidencia sobre la comprensión estudiantil? ¿Qué sigue sin estar claro?",
+    final_q3_ph: "Un buen producto o una reflexión pueden dejar dudas. Indica qué necesitas comprobar después.",
 
     final_s2_title: "Tensiones y Preguntas Sin Resolver",
-    final_s2_sub: "El aprendizaje profesional más importante a menudo vive en las preguntas que no se resuelven limpiamente. Nómbralas.",
-    final_q4: "¿Qué tensión disciplinar surgió en este ciclo con la que todavía te sientas?",
-    final_q4_ph: "No un problema de diseño que puedes solucionar con una mejor tarea. Una tensión genuina entre los valores epistémicos de tu disciplina y lo que la IA hace posible o inevitable.",
+    final_s2_sub: "Anota las dudas que importan para tu próxima clase.",
+    final_q4: "¿Qué fue difícil equilibrar al usar IA en esta materia?",
+    final_q4_ph: "Por ejemplo: práctica independiente y ayuda oportuna, o retroalimentación y autoría. Si no surgió ninguna tensión, indícalo.",
     final_q5: "¿Qué reveló este ciclo sobre tus propias suposiciones — sobre estudiantes, aprendizaje, o IA?",
-    final_q5_ph: "Timperley et al. (2007) llaman a esto 'experiencia adaptativa' — la capacidad de notar cuando tus propios modelos mentales están siendo desafiados.",
-    final_q6: "¿Qué pregunta sobre la IA y tu disciplina llevas ahora que no llevabas antes?",
-    final_q6_ph: "Esta es tu contribución de investigación. No un problema resuelto — una pregunta abierta que este ciclo ha agudizado para ti.",
+    final_q5_ph: "Nombra una expectativa que la evidencia confirmó o cuestionó.",
+    final_q6: "¿Qué pregunta explorarás después?",
+    final_q6_ph: "Escribe la pregunta y una observación o tarea que podría ayudarte a responderla.",
 
-    final_s3_title: "Cómo Ha Cambiado Tu Pensamiento",
-    final_s3_sub: "Este es el corazón de lo que aprendiste. No qué hiciste diferente — qué ahora entiendes diferente.",
+    final_s3_title: "Qué llevarás a tu próxima clase",
+    final_s3_sub: "Elige tu próximo ajuste y qué compartirías con un colega.",
     final_q7: "¿Cómo ha cambiado tu comprensión de lo que la IA puede y no puede hacer en tu disciplina?",
-    final_q7_ph: "Específico a tu materia. No una declaración general sobre las limitaciones de la IA — una disciplinar. ¿Qué maneja bien la IA en tu materia y dónde falla de maneras que importan para el aprendizaje?",
-    final_q8: "Si rediseñaras esta tarea nuevamente para el próximo año, ¿qué cambiarías y por qué?",
-    final_q8_ph: "Diseño inverso desde lo que realmente observaste. Comienza desde la evidencia que recopilaste — ¿qué te dice sobre lo que la tarea debería haber pedido?",
-    final_q9: "¿Qué le dirías a un colega escéptico en tu departamento que no ha comenzado este trabajo?",
-    final_q9_ph: "No un argumento de venta para el fellowship. Un relato honesto de lo que encontraste difícil, lo que te sorprendió, y lo que querrías que supieran antes de comenzar.",
+    final_q7_ph: "Refiérete a la tarea que probaste. ¿Qué hizo bien la IA y qué necesitó verificación?",
+    final_q8: "¿Qué mantendrás o cambiarás la próxima vez y por qué?",
+    final_q8_ph: "Relaciona una decisión con la evidencia estudiantil.",
+    final_q9: "¿Qué le serviría a un colega que pruebe una tarea similar?",
+    final_q9_ph: "Comparte una idea práctica, un ejemplo o una pregunta pendiente.",
 
-    final_submit_note: "Guardar esta Auditoría Final completa el registro del ciclo almacenado en este navegador. Nada se envía a Cajina ni a un Knowledge Hub compartido.",
+    final_submit_note: "Guardar conserva un borrador en este navegador y dispositivo. Copia tus notas en otro lugar antes de empezar otra tarea.",
     nav_save: "Guardar Borrador",
     nav_pdf: "PDF",
     lang_toggle: "🇺🇸 English",
     
-    launch_badge: "Fellowship de Innovación en IA · CNG · Protocolo de Diseño de Evaluación · v1.0",
+    launch_badge: "Fellowship de Innovación en IA · CNG",
     launch_title_1: "VISTA",
     launch_title_2: "Protocolo de Diseño",
     launch_sub: "VISTA: Visibilidad del Pensamiento y la Agencia Estudiantil — CNG",
@@ -861,43 +875,43 @@ const STRINGS = {
     vista_s: "del",
     vista_t: "Pensamiento",
     vista_a: "y Agencia",
-    launch_q_label: "Pregunta Principal — El Problema de Práctica",
-    launch_q: "\"Si la IA puede producir la respuesta, ¿cómo evaluamos el razonamiento, la interpretación, la revisión y el juicio detrás de ella?\"",
-    launch_bad_head: "⬛ Cuando el producto es todo lo que hay",
-    launch_bad: "La IA lo genera. El razonamiento, la interpretación y el juicio del estudiante nunca tuvieron que existir. La evaluación tiene un problema de validez.",
-    launch_good_head: "🟩 Cuando el razonamiento se hace visible",
-    launch_good: "La evaluación genera evidencia de cómo piensa el estudiante — no solo de lo que produjo. Esa evidencia merece confianza.",
+    launch_q_label: "Empieza con una tarea",
+    launch_q: "¿Qué necesitan pensar tus estudiantes por sí mismos?",
+    launch_bad_head: "Ten a mano",
+    launch_bad: "Una tarea que ya usas, su objetivo de aprendizaje y los criterios de logro.",
+    launch_good_head: "Al terminar tendrás",
+    launch_good: "Un plan de uso de IA y una forma de comprobar qué comprenden los estudiantes.",
     
     path_a_title: "Auditoría Inicial",
-    path_a_sub: "Trabaja esto solo — antes de cualquier IA o conversación con Cajina. Sube tu tarea y responde cuatro preguntas honestas. 20–30 minutos. Esta es tu línea base.",
+    path_a_sub: "Describe la tarea, identifica qué deben pensar los estudiantes y elige un nivel inicial de uso de IA. Trabaja de forma independiente antes de consultar IA.",
     path_a_btn: "Comenzar Auditoría Inicial →",
     path_b_title: "La Rutina de Pensamiento Humano Aumentado",
-    path_b_sub: "Una rutina de pensamiento estructurada — cuatro movimientos que construyen tu juicio sobre la IA en tu disciplina. Tú piensas primero, luego usas la IA para ver más lejos de lo que podrías solo. Repetible en cualquier tarea. ~30 min.",
+    path_b_sub: "Prueba la tarea con IA, verifica su respuesta y decide qué ajustar antes de enseñar. Reserva unos 30 minutos.",
     path_b_btn: "Comenzar la Rutina →",
-    path_note: "Haz primero la Auditoría Inicial. Regresa para la Rutina de Pensamiento Humano Aumentado antes de tu sesión de rediseño.",
+    path_note: "Audita → Prueba y ajusta → Enseña y recoge evidencia → Reflexiona. Guarda antes de salir; el borrador queda solo en este navegador.",
     
     step1_title: "Describe Tu Tarea",
-    step1_sub: "Comienza aquí. Da suficiente contexto para que alguien ajeno a tu clase pueda entender qué hacen los estudiantes y por qué.",
+    step1_sub: "Elige una tarea que planeas enseñar. Bastan notas breves.",
     step1_task_label: "¿Cuál es la tarea y qué pensamiento específico está diseñada para desarrollar?",
-    step1_task_ph: "Describe la tarea en una o dos oraciones, luego nombra el pensamiento disciplinar específico — no el tema, el pensamiento. ¿Qué podría hacer un estudiante que genuinamente entiende esto que uno que no entiende no podría?",
+    step1_task_ph: "Incluye la materia y edad, qué harán los estudiantes y qué deberían poder explicar o hacer de forma independiente.",
     
-    step2_title: "Clasificador de Vulnerabilidad de Aprendizaje",
-    step2_sub: "¿Qué tipo de aprendizaje está en riesgo en esta tarea? Selecciona todos los que apliquen.",
+    step2_title: "Identifica el aprendizaje",
+    step2_sub: "¿Qué tipos de aprendizaje requiere esta tarea? Selecciona todos los que correspondan.",
     
-    step3_title: "Calificación de Descarga Cognitiva",
-    step3_sub: "¿Cuánto del aprendizaje previsto podría eludir la IA? Esto determina tu decisión de rediseño.",
+    step3_title: "Revisa qué podría hacer la IA",
+    step3_sub: "¿Cuánto del pensamiento esperado podría delegar un estudiante a la IA? Haz una estimación inicial; compruébala en la rutina.",
     
-    step4_title: "Posicionamiento SAIL",
-    step4_sub: "No es una configuración predeterminada — es una decisión pedagógica deliberada. ¿Qué nivel protege el aprendizaje que identificaste? Prepárate para justificar tu elección.",
-    step4_justify_label: "Justifica tu posicionamiento SAIL",
-    step4_justify_ph: "¿Por qué este nivel y no uno por encima o por debajo? ¿Qué específicamente de tu objetivo de aprendizaje y calificación de vulnerabilidad te llevó aquí?",
+    step4_title: "Elige un nivel SAIL",
+    step4_sub: "Usa los niveles SAIL de CNG para decidir cómo podrán usar IA en esta tarea.",
+    step4_justify_label: "¿Por qué este nivel corresponde a tu objetivo de aprendizaje?",
+    step4_justify_ph: "Indica qué deben hacer los estudiantes por sí mismos y en qué puede ayudar la IA.",
     
     step5_title: "Escenarios Disciplinares",
-    step5_sub: "Tareas reales de aula, auditadas. Selecciona la más cercana a la tuya para calibrar tu propia auditoría.",
+    step5_sub: "Opcional: compara tu tarea con un ejemplo de una materia.",
     
-    step6_title: "Antes de Enseñar",
-    step6_sub: "Una pregunta opcional antes de la implementación. Este no es el análisis profundo — ese viene en la Auditoría Final.",
-    step6_flag_label: "¿Algo que quieras anotar antes de enseñar esto? (opcional)",
+    step6_title: "Anota qué comprobar",
+    step6_sub: "Opcional: anota una pregunta para comprobar en la rutina.",
+    step6_flag_label: "¿Qué duda te queda? (opcional)",
     step6_flag_ph: "Una línea está bien. Omite si no se te ocurre nada.",
     
     step7_title: "Subir Evidencia y Enviar",
@@ -906,7 +920,7 @@ const STRINGS = {
     upload_sub: "Tarea · Muestras de trabajo · Notas de iteración · Fotos",
     upload_sub2: "PDF, Word, imágenes — hasta 20MB cada uno",
     upload_btn: "Elegir Archivos",
-    submit_ready: "¿Listo para guardar esta auditoría en este dispositivo? Completa primero los pasos principales.",
+    submit_ready: "Puedes guardar un borrador en cualquier momento. Para terminar, describe la tarea, selecciona los aprendizajes, califica y elige y explica un nivel SAIL.",
     btn_draft: "Guardar Borrador",
     btn_submit: "Guardar Auditoría Localmente →",
     
@@ -918,7 +932,7 @@ const STRINGS = {
       ["L2","Idear","La IA puede ayudar a generar ideas. El estudiante piensa y escribe solo.","El estudiante hace todo el trabajo sustantivo; la IA desencadena o desbloquea."],
       ["L3","Editar","La IA ayuda a mejorar el trabajo ya creado por el estudiante.","El estudiante conserva la autoría; la IA refina. El aprendizaje está en las decisiones."],
       ["L4","Evaluar","La IA hace el trabajo. El estudiante decide qué tan bien responde al objetivo.","El juicio evaluativo es el aprendizaje. Úsalo cuando evaluar calidad es la meta."],
-      ["L5","Co-Crear","La IA como compañero. Estudiante e IA crean juntos — el estudiante cita.","Liderazgo creativo y autoridad epistémica. Solo cuando la auditoría VISTA confirma que el aprendizaje no puede eludirse."],
+      ["L5","Co-Crear","La IA como compañero. Estudiante e IA crean juntos — el estudiante cita.","Los estudiantes dirigen el trabajo y explican sus decisiones. Planifica una comprobación de su comprensión independiente."],
     ],
 
     classifier_cards: [
@@ -930,41 +944,39 @@ const STRINGS = {
     ],
 
     rating_cards: [
-      {d:"full", icon:"⬛", label:"Totalmente", desc:"La IA puede completar toda la tarea. El estudiante no produce nada de valor disciplinar."},
-      {d:"subs", icon:"🟧", label:"Sustancialmente", desc:"La IA hace la mayor parte. Se requiere algo de aportación del estudiante pero no el pensamiento central."},
-      {d:"part", icon:"🟨", label:"Parcialmente", desc:"La IA puede apoyar pero no completar. El estudiante debe tomar decisiones genuinas."},
-      {d:"min",  icon:"🟩", label:"Mínimamente", desc:"La IA no puede hacer esto por el estudiante. La tarea requiere pensamiento que la IA no puede replicar."},
+      {d:"full", icon:"⬛", label:"Totalmente", desc:"La IA podría producir el trabajo evaluado sin que el estudiante haga el pensamiento esperado."},
+      {d:"subs", icon:"🟧", label:"Sustancialmente", desc:"La IA podría hacer la mayor parte del pensamiento esperado; el estudiante toma decisiones menores."},
+      {d:"part", icon:"🟨", label:"Parcialmente", desc:"La IA podría ayudar con algunas partes; el estudiante aún debe tomar y explicar decisiones clave."},
+      {d:"min",  icon:"🟩", label:"Mínimamente", desc:"El estudiante demuestra el aprendizaje central bajo las condiciones de esta tarea."},
     ],
 
     decisions: {
       full: {verdict:"Rediseño Requerido", vclass:"vr", text:"La IA puede completar esta tarea. <strong>Agrega un componente de razonamiento visible</strong> que haga del pensamiento del estudiante la evidencia evaluable."},
       subs: {verdict:"Rediseño Recomendado", vclass:"vo", text:"La IA hace la mayor parte. <strong>Identifica el único momento de juicio genuino</strong> del estudiante y conviértelo en la evaluación."},
       part: {verdict:"Considera Agregar un Rastro", vclass:"vy", text:"La IA puede apoyar pero el estudiante toma decisiones reales. <strong>Un breve rastro de razonamiento</strong> puede ser suficiente."},
-      min:  {verdict:"El Diseño Funciona", vclass:"vg", text:"La tarea requiere pensamiento genuino que la IA no puede replicar. <strong>No se requiere rediseño.</strong> Documenta como ejemplar."},
+      min:  {verdict:"Mantén y comprueba", vclass:"vg", text:"<strong>Mantén los aspectos que exigen demostrar el aprendizaje.</strong> Confirma tu estimación en la rutina y en clase."},
     },
 
-    min_reflection_head: "El Diseño Funciona — Ahora Reflexiona Sobre Por Qué",
-    min_reflection_intro: "Esta tarea requiere pensamiento genuino que la IA no puede replicar. Eso merece entenderse — no solo notarse y continuar. La investigación sobre aprendizaje profesional (Schön, 1983; Timperley et al., 2007) muestra consistentemente que el conocimiento docente más duradero proviene de examinar lo que ya funciona y articular las razones — no solo de corregir lo que no funciona.",
-    min_r1: "¿Qué específicamente hace que esta tarea resista a la IA?",
-    min_r1_ph: "Sé preciso — no 'es práctica' o 'los estudiantes necesitan pensar.' ¿Qué operaciones cognitivas, corporales o epistémicas requiere esta tarea que un predictor de texto probabilístico genuinamente no puede realizar?",
-    min_r2: "¿Qué protege esta tarea que no habías nombrado explícitamente antes de esta auditoría?",
-    min_r2_ph: "La pregunta de VISTA frecuentemente saca a la luz algo que los docentes sabían implícitamente pero no habían articulado. ¿Qué descubriste sobre lo que esta tarea está realmente diseñada para desarrollar?",
-    min_r3: "¿Ha cambiado tu pensamiento sobre esta tarea desde que la IA se convirtió en parte de tu aula?",
-    min_r3_ph: "No si la tarea cambió — sino si tu comprensión de por qué importa cambió. ¿Ha trabajar en un entorno rico en IA hecho que valores este diseño de manera diferente?",
-    min_r4: "¿Qué necesitaría la IA para eludir esta tarea — y cómo lo sabrías?",
-    min_r4_ph: "Esta es la pregunta orientada al futuro. ¿Qué tendría que ser verdad sobre las capacidades de la IA para que esta tarea perdiera su integridad de aprendizaje? ¿Qué estás observando?",
-    min_exemplar_head: "Documenta Esto como un Ejemplar de Diseño",
-    min_exemplar: "Una tarea que genuinamente resiste a la IA es algo raro y valioso. Documéntala como punto de referencia — para rediseñar otras tareas, para enseñar a los estudiantes cómo se ve el trabajo intelectual genuino.",
-    min_exemplar_ph: "Describe qué protege esta tarea, por qué funciona el diseño, y qué hace difícil que la IA lo replique.",
-    min_r1_research: "Schön (1983) argumenta que los practicantes desarrollan el conocimiento más sofisticado reflexionando sobre lo que hacen bien — no solo solucionando fallas.",
-    min_r3_research: "La investigación sobre cognición docente (Timperley et al., 2007) muestra que cuando los docentes examinan su relación cambiante con una tarea, desarrollan experiencia adaptativa.",
+    min_reflection_head: "Comprueba qué protege esta tarea",
+    min_reflection_intro: "Esperas que los estudiantes hagan el trabajo central por sí mismos. Usa estas preguntas para comprobarlo. Bastan notas breves.",
+    min_r1: "¿Qué deben demostrar los estudiantes por sí mismos?",
+    min_r1_ph: "Indica qué acción, razonamiento o desempeño observarás directamente.",
+    min_r2: "¿A qué objetivo de aprendizaje responde esa demostración?",
+    min_r2_ph: "Relaciona la acción del estudiante con la habilidad o comprensión que quieres desarrollar.",
+    min_r3: "¿Cambió esta auditoría lo que quieres observar?",
+    min_r3_ph: "Anota cualquier cambio o explica qué mantendrás.",
+    min_r4: "¿Qué parte aún podría delegarse a la IA?",
+    min_r4_ph: "Considera la planificación, las explicaciones escritas o las reflexiones. ¿Cómo comprobarás de quién es la comprensión que muestran?",
+    min_exemplar_head: "Conserva un ejemplo útil",
+    min_exemplar: "Resume qué mantendrías y cómo comprobarás el aprendizaje.",
+    min_exemplar_ph: "Aspecto a mantener → aprendizaje que apoya → evidencia a recoger.",
 
     scenarios_label: "Escenarios Disciplinares",
     scenario_audit: "Auditoría",
     scenario_redesign: "Rediseño",
     
     deepdive_intro_title: "La Rutina de Pensamiento Humano Aumentado",
-    deepdive_intro: "Una rutina de pensamiento estructurada — cuatro movimientos que construyen el juicio profesional para trabajar con IA en tu disciplina. Tú piensas primero. La IA extiende lo que puedes ver. En el Ciclo 2, la corres solo, en cualquier tarea, sin un facilitador.",
+    deepdive_intro: "Usa tu auditoría y la tarea real. Completa cuatro pasos; luego enseña la versión revisada y recoge evidencia para la Auditoría Final.",
     deepdive_prompt_label: "Usa este prompt con tu herramienta de IA",
     deepdive_send_label: "O envía tu auditoría directamente",
     deepdive_llm_label: "Abrir en...",
@@ -975,12 +987,12 @@ const STRINGS = {
     deepdive_r2: "¿Qué se equivocó o qué se perdió la IA que tú captaste?",
     deepdive_r2_ph: "¿Dónde fue la IA confiada pero incorrecta? ¿Dónde perdió el matiz disciplinar? ¿Dónde produjo una respuesta plausible que no funcionaría en tu aula?",
     deepdive_r3: "¿Con qué pregunta te quedas ahora que antes no tenías?",
-    deepdive_r3_ph: "La sesión con IA debería haber generado algo genuinamente incierto. Nómbralo.",
+    deepdive_r3_ph: "Anota una pregunta pendiente, si la tienes.",
     deepdive_r4: "¿Cómo cambió — o no cambió — tu posicionamiento SAIL esta sesión?",
-    deepdive_r4_ph: "¿El análisis de la IA movió tu calificación? ¿Por qué sí o por qué no?",
+    deepdive_r4_ph: "Indica si cambió tu elección SAIL y qué te llevó a esa decisión.",
     
     footer_left: "Protocolo VISTA · v1.0 · Fellowship de Innovación en IA · CNG 2026–2027 · Andrew Cajina",
-    footer_right: "Basado en investigación actual sobre evaluación, aprendizaje e IA en educación · CNG",
+    footer_right: "Guarda tus notas antes de salir de esta página.",
   }
 };
 
@@ -992,7 +1004,7 @@ const SCENARIOS = {
       context:"Desmos-based investigation. Teacher wants to assess whether students understand why one model fits better — not just which one Desmos selects.",
       rating:"full", ratingClass:"sc-audit-bad",
       audit:"⬛ Fully bypassed — Conceptual. AI generates the model, the equation, AND a fluent explanation of why exponential fits. The student submits AI's reasoning. The conceptual understanding the teacher wanted to assess never had to exist.",
-      redesign:"→ After Desmos generates the model, student records a 90-second reasoning vlog: what in the data tells them it's exponential (not linear), and what would have to be true about the data for linear to fit instead. That constraint-reversal reasoning cannot be faked."
+      redesign:"→ After Desmos generates the model, student records a 90-second reasoning vlog: what in the data tells them it's exponential (not linear), and what would have to be true about the data for linear to fit instead. Follow up with a new example the student explains independently."
     },
     {
       subject:"Chemistry — Grade 11", headClass:"sh-sci",
@@ -1000,7 +1012,7 @@ const SCENARIOS = {
       context:"Lab design unit. Teacher wants students to practice scientific reasoning and experimental design, not just recall lab steps.",
       rating:"subs", ratingClass:"sc-audit-warn",
       audit:"🟧 Substantially bypassed — Evaluative + Conceptual. AI produces a competent lab design with correct variables and a plausible hypothesis. The only gap: AI doesn't know the specific constraints of the school's equipment.",
-      redesign:"→ Student receives an AI-generated lab design for the same investigation and writes a 200-word evaluation: what this design gets right, what it misses about the enzyme biology, and one change they'd make given their actual lab equipment. The evaluation is the evidence of understanding."
+      redesign:"→ Student receives an AI-generated lab design for the same investigation and writes a 200-word evaluation: what this design gets right, what it misses about the enzyme biology, and one change they'd make given their actual lab equipment. Check the evaluation with a brief follow-up question the student answers independently."
     },
     {
       subject:"World History — Grade 10", headClass:"sh-hum",
@@ -1008,7 +1020,7 @@ const SCENARIOS = {
       context:"End-of-unit summative. Teacher wants students to demonstrate historical thinking through sourcing, argumentation, and causal reasoning.",
       rating:"full", ratingClass:"sc-audit-bad",
       audit:"⬛ Fully bypassed — Evaluative + Conceptual. AI produces a fluent, well-sourced argumentative essay. It even cites primary sources (sometimes hallucinating details). The student contributes nothing that distinguishes their historical understanding from AI's pattern-matching.",
-      redesign:"→ Student writes the essay. Before submitting, they add a 150-word sourcing note: identify one source they initially trusted but ended up questioning, explain what raised the doubt, and describe how it changed their argument. That note is the evidence of historical thinking."
+      redesign:"→ Student writes the essay. Before submitting, they add a 150-word sourcing note: identify one source they initially trusted but ended up questioning, explain what raised the doubt, and describe how it changed their argument. Use a brief conversation about the source to check the reasoning in the note."
     },
     {
       subject:"Visual Arts — Studio", headClass:"sh-arts",
@@ -1024,7 +1036,7 @@ const SCENARIOS = {
       context:"IB Language B oral and written preparation. Teacher wants students to develop authentic voice and argument structure in Spanish.",
       rating:"subs", ratingClass:"sc-audit-warn",
       audit:"🟧 Substantially bypassed — Conceptual + Evaluative. AI writes fluent, idiomatic Spanish opinion pieces far beyond the student's current production level. The student may recognize this as better than theirs — and that recognition itself is lost as a learning moment.",
-      redesign:"→ Student writes a first draft independently (L1). Then at L3, they use AI to improve one specific paragraph they choose. In a brief reflection note, they explain: what they asked AI to fix, what AI changed, and whether they kept the change or reverted — and why. The decision is the evidence of linguistic judgment."
+      redesign:"→ Student writes a first draft independently (L1). Then at L3, they use AI to improve one specific paragraph they choose. In a brief reflection note, they explain: what they asked AI to fix, what AI changed, and whether they kept the change or reverted — and why. Ask the student to explain one language choice independently."
     },
     {
       subject:"Mathematics — Statistics", headClass:"sh-math",
@@ -1039,7 +1051,7 @@ const SCENARIOS = {
       task:"Demonstrate three different defensive techniques in a game situation and adapt your positioning based on the opponent's movement.",
       context:"Assessment of real-time decision-making and embodied technique under pressure.",
       rating:"min", ratingClass:"sc-audit-ok",
-      audit:"🟩 Minimally bypassed — Embodied + Procedural. AI cannot play basketball. The embodied technique, real-time reading of an opponent's movement, and physical decision-making under pressure are entirely inaccessible to AI. This is a strong design.",
+      audit:"🟩 Minimally bypassed — Embodied + Procedural. The teacher observes technique and decisions during play. Written reflections still need to be checked against that performance.",
       redesign:"→ This task is working well. Document it as an exemplar. Consider adding: 'What did you notice about your decision-making during the game?' — not to replace physical evidence, but to develop metacognitive awareness about the tacit knowledge students are building."
     },
   ],
@@ -1104,7 +1116,7 @@ const PATHWAYS = {
       items_en: [
         ['Reasoning Log','Student documents each step with a sentence explaining why they made that move — not what they did, but why. Submitted alongside the solution.'],
         ['Error Analysis','Provide a worked example with a deliberate error. Student identifies, explains, and corrects it — revealing procedural understanding, not just execution.'],
-        ['Conjecture-Test-Revise','Student makes a written prediction before executing, then explains the gap between prediction and actual result. The gap is the evidence of understanding.'],
+        ['Conjecture-Test-Revise','Student makes a written prediction before executing, then explains the gap between prediction and actual result. Ask the student to explain the difference using the relevant concept.'],
         ['Annotated Walkthrough','Student narrates a solution step by step — recorded as a short video or audio note. Talking while doing surfaces tacit procedural knowledge.'],
         ['Backwards Check','Student solves a problem, then constructs a similar problem that would have the same answer — revealing whether they understand the mathematical relationship, not just the procedure.'],
       ],
@@ -1149,7 +1161,7 @@ const PATHWAYS = {
       goal_en: 'Goal: make the sense-making visible — not just the conclusion',
       goal_es: 'Meta: hacer visible la construcción de significado — no solo la conclusión',
       items_en: [
-        ['Revision Narrative','Student explains how their understanding changed — specifically naming what they thought before and what shifted it. This is the clearest evidence of genuine conceptual change.'],
+        ['Revision Narrative','Student explains how their understanding changed — specifically naming what they thought before and what shifted it. Check the explanation with a new example.'],
         ['Reasoning Vlog (60–90 sec)','Student explains their thinking aloud while working. Captures real-time sense-making that polished written work hides. Even a phone recording works.'],
         ['Misconception Audit','Student identifies one AI-generated explanation they found initially plausible but ultimately rejected, and explains why using disciplinary reasoning.'],
         ['Model Diagram','Student represents their understanding as a diagram, concept map, or visual — making relational thinking visible in ways prose often doesn\'t.'],
@@ -1167,9 +1179,9 @@ const PATHWAYS = {
       goal_en: 'Goal: surface the one conceptual judgment AI bypassed',
       goal_es: 'Meta: hacer visible el juicio conceptual que la IA eludió',
       items_en: [
-        ['The Key Insight','Student identifies the one thing in their work that required them to actually understand something — not just know it. One paragraph. The ability to name it is the evidence.'],
+        ['The Key Insight','Student identifies the one thing in their work that required them to actually understand something — not just know it. One paragraph. Check the explanation against the work.'],
         ['Before/After Note','Student writes what they understood about the concept before engaging with the task, and what changed.'],
-        ['The Hardest Part','Student identifies the moment in the task that was hardest to understand and explains what made it difficult. Difficulty is evidence of genuine engagement.'],
+        ['The Hardest Part','Student identifies the moment in the task that was hardest to understand and explains what made it difficult. Use the answer to choose a follow-up question or support.'],
       ],
       items_es: [
         ['La Perspectiva Clave','El estudiante identifica la única cosa en su trabajo que requirió comprensión genuina — no solo conocimiento.'],
@@ -1196,11 +1208,11 @@ const PATHWAYS = {
       goal_en: 'Goal: make the judgment process visible — not just the verdict',
       goal_es: 'Meta: hacer visible el proceso de juicio — no solo el veredicto',
       items_en: [
-        ['AI Rejection Log','Student documents one AI claim they evaluated and rejected, with the specific epistemic standard it violated. This is the clearest evidence of genuine evaluative judgment.'],
+        ['AI Rejection Log','Student documents one AI claim they evaluated and rejected, with the specific epistemic standard it violated. Ask a follow-up question about the evidence for that decision.'],
         ['Source Triangulation Record','Student documents how they verified a specific claim — what they checked it against, what that revealed, and whether it changed their conclusion.'],
         ['Oral Defense (5 min)','Student defends one interpretive claim under structured questioning. The ability to hold a position under challenge — or revise it with good reason — is the evaluative evidence.'],
         ['Annotated AI Output','Student marks up an AI-generated response identifying what is accurate, misleading, and missing — using the discipline\'s own evaluative standards.'],
-        ['Claim Confidence Map','Student maps out their key claims with a confidence rating for each and a one-sentence reason. The pattern of confidence levels reveals the quality of their epistemic reasoning.'],
+        ['Claim Confidence Map','Student maps out their key claims with a confidence rating for each and a one-sentence reason. Check whether the reasons support the confidence ratings.'],
       ],
       items_es: [
         ['Registro de Rechazo de IA','El estudiante documenta una afirmación de IA que evaluó y rechazó, con el estándar epistémico específico que violó.'],
@@ -1345,6 +1357,7 @@ const TOTAL_STEPS = 6;
 
 // ── LANG ──────────────────────────────────────────────────────────────────────
 function toggleLang() {
+  if (!saveDraft(true)) return;
   lang = lang === 'en' ? 'es' : 'en';
   applyStrings(); // applyStrings now calls rebuild functions
 }
@@ -1369,7 +1382,7 @@ function applyStrings() {
   const ahSub = document.getElementById('auditHeaderSub');
   if (ahSub) ahSub.textContent = lang === 'es'
     ? 'Completa esto solo, antes de cualquier IA o conversación'
-    : 'Complete this alone, before any AI or conversation';
+    : 'Start independently, before consulting AI';
   const refsT = document.getElementById('refs-title');
   if (refsT) refsT.textContent = lang === 'es'
     ? 'Fuentes citadas en el Protocolo VISTA'
@@ -1377,7 +1390,7 @@ function applyStrings() {
   const cap = document.getElementById('vista-caption');
   if (cap) cap.innerHTML = lang === 'es'
     ? 'Visibilidad e Indagación del Pensamiento y la Agencia Estudiantil'
-    : 'Visible Into Student Thinking &amp; Agency';
+    : 'Visibility Into Student Thinking &amp; Agency';
   // Update VISTA acronym words
   const va = ['v','i','s','t','a'];
   va.forEach(l => {
@@ -1390,7 +1403,7 @@ function applyStrings() {
   // Rebuild all views to apply new language
   rebuildAudit();
   rebuildDeepDive();
-  if (currentView === 'final') rebuildFinal();
+  rebuildFinal();
   associateLabels();
   if (currentView === 'refs') rebuildRefs();
   renderBibliography();
@@ -1404,7 +1417,7 @@ function showView(name) {
   document.querySelectorAll('.nav-tab,.bn-tab').forEach(t => t.classList.remove('active'));
   if (name === 'initial') { document.getElementById('navInitial').classList.add('active'); document.getElementById('bnInitial')?.classList.add('active'); }
   if (name === 'deepdive') { document.getElementById('navDeep').classList.add('active'); document.getElementById('bnDeep')?.classList.add('active'); refreshDeepDiveContext(); }
-  if (name === 'final') { document.getElementById('navFinal').classList.add('active'); document.getElementById('bnFinal')?.classList.add('active'); rebuildFinal(); associateLabels(); }
+  if (name === 'final') { document.getElementById('navFinal').classList.add('active'); document.getElementById('bnFinal')?.classList.add('active'); associateLabels(); }
   if (name === 'refs') { document.getElementById('navRefs').classList.add('active'); document.getElementById('bnRefs')?.classList.add('active'); rebuildRefs(); }
   window.scrollTo(0,0);
 }
@@ -1463,7 +1476,7 @@ function buildSubmitBar() {
     <div class="submit-status" id="submitStatus"><strong>0/${TOTAL_STEPS} ${lang==='es'?'pasos':'steps'}</strong> — ${s.submit_ready}</div>
     <div class="submit-actions">
       <button class="btn-draft-sm" onclick="saveDraft()">${s.btn_draft}</button>
-      <button class="btn-sub" onclick="submitAudit()">${s.btn_submit}</button>
+      <button class="btn-sub" onclick="submitAudit()">${s.btn_submit}</button><button class="btn-draft-sm" onclick="showView('deepdive')">${lang==='es'?'Continuar a la rutina →':'Continue to the routine →'}</button>
     </div>
   </div>`;
 }
@@ -1478,7 +1491,7 @@ function rebuildFinal() {
   // Callout warning
   const warn = document.createElement('div');
   warn.style.cssText = 'background:rgba(92,26,107,.08);border:1.5px solid rgba(92,26,107,.2);border-radius:10px;padding:16px 20px;margin-bottom:32px';
-  warn.innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#5C1A6B;margin-bottom:6px">Before you start</div>
+  warn.innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#5C1A6B;margin-bottom:6px">${lang==='es'?'Antes de empezar':'Before you start'}</div>
     <div style="font-size:13px;color:#3A1A4A;line-height:1.6">${s.final_instr_callout}</div>`;
   body.appendChild(warn);
 
@@ -1486,9 +1499,9 @@ function rebuildFinal() {
   body.appendChild(buildFinalSection(
     s.final_s1_title, s.final_s1_sub, '#3A1A4A',
     [
-      {id:'fq1', label:s.final_q1, ph:s.final_q1_ph, note:lang==='es'?'La evidencia más valiosa suele ser lo inesperado — lo que no planeaste ver.':'The most valuable evidence is often the unexpected — what you did not plan to see.'},
-      {id:'fq2', label:s.final_q2, ph:s.final_q2_ph, note:lang==='es'?'Distinguir cuándo la IA profundiza el pensamiento y cuándo lo reemplaza es una habilidad docente clave (Chiu, 2025). Nómbrala concretamente.':'Telling when AI deepens thinking versus replaces it is a core teaching skill (Chiu, 2025). Name it concretely.'},
-      {id:'fq3', label:s.final_q3, ph:s.final_q3_ph, wide:true, note:lang==='es'?'No todo el aprendizaje puede hacerse visible. Esa es también una forma de evidencia.':'Not all learning can be made visible. That is also a form of evidence.'},
+      {id:'fq1', label:s.final_q1, ph:s.final_q1_ph},
+      {id:'fq2', label:s.final_q2, ph:s.final_q2_ph},
+      {id:'fq3', label:s.final_q3, ph:s.final_q3_ph, wide:true},
     ]
   ));
 
@@ -1496,9 +1509,9 @@ function rebuildFinal() {
   body.appendChild(buildFinalSection(
     s.final_s2_title, s.final_s2_sub, '#2A3A6A',
     [
-      {id:'fq4', label:s.final_q4, ph:s.final_q4_ph, note:lang==='es'?'Schön (1983): la práctica reflexiva más profunda no resuelve tensiones — las nombra con más precisión.':'Schön (1983): the deepest reflective practice does not resolve tensions — it names them more precisely.'},
-      {id:'fq5', label:s.final_q5, ph:s.final_q5_ph, note:lang==='es'?'Timperley et al. (2007): la experiencia adaptativa requiere notar cuando tus modelos mentales están siendo desafiados — no solo cuando el contexto cambia.':'Timperley et al. (2007): adaptive expertise requires noticing when your mental models are being challenged — not just when the context changes.'},
-      {id:'fq6', label:s.final_q6, ph:s.final_q6_ph, wide:true, note:lang==='es'?'Esta respuesta puede convertirse más adelante en una contribución al centro de conocimiento y en algo real para llevar a tu departamento. Por ahora permanece en este navegador.':'This response can later become a Knowledge Hub contribution and something real to carry into your department. For now, it remains in this browser.'},
+      {id:'fq4', label:s.final_q4, ph:s.final_q4_ph},
+      {id:'fq5', label:s.final_q5, ph:s.final_q5_ph},
+      {id:'fq6', label:s.final_q6, ph:s.final_q6_ph, wide:true},
     ]
   ));
 
@@ -1506,9 +1519,9 @@ function rebuildFinal() {
   body.appendChild(buildFinalSection(
     s.final_s3_title, s.final_s3_sub, '#1A4A2A',
     [
-      {id:'fq7', label:s.final_q7, ph:s.final_q7_ph, note:lang==='es'?'Cada materia es distinta (Celik, 2023): lo general sobre IA no basta — necesitas comprensión disciplinar.':'Every subject is different (Celik, 2023): generic models about AI are not enough — you need disciplinary understanding.'},
-      {id:'fq8', label:s.final_q8, ph:s.final_q8_ph, note:lang==='es'?'Wiggins & McTighe (1998): el diseño inverso — comienza siempre desde la evidencia, no desde la actividad.':'Wiggins & McTighe (1998): backwards design — always begin from the evidence, not the activity.'},
-      {id:'fq9', label:s.final_q9, ph:s.final_q9_ph, wide:true, note:lang==='es'?'Este es el ensayo para tu sesión de transferencia de departamento en Junio. Escríbelo como si estuvieras hablando con un colega real.':'This is the rehearsal for your department transfer session in June. Write it as if talking to a real colleague.'},
+      {id:'fq7', label:s.final_q7, ph:s.final_q7_ph},
+      {id:'fq8', label:s.final_q8, ph:s.final_q8_ph},
+      {id:'fq9', label:s.final_q9, ph:s.final_q9_ph, wide:true},
     ]
   ));
 
@@ -1553,7 +1566,7 @@ function buildFinalSection(title, sub, accentColor, questions) {
 }
 
 function submitFinal() {
-  saveDraft();
+  if (!saveDraft()) return;
   showToast(lang==='es'?'Auditoría Final guardada en este dispositivo ✓':'Final Audit saved on this device ✓');
 }
 
@@ -1645,7 +1658,7 @@ function buildStep(num, title, sub, instr, content, locked) {
       <div class="step-num">${num}</div>
       <div class="step-head-text"><h2>${title}</h2><p>${sub}</p></div>
     </div>
-    <div class="step-instr">${instr}</div>
+
   `;
   div.appendChild(content);
   return div;
@@ -1729,7 +1742,7 @@ function buildRating() {
           </div>
         </div>
         <div class="pw-section">
-          <div class="pw-head">${lang==='es'?'Las 5 Rutas de Rediseño':'All 5 Redesign Pathways'}</div>
+          <div class="pw-head">${lang==='es'?'Formas de comprobar el aprendizaje':'Ways to Check Learning'}</div>
           <div class="pw-auto" id="pwauto-${d}"></div>
           <div class="ptabs" id="ptabs-${d}"></div>
           <div id="pcontents-${d}"></div>
@@ -1924,7 +1937,7 @@ function buildMinReflection() {
   panel.className = 'min-panel';
   panel.innerHTML = `
     <div class="min-panel-head">
-      <div class="min-badge">🟩 ${lang==='es'?'Diseño sólido':'Strong design'}</div>
+      <div class="min-badge">🟩 ${lang==='es'?'Comprueba tu estimación':'Check your estimate'}</div>
       <div class="min-title">${s.min_reflection_head}</div>
       <div class="min-intro">${s.min_reflection_intro}</div>
     </div>
@@ -1932,7 +1945,6 @@ function buildMinReflection() {
       <div class="min-rf-grid">
         <div class="min-q">
           <div class="min-ql"><div class="min-qnum">1</div>${s.min_r1}</div>
-          <div class="min-research-note">${s.min_r1_research}</div>
           <textarea class="min-area" id="min_r1" placeholder="${s.min_r1_ph}" oninput="markDone(3,true)"></textarea>
         </div>
         <div class="min-q">
@@ -1941,7 +1953,6 @@ function buildMinReflection() {
         </div>
         <div class="min-q">
           <div class="min-ql"><div class="min-qnum">3</div>${s.min_r3}</div>
-          <div class="min-research-note">${s.min_r3_research}</div>
           <textarea class="min-area" id="min_r3" placeholder="${s.min_r3_ph}"></textarea>
         </div>
         <div class="min-q">
@@ -1984,8 +1995,8 @@ function updatePathways() {
     if (selected.size > 0) {
       const names = [...selected].map(tp => PATHWAYS[tp][`label_${lang}`]).join(', ');
       autoNote.innerHTML = lang === 'es'
-        ? `Tipos seleccionados resaltados: <strong>${names}</strong> — explora todos para comparar`
-        : `Your selected types highlighted: <strong>${names}</strong> — explore all to compare`;
+        ? `Tipos seleccionados resaltados: <strong>${names}</strong> — elige una opción útil`
+        : `Start with your selected types: <strong>${names}</strong> — choose one useful approach`;
     } else {
       autoNote.textContent = lang === 'es'
         ? 'Selecciona tipos arriba para resaltar los más relevantes, o explora todos aquí'
@@ -2028,7 +2039,7 @@ function updatePathways() {
       ? `<div style="background:rgba(26,107,122,.1);border-left:3px solid var(--teal);padding:8px 12px;border-radius:0 6px 6px 0;margin-bottom:12px;font-size:11px;color:var(--teal)">${lang==='es'?'✓ Tipo seleccionado en tu clasificación':'✓ You identified this type in your classification'}</div>`
       : '';
 
-    content.innerHTML = `<div class="pinner">${relevanceNote}<div class="pgoal">${goal}</div>${items}</div>`;
+    content.innerHTML = `<div class="pinner">${relevanceNote}<div class="pgoal">${goal}</div><p style="font-size:12px;line-height:1.6;margin-bottom:12px">${lang==='es'?'Elige una opción que responda a tu duda. Una nota también puede generarse con IA; compruébala con una explicación o demostración independiente.':'Choose one option that answers your question. A written note can also be AI-generated; check it with an independent explanation or demonstration.'}</p>${items}</div>`;
     contentsEl.appendChild(content);
     firstTab = false;
   });
@@ -2051,6 +2062,7 @@ function selectSail(row, level) {
   row.classList.add('on');
   row.setAttribute('aria-checked', 'true');
   state.sailLevel = level;
+  updateSubmitStatus();
 }
 
 // ── UPLOAD ────────────────────────────────────────────────────────────────────
@@ -2120,13 +2132,18 @@ function updateProgressBar() {
   });
 }
 
+function auditReady() {
+  return Boolean(document.getElementById('s1task')?.value.trim().length > 10 &&
+    state.selectedTypes.size && state.rating && state.sailLevel &&
+    document.getElementById('sailJustify')?.value.trim().length > 10);
+}
+
 function updateSubmitStatus() {
   const el = document.getElementById('submitStatus');
   if (!el) return;
-  const n = state.completedSteps.size;
-  if (n < 4) el.innerHTML = `<strong>${n}/${TOTAL_STEPS} ${lang==='es'?'pasos':'steps'}</strong> — ${t('submit_ready')}`;
-  else if (n < 7) el.innerHTML = `<strong>${n}/${TOTAL_STEPS} ${lang==='es'?'pasos':'steps'} ✓</strong> — ${lang==='es'?'Casi listo — puedes guardar localmente ahora.':'Looking good — you can save locally now.'}`;
-  else el.innerHTML = `<strong>${lang==='es'?'Todos los pasos completos ✓':'All steps complete ✓'}</strong> — ${lang==='es'?'Listo para guardar en este dispositivo.':'Ready to save on this device.'}`;
+  el.textContent = auditReady()
+    ? (lang==='es'?'Listo para guardar. Después, continúa con la rutina.':'Ready to save. Next, continue to the thinking routine.')
+    : t('submit_ready');
 }
 
 // ── DEEP DIVE BUILDER ─────────────────────────────────────────────────────────
@@ -2139,20 +2156,7 @@ function rebuildDeepDive() {
   const how = document.createElement('div');
   how.className = 'dd-section';
   how.style.cssText = 'background:var(--navy);border-radius:12px;padding:24px 28px;margin-bottom:22px';
-  how.innerHTML = `
-    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px">${ES?'Cómo usar esta página':'How to use this page'}</div>
-    <div style="font-size:15px;color:#fff;font-weight:500;line-height:1.5;margin-bottom:16px">${ES?'La regla de oro: piensa tú primero — luego usa la IA para ver más lejos.':'The golden rule: think it through yourself first — then use AI to see further.'}</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px 16px">
-        <div style="font-size:12px;font-weight:600;color:var(--gold);margin-bottom:5px">${ES?'1 \u00b7 Tú primero':'1 \u00b7 You first'}</div>
-        <div style="font-size:12.5px;color:rgba(255,255,255,.8);line-height:1.5">${ES?'Cada paso empieza con una pregunta para ti. Escribe tu respuesta antes de abrir cualquier IA. Esto es tu pensamiento — el que quieres proteger.':'Each step starts with a question for you. Write your answer before opening any AI. This is your thinking — the kind you want to protect.'}</div>
-      </div>
-      <div style="background:rgba(255,255,255,.06);border-radius:8px;padding:14px 16px">
-        <div style="font-size:12px;font-weight:600;color:var(--gold);margin-bottom:5px">${ES?'2 \u00b7 Luego con la IA':'2 \u00b7 Then with AI'}</div>
-        <div style="font-size:12.5px;color:rgba(255,255,255,.8);line-height:1.5">${ES?'Usa el prompt sugerido para empujar tu pensamiento más lejos. La IA no te da la respuesta — te ayuda a ver lo que no habías visto.':'Use the suggested prompt to push your thinking further. AI doesn\u2019t give you the answer — it helps you see what you hadn\u2019t.'}</div>
-      </div>
-    </div>
-    <div style="font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.55;margin-top:14px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px">${ES?'Son cuatro pasos. Toma unos 30 minutos. Al final tendrás una decisión concreta para mejorar tu evaluación \u2014 y habrás practicado una forma de pensar con IA que puedes repetir tú solo en cualquier tarea.':'Four steps. About 30 minutes. By the end you\u2019ll have one concrete decision to improve your assessment \u2014 and you\u2019ll have practiced a way of thinking with AI you can repeat on your own, on any task.'}</div>\n    <div style="font-size:12px;color:var(--gold);line-height:1.5;margin-top:12px;background:rgba(196,134,26,.12);border-radius:8px;padding:11px 14px">${ES?'\ud83d\udca1 La rutina: tu juicio primero \u2014 la IA lo extiende. Nunca te quedes con la primera respuesta.':'\ud83d\udca1 The routine: your judgment leads \u2014 AI extends it. Never stop at the first answer.'}</div>`;
+  how.innerHTML = `<div style="font-size:14px;color:#fff;line-height:1.6">${ES?'En cada paso, formula tu propio juicio antes de consultar IA. Verifica las sugerencias con la tarea, tus criterios y fuentes confiables. Usa los prompts que necesites.':'At each step, make your own judgment before consulting AI. Check suggestions against the task, your criteria, and reliable sources. Use the prompts you need.'}</div>`;
   body.appendChild(how);
 
   // helper to build a "you first → then AI" step
@@ -2195,7 +2199,8 @@ function rebuildDeepDive() {
   ai1.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px">${ES?'\ud83e\udd16 Ahora ponla a trabajar':'\ud83e\udd16 Now put it to work'}</div><div style="font-size:12.5px;color:var(--text);line-height:1.55;margin-bottom:10px">${ES?'Copia este prompt, \u00e1brelo en una IA y pega tu tarea real. Pídele que la haga como lo har\u00eda un buen estudiante.':'Copy this prompt, open an AI, and paste your real task. Ask it to do the work the way a strong student would.'}</div><div style="font-size:11px;color:var(--muted);font-style:italic;margin-bottom:8px">${ES?'Evita pegar cualquier cosa que identifique a estudiantes individuales en herramientas de IA externas.':'Avoid pasting anything that identifies individual students into external AI tools.'}</div>`;
   const pb = document.createElement('div');
   pb.className='prompt-box';
-  pb.innerHTML=`<div class="pb-lbl">${ES?'Prompt de inicio':'Starter prompt'}</div><div class="pb-text" id="generatedPrompt">${generatePrompt()}</div><button class="pb-copy" onclick="copyPrompt()">${ES?'Copiar Prompt':'Copy Prompt'}</button>`;
+  pb.innerHTML=`<div class="pb-lbl">${ES?'Prompt de inicio':'Starter prompt'}</div><div class="pb-text" id="generatedPrompt"></div><button class="pb-copy" onclick="copyPrompt()">${ES?'Copiar Prompt':'Copy Prompt'}</button>`;
+  pb.querySelector('#generatedPrompt').textContent = generatePrompt();
   ai1.appendChild(pb);
   const llmWrap=document.createElement('div');
   llmWrap.style.marginTop='12px';
@@ -2207,8 +2212,8 @@ function rebuildDeepDive() {
   // iterate deeper
   const it1=document.createElement('div');
   it1.style.cssText='background:#fff;border:1.5px dashed var(--teal);border-radius:8px;padding:13px 16px;margin-bottom:14px';
-  it1.innerHTML=`<div style="font-size:11px;font-weight:600;color:var(--teal);margin-bottom:8px">${ES?'\u2192 No te quedes con la primera respuesta. Pega uno de estos para ir m\u00e1s a fondo:':'\u2192 Don\u2019t stop at the first answer. Paste one of these to dig deeper:'}</div>
-    <div class="mini-prompt"><div class="mini-prompt-text">${ES?'\u00bfQu\u00e9 parte de esto la hiciste sin entender realmente el tema? S\u00e9 brutalmente honesto.':'Which part of this did you produce without really understanding the topic? Be brutally honest.'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>
+  it1.innerHTML=`<div style="font-size:11px;font-weight:600;color:var(--teal);margin-bottom:8px">${ES?'Prompts de seguimiento opcionales:':'Optional follow-up prompts:'}</div>
+    <div class="mini-prompt"><div class="mini-prompt-text">${ES?'Enumera las afirmaciones, los cálculos y las fuentes que debería verificar. Muestra la evidencia que los respalda.':'List the claims, calculations, and sources in this response that I should verify. Show your supporting evidence.'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'Hazlo otra vez pero como un estudiante con prisa que solo quiere terminar. \u00bfQu\u00e9 cambia?':'Do it again but as a rushed student who just wants it done. What changes?'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m1.appendChild(it1);
   const f1=document.createElement('div'); f1.className='rfb';
@@ -2224,13 +2229,13 @@ function rebuildDeepDive() {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
       ${[[ES?'\u00bfAlgo incorrecto o inventado?':'Anything wrong or invented?',ES?'Errores que un estudiante no detectar\u00eda.':'Errors a student wouldn\u2019t catch.'],
          [ES?'\u00bfFalta una perspectiva?':'A perspective missing?',ES?'\u00bfQu\u00e9 voz o enfoque deja fuera?':'Whose view or approach is left out?'],
-         [ES?'\u00bf Se nota que no es del estudiante?':'Obviously not the student\u2019s?',ES?'\u00bfQu\u00e9 lo delata?':'What gives it away?'],
+         [ES?'¿Qué necesita verificación?':'What needs checking?',ES?'¿Qué afirmación necesita una fuente o comprobación?':'Which claim needs a source or a worked check?'],
          [ES?'\u00bfSuena bien pero vac\u00edo?':'Sounds good but hollow?',ES?'\u00bfImita comprensi\u00f3n o la demuestra?':'Imitates understanding or shows it?']].map(([q,d])=>`<div style="background:#fff;border:1px solid var(--border);border-radius:7px;padding:9px 11px"><div style="font-size:12px;font-weight:600;color:var(--navy);margin-bottom:2px">${q}</div><div style="font-size:11px;color:var(--muted);line-height:1.4">${d}</div></div>`).join('')}
     </div>`;
   m2.appendChild(you2);
   const ai2=document.createElement('div');
   ai2.style.cssText='background:var(--light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px';
-  ai2.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px">${ES?'\ud83e\udd16 Ahora presi\u00f3nala':'\ud83e\udd16 Now pressure it'}</div><div style="font-size:12.5px;color:var(--text);line-height:1.55;margin-bottom:10px">${ES?'Haz que la IA critique su propio trabajo. A menudo admite debilidades que no mostr\u00f3 al inicio:':'Make AI critique its own work. It often admits weaknesses it didn\u2019t show at first:'}</div>
+  ai2.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px">${ES?'\ud83e\udd16 Ahora presi\u00f3nala':'\ud83e\udd16 Now pressure it'}</div><div style="font-size:12.5px;color:var(--text);line-height:1.55;margin-bottom:10px">${ES?'Pide a la IA que sugiera comprobaciones y realízalas tú. Su crítica no es una verificación:':'Ask AI to suggest checks, then carry them out yourself. Its critique is not verification:'}</div>
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'Revisa tu respuesta anterior. \u00bfQu\u00e9 afirmaciones podr\u00edan estar equivocadas o ser demasiado generales? \u00bfQu\u00e9 verificar\u00eda un experto?':'Review your last answer. Which claims might be wrong or too general? What would an expert double-check?'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'\u00bfQu\u00e9 perspectivas o voces faltan en tu respuesta? \u00bfA qui\u00e9n deja fuera?':'What perspectives or voices are missing from your answer? Who does it leave out?'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m2.appendChild(ai2);
@@ -2252,7 +2257,7 @@ function rebuildDeepDive() {
   m3.appendChild(you3);
   const ai3=document.createElement('div');
   ai3.style.cssText='background:var(--light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px';
-  ai3.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px">${ES?'\ud83e\udd16 Usa la IA para anticipar':'\ud83e\udd16 Use AI to anticipate'}</div><div style="font-size:12.5px;color:var(--text);line-height:1.55;margin-bottom:10px">${ES?'Dale contexto sobre tus estudiantes y deja que prevea c\u00f3mo lo abordar\u00edan distintos perfiles:':'Give it context about your students and let it predict how different learners would approach it:'}</div>
+  ai3.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px">${ES?'\ud83e\udd16 Usa la IA para anticipar':'\ud83e\udd16 Use AI to anticipate'}</div><div style="font-size:12.5px;color:var(--text);line-height:1.55;margin-bottom:10px">${ES?'Describe la clase sin identificar estudiantes. Usa las sugerencias como posibilidades para comprobar:':'Describe the class without identifying students. Use the suggestions as possibilities to check:'}</div>
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'Mis estudiantes son [describe: nivel, edad, contexto]. Mu\u00e9strame tres formas distintas en que podr\u00edan usar IA en esta tarea: una superficial, una razonable y una muy astuta.':'My students are [describe: level, age, context]. Show me three different ways they might use AI on this task: one shallow, one reasonable, one very clever.'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m3.appendChild(ai3);
   const f3=document.createElement('div'); f3.className='rfb';
@@ -2280,7 +2285,7 @@ function rebuildDeepDive() {
     <div class="mini-prompt"><div class="mini-prompt-text">${ES?'De esas tres, \u00bfcu\u00e1l da la evidencia m\u00e1s clara de que el estudiante pens\u00f3 de verdad \u2014 y cu\u00e1l es m\u00e1s f\u00e1cil de calificar para m\u00ed?':'Of those three, which gives the clearest evidence the student actually thought \u2014 and which is easiest for me to grade?'}</div><button class="mini-copy" onclick="copyText(this)">${ES?'Copiar':'Copy'}</button></div>`;
   m4.appendChild(ai4);
   const f4=document.createElement('div'); f4.className='rfb';
-  f4.innerHTML=`<div class="rf-label">${ES?'Tu decisi\u00f3n de rediseño \u2014 esto es lo que llevas a tu pr\u00f3xima versi\u00f3n de la tarea:':'Your redesign decision \u2014 this is what you carry into your next version of the task:'}</div><textarea class="rf-area" id="dd4" style="min-height:120px" placeholder="${ES?'Una decisi\u00f3n concreta que surge de los cuatro pasos.':'One concrete decision that comes from the four steps.'}"></textarea>`;
+  f4.innerHTML=`<div class="rf-label">${ES?'Tu decisi\u00f3n de rediseño \u2014 esto es lo que llevas a tu pr\u00f3xima versi\u00f3n de la tarea:':'Your redesign decision \u2014 this is what you carry into your next version of the task:'}</div><textarea class="rf-area" id="dd4" style="min-height:120px" placeholder="${ES?'Anota el nivel SAIL final, el cambio a la tarea y cómo comprobarás qué pueden hacer los estudiantes de forma independiente.':'Record your final SAIL level, the task change, and how you will check what students can do independently.'}"></textarea>`;
   m4.appendChild(f4);
   const f4b = document.createElement('div'); f4b.className='rfb';
   f4b.innerHTML=`<div class="rf-label" style="color:var(--muted);font-weight:400">${ES?'Pega o enlaza tu tarea rediseñada (opcional) — para tenerla a mano cuando la reflexiones más tarde.':'Paste or link your redesigned task (optional) — so you have it on hand when you reflect on it later.'}</div><textarea class="rf-area" id="dd4redesign" style="min-height:80px" placeholder="${ES?'Tarea rediseñada, enlace, o notas rápidas.':'Redesigned task, a link, or quick notes.'}"></textarea>`;
@@ -2290,7 +2295,7 @@ function rebuildDeepDive() {
   // ── CLOSING ─────────────────────────────────────────────────────────────
   const close=document.createElement('div'); close.className='dd-section';
   close.style.cssText='background:var(--navy);border-radius:12px;padding:22px 26px;margin-top:8px';
-  close.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">${ES?'Lo que acabas de practicar':'What you just practiced'}</div><div style="font-size:13px;color:rgba(255,255,255,.82);line-height:1.65">${ES?'Acabas de correr la Rutina de Pensamiento Humano Aumentado. Cuatro movimientos. Tu juicio primero \u2014 la IA extendi\u00f3 lo que pod\u00edas ver. Esa es la pr\u00e1ctica. C\u00f3rrela en cualquier tarea, cuando quieras, sin m\u00ed.':'You just ran the Augmented Human Thinking Routine. Four moves. Your judgment led \u2014 AI extended what you could see. That\u2019s the practice. Run it on any task, anytime, without me.'}</div>`;
+  close.innerHTML=`<div style="font-size:16px;color:var(--gold);margin-bottom:10px">${ES?'Antes de enseñar':'Before you teach'}</div><div style="font-size:13px;color:#fff;line-height:1.65">${ES?'Actualiza las instrucciones de la tarea con el nivel SAIL elegido y una opción sin IA. Decide qué observarás o recogerás para comprobar el aprendizaje. Guarda tus notas y enseña la tarea. Después, vuelve a la Auditoría Final.':'Update the task instructions with your chosen SAIL level and a way to participate without AI. Decide what you will observe or collect to check learning. Save your notes and teach the task. Then return to the Final Audit.'}</div><button class="btn-draft-sm" style="margin-top:16px" onclick="saveDraft()">${t('btn_draft')}</button>`;
   body.appendChild(close);
 
   document.querySelectorAll('.dd-section').forEach(el => visObs.observe(el));
@@ -2313,7 +2318,7 @@ ${task}
 
 Por favor:
 1. Completa la tarea de verdad — produce el trabajo real, no una descripción de cómo lo harías.
-2. Luego dime con honestidad: de lo que acabas de hacer, ¿qué partes exigieron pensar de verdad y cuáles pudiste producir sin entender el contenido?
+2. Muestra los pasos, supuestos y fuentes que respaldan tu respuesta. Identifica las afirmaciones que necesitan verificación.
 3. Señala dónde tu respuesta suena convincente pero le falta el razonamiento que un docente espera ver.
 
 Sé específico sobre mi materia.`;
@@ -2325,7 +2330,7 @@ ${task}
 
 Please:
 1. Actually complete the task — produce the real work, not a description of how you'd approach it.
-2. Then tell me honestly: of what you just did, which parts required real thinking and which could you produce without understanding the content?
+2. Show the steps, assumptions, and sources supporting your response. Identify any claims that need checking.
 3. Point out where your answer sounds convincing but is missing the reasoning a teacher expects to see.
 
 Be specific to my subject.`;
@@ -2354,7 +2359,7 @@ function copyText(btn) {
 }
 
 // ── SAVE / SUBMIT ─────────────────────────────────────────────────────────────
-function saveDraft() {
+function saveDraft(silent = false) {
   const draft = {
     lang, meta: {
       teacher: document.getElementById('ft')?.value,
@@ -2413,24 +2418,25 @@ function saveDraft() {
   };
   try {
     localStorage.setItem('dlp_draft_v2', JSON.stringify(draft));
-    showToast(lang==='es'?'Borrador guardado ✓':'Draft saved ✓');
+    if (!silent) showToast(lang==='es'?'Borrador guardado en este navegador ✓':'Draft saved in this browser ✓');
     const ind = document.getElementById('saveIndicator');
     if (ind) { ind.textContent = lang==='es'?'guardado ahora':'saved just now'; const ts = Date.now(); const tick = setInterval(() => { const m = Math.round((Date.now()-ts)/60000); if (m < 1) return; ind.textContent = lang==='es'?`hace ${m} min`:`${m} min ago`; if (m >= 60) clearInterval(tick); }, 30000); }
-  } catch(e) { showToast('Save failed — localStorage may be full'); }
+    return true;
+  } catch(e) { showToast(lang==='es'?'No se pudo guardar. Copia tus notas antes de salir.':'Could not save. Copy your notes before leaving.'); return false; }
 }
 
 function submitAudit() {
-  if (state.completedSteps.size < 4) {
-    showToast(lang==='es'?'Completa al menos los Pasos 1–6 antes de enviar':'Complete at least Steps 1–6 before submitting');
+  if (!auditReady()) {
+    showToast(lang==='es'?'Describe la tarea, selecciona los aprendizajes, califica y elige y explica SAIL.':'Describe the task, select learning types, rate it, and choose and explain SAIL.');
     return;
   }
-  saveDraft();
+  if (!saveDraft()) return;
   showToast(lang==='es'?
     'Auditoría guardada en este dispositivo ✓ — no se envió nada':
     'Audit saved on this device ✓ — nothing was sent');
   setTimeout(() => {
     const btn = document.querySelector('.btn-sub');
-    if (btn) { btn.textContent = lang==='es'?'Guardado localmente ✓':'Saved locally ✓'; btn.style.background='var(--green)'; btn.disabled=true; }
+    if (btn) { btn.textContent = lang==='es'?'Guardado localmente ✓':'Saved locally ✓'; btn.style.background='var(--green)'; btn.disabled=false; }
   }, 1000);
 }
 
@@ -2611,7 +2617,7 @@ function rebuildRefs() {
   intro.style.cssText = 'background:var(--light);border-radius:8px;padding:14px 18px;margin-bottom:28px;font-size:12px;color:var(--muted);font-style:italic';
   intro.textContent = lang === 'es'
     ? 'Las siguientes fuentes fundamentan el diseño del Protocolo VISTA, incluyendo marcos de conocimiento docente, SAIL, diseño de evaluación, Diseño Universal para el Aprendizaje, ciencia del aprendizaje, y aprendizaje profesional docente. Formato APA 7ª edición.'
-    : 'The following sources underpin the design of the VISTA Protocol, including teacher knowledge frameworks, SAIL, assessment design, Universal Design for Learning, science of learning, and teacher professional learning. APA 7th edition.';
+    : 'Optional reading on assessment, learning, and AI. You can complete the protocol without reading these sources.';
   body.appendChild(intro);
   
   // Group references by category
@@ -2737,16 +2743,6 @@ associateLabels();
 applyStrings();
 renderBibliography();
 
-// Sync nav label clicks to rebuild views
-document.querySelectorAll('.nav-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    setTimeout(() => {
-      if (currentView === 'final') rebuildFinal();
-  if (currentView === 'refs') rebuildRefs();
-  renderBibliography();
-    }, 50);
-  });
-});
 </script>
 </body>
 </html>
