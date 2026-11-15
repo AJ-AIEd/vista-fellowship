@@ -4,8 +4,8 @@
 export const STAGE_ORDER = ['initial', 'ahtr', 'redesign', 'implementation', 'final', 'reflection'];
 
 const STAGE_NAMES = {
-  en: {initial: 'Initial Audit', ahtr: 'AHTR', redesign: 'Redesign', implementation: 'Implementation', final: 'Final Audit', reflection: 'Reflection and Next Cycle'},
-  es: {initial: 'Auditoría Inicial', ahtr: 'RHPA', redesign: 'Rediseño', implementation: 'Implementación', final: 'Auditoría Final', reflection: 'Reflexión y siguiente ciclo'}
+  en: {initial: 'Initial Audit', ahtr: 'AI-HTR', redesign: 'Redesign', implementation: 'Implementation', final: 'Final Audit', reflection: 'Reflection and Next Cycle'},
+  es: {initial: 'Auditoría Inicial', ahtr: 'AI-HTR', redesign: 'Rediseño', implementation: 'Implementación', final: 'Auditoría Final', reflection: 'Reflexión y siguiente ciclo'}
 };
 // English names keyed by stage; kept as a named export for existing callers.
 export const STAGES = STAGE_NAMES.en;
@@ -99,7 +99,7 @@ const TEXT = {
 };
 const HANDOFF = {
   en: {
-    initial: 'Help me test my assumptions about what AI could do and prepare for the AHTR. Ask me to predict before suggesting changes.',
+    initial: 'Help me test my assumptions about what AI could do and prepare for the AI-HTR. Ask me to predict before suggesting changes.',
     ahtr: 'Help me examine what the AI trial showed, separate what I verified from what I assumed, and decide what that means for the task.',
     redesign: 'Help me examine my redesign, decide what student evidence to collect, and plan a manageable independent check of learning.',
     implementation: 'Help me organise what I observed while teaching without over-interpreting it, and decide what I still need to look at.',
@@ -109,7 +109,7 @@ const HANDOFF = {
     lead: 'Use this VISTA report as context.'
   },
   es: {
-    initial: 'Ayúdame a poner a prueba mis supuestos sobre lo que podría hacer la IA y a preparar la RHPA. Pídeme predecir antes de sugerir cambios.',
+    initial: 'Ayúdame a poner a prueba mis supuestos sobre lo que podría hacer la IA y a preparar la AI-HTR. Pídeme predecir antes de sugerir cambios.',
     ahtr: 'Ayúdame a examinar qué mostró la prueba con IA, a separar lo que verifiqué de lo que supuse y a decidir qué implica para la tarea.',
     redesign: 'Ayúdame a examinar mi rediseño, decidir qué evidencia estudiantil recoger y planear una comprobación independiente y manejable del aprendizaje.',
     implementation: 'Ayúdame a ordenar lo que observé al enseñar sin sobreinterpretarlo y a decidir qué me falta revisar.',

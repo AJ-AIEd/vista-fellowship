@@ -19,7 +19,7 @@ A self-guided professional-learning tool for auditing and redesigning assessment
 
 ## The tool
 
-Six stages: Initial Audit → Augmented Human Thinking Routine (AHTR) → Redesign → Implementation → Final Audit → Reflection and Next Cycle. English and Spanish.
+Six stages: Initial Audit → AI–Human Thinking Routine (AI-HTR) → Redesign → Implementation → Final Audit → Reflection and Next Cycle. English and Spanish.
 
 There is no login and no backend. Cycles are stored in the browser's `localStorage`; teachers can keep several cycles, export and import backup files, and print or save reports as PDF. See `docs/ARCHITECTURE.md`.
 
@@ -51,5 +51,6 @@ Set `VISTA_URL` to run the browser tests against a deployment and `VISTA_SHOTS` 
 - `docs/RIGHTS-AND-OPEN-ISSUES.md` — ownership, citation, privacy, and unverified items
 - `docs/facilitator-guide.md` — draft guide for licensed schools (not published on the site)
 - `docs/OPUS-HANDOFF.md` — routine follow-up tasks
+- `docs/REVIEW.md` — independent-review report: test status, framework alignment, release blockers, decisions
 - `docs/research-quote-provenance.md` — sources of the two quotations in the tool
 - `legacy/cloud/` — the earlier Supabase account integration, not built or deployed

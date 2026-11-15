@@ -13,7 +13,7 @@ test('a full-cycle report covers all six stages in order, in English and Spanish
     const {title, draft} = exampleCycle(lang);
     const snapshot = sanitizeDraft(draft); // the example must survive the same validation as teacher data
     const text = buildReport({title, stage: 'reflection', snapshot, lang});
-    const positions = STAGE_ORDER.map(s => text.indexOf('## ' + {en: {initial: 'Initial Audit', ahtr: 'AHTR', redesign: 'Redesign', implementation: 'Implementation', final: 'Final Audit', reflection: 'Reflection and Next Cycle'}, es: {initial: 'Auditoría Inicial', ahtr: 'RHPA', redesign: 'Rediseño', implementation: 'Implementación', final: 'Auditoría Final', reflection: 'Reflexión y siguiente ciclo'}}[lang][s]));
+    const positions = STAGE_ORDER.map(s => text.indexOf('## ' + {en: {initial: 'Initial Audit', ahtr: 'AI-HTR', redesign: 'Redesign', implementation: 'Implementation', final: 'Final Audit', reflection: 'Reflection and Next Cycle'}, es: {initial: 'Auditoría Inicial', ahtr: 'AI-HTR', redesign: 'Rediseño', implementation: 'Implementación', final: 'Auditoría Final', reflection: 'Reflexión y siguiente ciclo'}}[lang][s]));
     assert.ok(positions.every(p => p > 0), 'every stage heading present: ' + positions);
     assert.deepEqual([...positions].sort((a, b) => a - b), positions);
     assert.ok(text.includes(snapshot.next.transfer) && text.includes(snapshot.redesign.evidence) && text.includes(snapshot.implementation.evidence));

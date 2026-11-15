@@ -428,7 +428,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 <div class="stagebar" id="stagebar" role="navigation" aria-label="Stages of the VISTA cycle">
   <button type="button" class="nav-tab" id="navStart" onclick="showView('launch')"><span data-k="nav_start">Start</span></button>
   <button type="button" class="nav-tab" id="navInitial" onclick="showView('initial')"><span class="st-n">1</span><span data-k="nav_initial">Initial Audit</span></button>
-  <button type="button" class="nav-tab" id="navDeep" onclick="showView('deepdive')"><span class="st-n">2</span><span data-k="nav_deepdive">AHTR</span></button>
+  <button type="button" class="nav-tab" id="navDeep" onclick="showView('deepdive')"><span class="st-n">2</span><span data-k="nav_deepdive">AI-HTR</span></button>
   <button type="button" class="nav-tab" id="navRedesign" onclick="showView('redesign')"><span class="st-n">3</span><span data-k="nav_redesign">Redesign</span></button>
   <button type="button" class="nav-tab" id="navImpl" onclick="showView('implementation')"><span class="st-n">4</span><span data-k="nav_impl">Implementation</span></button>
   <button type="button" class="nav-tab" id="navFinal" onclick="showView('final')"><span class="st-n">5</span><span data-k="nav_final">Final Audit</span></button>
@@ -466,7 +466,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
         <div class="phase-label"><span data-k="phase_before">Before you teach</span><em data-k="phase_before_time">about 60 to 90 minutes, in one or two sittings</em></div>
         <div class="stage-cards">
           <div class="path-card" onclick="showView('initial')"><div class="path-step-badge">1</div><div class="path-title" data-k="path_a_title">Initial Audit</div><div class="path-sub" data-k="path_a_sub"></div></div>
-          <div class="path-card" onclick="showView('deepdive')"><div class="path-step-badge">2</div><div class="path-title" data-k="path_b_title">The Augmented Human Thinking Routine</div><div class="path-sub" data-k="path_b_sub"></div></div>
+          <div class="path-card" onclick="showView('deepdive')"><div class="path-step-badge">2</div><div class="path-title" data-k="path_b_title">The AI–Human Thinking Routine (AI-HTR)</div><div class="path-sub" data-k="path_b_sub"></div></div>
           <div class="path-card" onclick="showView('redesign')"><div class="path-step-badge">3</div><div class="path-title" data-k="path_r_title">Redesign</div><div class="path-sub" data-k="path_r_sub"></div></div>
         </div>
       </div>
@@ -525,8 +525,8 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 <!-- ═══════════════════════════════════════════════════ AHTR ═══ -->
 <div class="view" id="view-deepdive">
   <div class="dd-header">
-    <div class="dd-badge"><span data-k="stage_word">Stage</span> 2 · <span data-k="dd_badge">Augmented Human Thinking Routine</span></div>
-    <div class="dd-title" data-k="deepdive_intro_title">The Augmented Human Thinking Routine</div>
+    <div class="dd-badge"><span data-k="stage_word">Stage</span> 2 · <span data-k="dd_badge">AI–Human Thinking Routine</span></div>
+    <div class="dd-title" data-k="deepdive_intro_title">The AI–Human Thinking Routine</div>
     <div class="dd-sub" data-k="deepdive_intro"></div>
   </div>
   <div class="dd-body" id="deepdiveBody"></div>
@@ -630,15 +630,15 @@ const STRINGS = {
   en: {
     nav_brand: "VISTA",
     nav_initial: "Initial Audit",
-    nav_deepdive: "AHTR",
-    dd_badge: "Augmented Human Thinking Routine",
+    nav_deepdive: "AI-HTR",
+    dd_badge: "AI–Human Thinking Routine",
     nav_final: "Final Audit",
     nav_refs: "References",
     step_badge_1: "Step 1",
     step_badge_2: "Step 2",
     step_badge_3: "Step 3",
     path_a_title: "Initial Audit",
-    path_b_title: "The Augmented Human Thinking Routine",
+    path_b_title: "The AI–Human Thinking Routine (AI-HTR)",
     path_c_title: "Final Audit",
     path_c_sub: "After teaching, use student work and observations to decide what to keep or change.",
     path_c_btn: "Begin Final Audit →",
@@ -701,7 +701,7 @@ const STRINGS = {
     path_a_title: "Initial Audit",
     path_a_sub: "Describe the task, identify the thinking students need to do, and choose an initial AI-use level. Work independently before consulting AI.",
     path_a_btn: "Begin Initial Audit →",
-    path_b_title: "The Augmented Human Thinking Routine",
+    path_b_title: "The AI–Human Thinking Routine (AI-HTR)",
     path_b_sub: "Think first, test your task with AI, then challenge what you see through your subject expertise. Use four moves to decide who does the thinking and what evidence you can trust.",
     path_b_btn: "Begin the Routine →",
     path_note: "Audit → Test and revise → Teach and collect evidence → Reflect. Save a report at each stage.",
@@ -824,7 +824,7 @@ const STRINGS = {
     scenario_audit: "Audit",
     scenario_redesign: "Redesign",
     
-    deepdive_intro_title: "The Augmented Human Thinking Routine",
+    deepdive_intro_title: "The AI–Human Thinking Routine",
     deepdive_intro: "Bring your initial judgment and the actual task. In each move, make your own interpretation before asking AI to challenge or extend it. Record what changes your mind, what you reject, and why.",
     deepdive_prompt_label: "Use this prompt with your AI tool of choice",
     deepdive_send_label: "Or send your audit directly",
@@ -846,15 +846,15 @@ const STRINGS = {
   es: {
     nav_brand: "VISTA",
     nav_initial: "Auditoría Inicial",
-    nav_deepdive: "RHPA",
-    dd_badge: "Rutina de Pensamiento Humano Aumentado",
+    nav_deepdive: "AI-HTR",
+    dd_badge: "Rutina de Pensamiento IA–Humano",
     nav_final: "Auditoría Final",
     nav_refs: "Referencias",
     step_badge_1: "Paso 1",
     step_badge_2: "Paso 2",
     step_badge_3: "Paso 3",
     path_a_title: "Auditoría Inicial",
-    path_b_title: "La Rutina de Pensamiento Humano Aumentado",
+    path_b_title: "La Rutina de Pensamiento IA–Humano (AI-HTR)",
     path_c_title: "Auditoría Final",
     path_c_sub: "Después de enseñar, usa trabajos y observaciones para decidir qué mantener o cambiar.",
     path_c_btn: "Comenzar Auditoría Final →",
@@ -917,7 +917,7 @@ const STRINGS = {
     path_a_title: "Auditoría Inicial",
     path_a_sub: "Describe la tarea, identifica qué deben pensar los estudiantes y elige un nivel inicial de uso de IA. Trabaja de forma independiente antes de consultar IA.",
     path_a_btn: "Comenzar Auditoría Inicial →",
-    path_b_title: "La Rutina de Pensamiento Humano Aumentado",
+    path_b_title: "La Rutina de Pensamiento IA–Humano (AI-HTR)",
     path_b_sub: "Piensa primero, prueba tu tarea con IA y cuestiona lo que observas desde tu experiencia disciplinar. Usa cuatro movimientos para decidir quién piensa y qué evidencia puedes interpretar.",
     path_b_btn: "Comenzar la Rutina →",
     path_note: "Audita → Prueba y revisa → Enseña y recoge evidencia → Reflexiona. Guarda un informe en cada etapa.",
@@ -1007,7 +1007,7 @@ const STRINGS = {
     scenario_audit: "Auditoría",
     scenario_redesign: "Rediseño",
     
-    deepdive_intro_title: "La Rutina de Pensamiento Humano Aumentado",
+    deepdive_intro_title: "La Rutina de Pensamiento IA–Humano",
     deepdive_intro: "Trae tu juicio inicial y la tarea real. En cada movimiento, interpreta primero antes de pedir a la IA que cuestione o amplíe tus ideas. Registra qué te hace cambiar de opinión, qué rechazas y por qué.",
     deepdive_prompt_label: "Usa este prompt con tu herramienta de IA",
     deepdive_send_label: "O envía tu auditoría directamente",
@@ -1498,7 +1498,7 @@ const UI = {
     ready_instructions: "The task instructions tell students which AI use is allowed, and why.", ready_route: "A student can complete the task without AI at the same intellectual demand.", ready_evidence: "I know what I will observe or collect, and it is no more than I need.", ready_privacy: "My notes will describe patterns and anonymised examples, not named students.",
     during_head: "After you teach", during_sub: "Brief notes are enough. Write what you saw before you interpret it.",
     when_label: "When did you teach it, and with whom?", when_ph: "e.g. Two Grade 10 sections, week of 12 May. No student names.",
-    coll_label: "What evidence did you collect or observe?", coll_ph: "Two or three anonymised observations or work samples are enough. For each, note what it shows and what it does not.",
+    coll_label: "What evidence did you collect or observe?", coll_ph: "Two or three anonymised observations or work samples are enough. Describe what you saw or collected; interpretation comes in the Final Audit.",
     adj_label: "What did you change while teaching, and why?", adj_ph: "Anything you adjusted on the day: instructions, AI permissions, timing, supports.",
     prop_head: "Collect only what answers your question", prop_body: "Evidence is useful when it reduces a real uncertainty about student understanding. More records are not better evidence. If the task itself already shows the thinking, add nothing.",
     leave_head: "Leaving for a while?", leave_body: "Your work stays in this browser on this device. If you may use another device, or if this browser clears its data, download a backup first. You can import it later from My cycles.", leave_btn: "Download a backup",
@@ -1533,7 +1533,7 @@ const UI = {
     ready_instructions: "Las instrucciones indican a los estudiantes qué uso de IA está permitido y por qué.", ready_route: "Un estudiante puede completar la tarea sin IA con la misma exigencia intelectual.", ready_evidence: "Sé qué observaré o recogeré, y no es más de lo que necesito.", ready_privacy: "Mis notas describirán patrones y ejemplos anónimos, no estudiantes con nombre.",
     during_head: "Después de enseñar", during_sub: "Bastan notas breves. Escribe lo que viste antes de interpretarlo.",
     when_label: "¿Cuándo la enseñaste y con quiénes?", when_ph: "p. ej. Dos grupos de décimo, semana del 12 de mayo. Sin nombres de estudiantes.",
-    coll_label: "¿Qué evidencia recogiste u observaste?", coll_ph: "Bastan dos o tres observaciones o muestras de trabajo anónimas. Para cada una, anota qué muestra y qué no.",
+    coll_label: "¿Qué evidencia recogiste u observaste?", coll_ph: "Bastan dos o tres observaciones o muestras de trabajo anónimas. Describe lo que viste o recogiste; la interpretación viene en la Auditoría Final.",
     adj_label: "¿Qué cambiaste mientras enseñabas y por qué?", adj_ph: "Lo que ajustaste ese día: instrucciones, permisos de IA, tiempos, apoyos.",
     prop_head: "Recoge solo lo que responda a tu pregunta", prop_body: "La evidencia es útil cuando reduce una incertidumbre real sobre la comprensión de los estudiantes. Más registros no son mejor evidencia. Si la tarea ya muestra el pensamiento, no añadas nada.",
     leave_head: "¿Vas a dejarlo por un tiempo?", leave_body: "Tu trabajo permanece en este navegador y en este dispositivo. Si vas a usar otro dispositivo, o si este navegador borra sus datos, descarga antes una copia de seguridad. Podrás importarla después desde Mis ciclos.", leave_btn: "Descargar copia de seguridad",

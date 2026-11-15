@@ -43,7 +43,7 @@ Rules the code enforces:
 
 ## Data model of a cycle
 
-`meta`, `task`, `learningEvidence`, `humanAI`, `classifier[]`, `rating`, `sail`, `sailJustify`, `light_reflection`, `min_reflection`, `deepdive` (AHTR notes plus `dd4`, `dd4redesign`), `redesign` (`sail`, `evidence`, `supports`), `implementation` (`when`, `ready[]`, `evidence`, `adjustments`), `final_audit` (`fq1`–`fq9`; `fq7`–`fq9` are shown in the Reflection stage), `next` (`uncertain`, `transfer`), `submissions` (reviewed imported text per stage).
+`meta`, `task`, `learningEvidence`, `humanAI`, `classifier[]`, `rating`, `sail`, `sailJustify`, `light_reflection`, `min_reflection`, `deepdive` (the AI-HTR; the internal key `ahtr`/`deepdive` predates the rename and is kept so saved cycles load; AHTR notes plus `dd4`, `dd4redesign`), `redesign` (`sail`, `evidence`, `supports`), `implementation` (`when`, `ready[]`, `evidence`, `adjustments`), `final_audit` (`fq1`–`fq9`; `fq7`–`fq9` are shown in the Reflection stage), `next` (`uncertain`, `transfer`), `submissions` (reviewed imported text per stage).
 
 Keys from v2 are unchanged, so old drafts and backups load.
 
