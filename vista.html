@@ -4,16 +4,15 @@
 <script defer src="/_vercel/insights/script.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VISTA Protocol — Visibility Into Student Thinking and Agency</title>
-<meta name="description" content="A structured assessment design tool for making student thinking visible in AI-rich classrooms. CNG AI Innovation Fellowship 2026–2027.">
+<title>VISTA — Assessment audit and redesign</title>
+<meta name="description" content="VISTA is a self-guided professional-learning cycle for auditing and redesigning assessment in AI-rich classrooms. No account; your work stays in your browser.">
 <meta name="author" content="Andrew Cajina">
-<meta property="og:title" content="VISTA Protocol — CNG AI Innovation Fellowship">
-<meta property="og:description" content="Visibility Into Student Thinking and Agency — Assessment audit tool for AI-rich classrooms">
+<meta property="og:title" content="VISTA — Visibility Into Student Thinking and Agency">
+<meta property="og:description" content="Audit an assessment, test it with AI, redesign it, teach it, and examine the evidence.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0F2236">
 <link rel="stylesheet" href="/css/shared.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/fonts.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -408,103 +407,94 @@ footer{background:var(--navy);padding:20px 56px;display:flex;justify-content:spa
 .cl-card:focus-visible,.sail-row:focus-visible,.ptab:focus-visible,.path-card:focus-visible,.llm-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </style>
-<link rel="stylesheet" href="/account.css">
+<link rel="stylesheet" href="/protocol-research.css">
+<link rel="stylesheet" href="/css/tool.css">
 </head>
-<body class="account-locked">
+<body>
+<a class="skip-link" href="#main" data-k="skip_link">Skip to content</a>
 
 <!-- NAV -->
-<nav>
-  <div style="display:flex;align-items:center;gap:16px"><a href="/" class="nav-back">← Home</a><div class="nav-brand" onclick="showView('launch')" data-k="nav_brand">VISTA</div></div>
-  <div style="display:flex;align-items:center;gap:6px;margin-left:auto">
-    <div class="nav-lang" id="langToggle" onclick="toggleLang()" data-k="lang_toggle">🇪🇸 Español</div>
-    <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
-    <div class="nav-tab" id="navInitial" onclick="showView('initial')" data-k="nav_initial">Initial Audit</div>
-    <div class="nav-tab" id="navDeep" onclick="showView('deepdive')" data-k="nav_deepdive">Augmented Review</div>
-    <div class="nav-tab" id="navFinal" onclick="showView('final')" data-k="nav_final">Final Audit</div>
-    <div class="nav-tab" id="navRefs" onclick="showView('refs')" data-k="nav_refs">References</div>
-    <div class="nav-divider" style="width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px"></div>
-    <button class="nav-pdf" onclick="window.open('/vista-print','_blank')" data-k="nav_pdf">PDF</button>
-    <button class="nav-save" onclick="saveDraft()" data-k="nav_save">Save Draft</button>
-    <span id="saveIndicator" style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.45);margin-left:6px;letter-spacing:.04em"></span>
+<nav aria-label="VISTA">
+  <div class="nav-left">
+    <a href="/" class="nav-brand" data-k="nav_brand">VISTA</a>
+    <button type="button" class="nav-cycle" id="cycleButton" aria-haspopup="dialog" onclick="window.VistaLocal?.openCycles()"><span class="nav-cycle-k" data-k="nav_cycles">My cycles</span><span class="nav-cycle-label" id="cycleLabel"></span></button>
+  </div>
+  <div class="nav-right">
+    <span id="saveIndicator" role="status" aria-live="polite"></span>
+    <button type="button" class="nav-lang" id="langToggle" onclick="toggleLang()">Español</button>
+    <button type="button" class="nav-pdf" id="reportButton" onclick="window.VistaLocal?.report()" data-k="nav_report">Report</button>
   </div>
 </nav>
-<div class="prog"><div class="prog-fill" id="pf"></div></div>
-
-<!-- MOBILE BOTTOM NAV -->
-<div class="bottom-nav" id="bottomNav">
-  <button class="bn-tab" id="bnInitial" onclick="showView('initial')">
-    <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
-    Audit
-  </button>
-  <button class="bn-tab" id="bnDeep" onclick="showView('deepdive')">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
-    Routine
-  </button>
-  <button class="bn-tab" id="bnFinal" onclick="showView('final')">
-    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-    Final
-  </button>
-  <button class="bn-tab" id="bnRefs" onclick="showView('refs')">
-    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-    Refs
-  </button>
-  <button class="bn-save" onclick="saveDraft()">Save</button>
+<div class="stagebar" id="stagebar" role="navigation" aria-label="Stages of the VISTA cycle">
+  <button type="button" class="nav-tab" id="navStart" onclick="showView('launch')"><span data-k="nav_start">Start</span></button>
+  <button type="button" class="nav-tab" id="navInitial" onclick="showView('initial')"><span class="st-n">1</span><span data-k="nav_initial">Initial Audit</span></button>
+  <button type="button" class="nav-tab" id="navDeep" onclick="showView('deepdive')"><span class="st-n">2</span><span data-k="nav_deepdive">AI-HTR</span></button>
+  <button type="button" class="nav-tab" id="navRedesign" onclick="showView('redesign')"><span class="st-n">3</span><span data-k="nav_redesign">Redesign</span></button>
+  <button type="button" class="nav-tab" id="navImpl" onclick="showView('implementation')"><span class="st-n">4</span><span data-k="nav_impl">Implementation</span></button>
+  <button type="button" class="nav-tab" id="navFinal" onclick="showView('final')"><span class="st-n">5</span><span data-k="nav_final">Final Audit</span></button>
+  <button type="button" class="nav-tab" id="navReflect" onclick="showView('reflection')"><span class="st-n">6</span><span data-k="nav_reflect">Reflection</span></button>
+  <button type="button" class="nav-tab nav-tab-aux" id="navRefs" onclick="showView('refs')"><span data-k="nav_refs">References</span></button>
 </div>
+<div class="prog"><div class="prog-fill" id="pf"></div></div>
+<div id="cycleNotice" class="cycle-notice" role="status" hidden></div>
 
-<!-- ═══════════════════════════════════════════════════ LAUNCH VIEW ═══ -->
+<main id="main" tabindex="-1">
+<!-- ═══════════════════════════════════════════════════ START VIEW ═══ -->
 <div class="view active" id="view-launch">
   <div class="launch">
-    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
     <div class="launch-inner">
-      <div class="launch-badge" data-k="launch_badge">CNG AI Innovation Fellowship</div>
-      <h1 data-k-split="launch_title_1|launch_title_2"><span id="lh1">VISTA</span><br><em id="lh2">Assessment Protocol</em></h1>
-      <div class="launch-sub" data-k="launch_sub">VISTA: Visibility Into Student Thinking and Agency — Colegio Nueva Granada</div>
-      <div class="vista-acronym" id="vistaAcronym">
-        <div class="va-letter"><div class="va-initial">V</div><div class="va-word" id="va-v">Visibility</div></div>
-        <div class="va-letter"><div class="va-initial">I</div><div class="va-word" id="va-i">Into</div></div>
-        <div class="va-letter"><div class="va-initial">S</div><div class="va-word" id="va-s">Student</div></div>
-        <div class="va-letter"><div class="va-initial">T</div><div class="va-word" id="va-t">Thinking</div></div>
-        <div class="va-letter"><div class="va-initial">A</div><div class="va-word" id="va-a">&amp; Agency</div></div>
-      </div>
-      <div style="font-size:11px;color:rgba(139,168,181,.5);text-align:center;margin:-16px auto 22px;font-family:'DM Sans',sans-serif;font-style:italic;letter-spacing:.02em" id="vista-caption">Visibility Into Student Thinking and Agency</div>
+      <div class="launch-badge" data-k="launch_badge">A self-guided professional-learning cycle</div>
+      <h1 data-k-split="launch_title_1|launch_title_2"><span id="lh1">VISTA</span><br><em id="lh2">Visibility Into Student Thinking and Agency</em></h1>
       <div class="qcard">
-        <div class="ql" data-k="launch_q_label">Start with one task</div>
-        <div class="qt" data-k="launch_q">What do your students need to think through themselves?</div>
+        <div class="ql" data-k="launch_q_label">The question behind your audit</div>
+        <div class="qt" data-k="launch_q">“If AI can produce the answer, how do we assess the reasoning, interpretation, revision, and judgment behind it?”</div>
         <div class="qsplit">
-          <div class="qhalf bad"><strong data-k="launch_bad_head">⬛ When the product is all there is</strong><span data-k="launch_bad">A task you already teach, its learning goal, and any success criteria.</span></div>
-          <div class="qhalf good"><strong data-k="launch_good_head">🟩 When reasoning is made visible</strong><span data-k="launch_good">A plan for AI use and a way to check what students understand.</span></div>
+          <div class="qhalf bad"><strong data-k="launch_bad_head">Bring</strong><span data-k="launch_bad">A task you already teach, its learning goal, and any success criteria.</span></div>
+          <div class="qhalf good"><strong data-k="launch_good_head">Leave with</strong><span data-k="launch_good">A plan for AI use and a way to check what students understand.</span></div>
         </div>
       </div>
-      <div class="paths">
-        <div class="path-card path-a" onclick="showView('initial')">
-          <div class="path-step-badge" data-k="step_badge_1">Step 1</div>
-          <div class="path-title" data-k="path_a_title">Initial Audit</div>
-          <div class="path-sub" data-k="path_a_sub">Describe the task, identify the thinking students need to do, and choose an initial AI-use level. Work independently before consulting AI.</div>
-          <button class="path-btn" data-k="path_a_btn">Begin Initial Audit →</button>
-        </div>
-        <div class="path-card path-b" onclick="showView('deepdive')">
-          <div class="path-step-badge" data-k="step_badge_2">Step 2</div>
-          <div class="path-title" data-k="path_b_title">The Augmented Human Thinking Routine</div>
-          <div class="path-sub" data-k="path_b_sub">Test the task with AI, check its output, and decide what to adjust before teaching. Allow about 30 minutes.</div>
-          <button class="path-btn" data-k="path_b_btn">Begin the Routine →</button>
+
+      <div class="start-actions">
+        <div class="path-a"><button type="button" class="path-btn start-primary" id="startOwn" onclick="window.VistaLocal?.begin()" data-k="start_begin">Begin with your own task →</button></div>
+        <button type="button" class="start-secondary" id="startResume" onclick="window.VistaLocal?.resume()" hidden></button>
+        <button type="button" class="start-secondary" id="startExample" onclick="window.VistaLocal?.example()" data-k="start_example">Explore a worked example</button>
+      </div>
+      <p class="start-privacy" data-k="start_privacy">No account. Your work is saved in this browser on this device and is not sent anywhere. Download a backup to keep a copy or move to another device.</p>
+
+      <h2 class="start-h" data-k="start_how">How a cycle works</h2>
+      <div class="phase">
+        <div class="phase-label"><span data-k="phase_before">Before you teach</span><em data-k="phase_before_time">about 60 to 90 minutes, in one or two sittings</em></div>
+        <div class="stage-cards">
+          <div class="path-card" onclick="showView('initial')"><div class="path-step-badge">1</div><div class="path-title" data-k="path_a_title">Initial Audit</div><div class="path-sub" data-k="path_a_sub"></div></div>
+          <div class="path-card" onclick="showView('deepdive')"><div class="path-step-badge">2</div><div class="path-title" data-k="path_b_title">The AI–Human Thinking Routine (AI-HTR)</div><div class="path-sub" data-k="path_b_sub"></div></div>
+          <div class="path-card" onclick="showView('redesign')"><div class="path-step-badge">3</div><div class="path-title" data-k="path_r_title">Redesign</div><div class="path-sub" data-k="path_r_sub"></div></div>
         </div>
       </div>
-      <div class="paths-bottom">
-        <div class="path-card path-c" onclick="showView('final')" style="flex-direction:row;align-items:center;gap:28px;padding:20px 28px">
-          <div style="flex-shrink:0">
-            <div class="path-step-badge" data-k="step_badge_3">Step 3</div>
-            <div class="path-title" data-k="path_c_title" style="font-size:20px;margin-bottom:0">Final Audit</div>
-          </div>
-          <div class="path-sub" data-k="path_c_sub" style="margin-bottom:0;flex:1">After teaching, use student work and observations to decide what to keep or change.</div>
-          <button class="path-btn" data-k="path_c_btn" style="flex-shrink:0">Begin Final Audit →</button>
+      <div class="phase">
+        <div class="phase-label"><span data-k="phase_during">In your classroom</span><em data-k="phase_during_time">your normal teaching time, plus brief notes</em></div>
+        <div class="stage-cards one">
+          <div class="path-card" onclick="showView('implementation')"><div class="path-step-badge">4</div><div class="path-title" data-k="path_i_title">Implementation</div><div class="path-sub" data-k="path_i_sub"></div></div>
         </div>
       </div>
-      <div class="path-note" data-k="path_note">Audit → Test and revise → Teach and collect evidence → Reflect. Save before leaving; your draft stays in this browser only.</div>
+      <div class="phase">
+        <div class="phase-label"><span data-k="phase_after">After you teach</span><em data-k="phase_after_time">about 30 to 45 minutes</em></div>
+        <div class="stage-cards two">
+          <div class="path-card" onclick="showView('final')"><div class="path-step-badge">5</div><div class="path-title" data-k="path_c_title">Final Audit</div><div class="path-sub" data-k="path_c_sub"></div></div>
+          <div class="path-card" onclick="showView('reflection')"><div class="path-step-badge">6</div><div class="path-title" data-k="path_f_title">Reflection and Next Cycle</div><div class="path-sub" data-k="path_f_sub"></div></div>
+        </div>
+      </div>
+      <p class="path-note" data-k="path_note">Time estimates are approximate. You can stop at any point and return; each stage shows what you decided earlier.</p>
+
+      <div class="start-details">
+        <details><summary data-k="start_d1_h">What VISTA does not do</summary><p data-k="start_d1">It does not detect AI use, score your task, evaluate you, or write answers for you. The feedback you see is fixed guidance chosen by your own selections, not AI analysis of your responses. The judgments are yours.</p></details>
+        <details><summary data-k="start_d2_h">New to generative AI?</summary><p data-k="start_d2">Before auditing, spend twenty minutes giving an AI tool a task from your own course and reading what it produces as you would read student work. An audit is easier to make honestly once you have seen what these tools do in your subject.</p></details>
+        <details><summary data-k="start_d3_h">Student privacy</summary><p data-k="start_d3">Do not enter student names or anything that identifies an individual student, here or in any AI tool you open from this page. Describe patterns and anonymised examples instead.</p></details>
+      </div>
     </div>
   </div>
   <footer>
-    <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship 2026–2027 · Andrew Cajina</div>
-    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
+    <div class="fl" data-k="footer_left">VISTA · Visibility Into Student Thinking and Agency</div>
+    <div class="fr"><a href="/method" data-k="footer_method">The method</a> · <a href="/privacy" data-k="footer_privacy">Privacy</a> · <a href="/vista-print" data-k="footer_print">Printable protocol</a> · <a href="/schools" data-k="footer_schools">For schools</a></div>
   </footer>
 </div>
 
@@ -513,45 +503,71 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   <div class="audit-header" style="padding:12px 40px 10px">
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div>
-        <div class="ah-label" data-k="nav_initial" style="margin-bottom:2px">Initial Audit</div>
+        <div class="ah-label"><span data-k="stage_word">Stage</span> 1 · <span data-k="nav_initial">Initial Audit</span></div>
         <div class="ah-title" id="auditHeaderSub" style="font-size:14px">Start independently, before consulting AI</div>
       </div>
       <div class="ah-progress" id="auditProgress" style="flex-shrink:0;margin-left:24px"></div>
     </div>
   </div>
   <div class="meta-bar">
-    <div class="mf"><label for="ft" data-k-meta="Teacher">Teacher</label><input type="text" id="ft" placeholder="Your name"></div>
+    <div class="mf"><label for="ft" data-k-meta="Teacher">Teacher</label><input type="text" id="ft" placeholder="Your name" autocomplete="name"></div>
     <div class="mf"><label for="fd" data-k-meta="Department">Department</label><input type="text" id="fd" placeholder="e.g. High School Mathematics"></div>
     <div class="mf"><label for="fa" data-k-meta="Assessment">Assessment</label><input type="text" id="fa" placeholder="Name of task being audited"></div>
     <div class="mf"><label for="fdate" data-k-meta="Date">Date</label><input type="text" id="fdate"></div>
   </div>
   <div class="audit-body" id="auditBody"></div>
-  
   <footer>
-    <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship</div>
-    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
+    <div class="fl" data-k="footer_left">VISTA</div>
+    <div class="fr" data-k="footer_right">Saved in this browser only.</div>
   </footer>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ DEEP DIVE ═══ -->
+<!-- ═══════════════════════════════════════════════════ AHTR ═══ -->
 <div class="view" id="view-deepdive">
   <div class="dd-header">
-    <div class="dd-badge" data-k="dd_badge">Augmented Human Thinking Routine</div>
-    <div class="dd-title" data-k="deepdive_intro_title">The Augmented Human Thinking Routine — Think First, Then Go Deeper</div>
-    <div class="dd-sub" data-k="deepdive_intro">Use your audit and the actual task. Work through four steps, then teach your revised version and collect evidence for the Final Audit.</div>
+    <div class="dd-badge"><span data-k="stage_word">Stage</span> 2 · <span data-k="dd_badge">AI–Human Thinking Routine</span></div>
+    <div class="dd-title" data-k="deepdive_intro_title">The AI–Human Thinking Routine</div>
+    <div class="dd-sub" data-k="deepdive_intro"></div>
   </div>
   <div class="dd-body" id="deepdiveBody"></div>
   <footer>
-    <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship</div>
-    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
+    <div class="fl" data-k="footer_left">VISTA</div>
+    <div class="fr" data-k="footer_right">Saved in this browser only.</div>
   </footer>
 </div>
 
+<!-- ═══════════════════════════════════════════════════ REDESIGN ═══ -->
+<div class="view" id="view-redesign">
+  <div class="dd-header" style="background:linear-gradient(135deg,#3A2A0A,#0F2236)">
+    <div class="dd-badge"><span data-k="stage_word">Stage</span> 3 · <span data-k="nav_redesign">Redesign</span></div>
+    <div class="dd-title" data-k="redesign_title">Decide what stays the student’s work</div>
+    <div class="dd-sub" data-k="redesign_intro"></div>
+  </div>
+  <div class="dd-body" id="redesignBody"></div>
+  <footer>
+    <div class="fl" data-k="footer_left">VISTA</div>
+    <div class="fr" data-k="footer_right">Saved in this browser only.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ IMPLEMENTATION ═══ -->
+<div class="view" id="view-implementation">
+  <div class="dd-header" style="background:linear-gradient(135deg,#0A2E3A,#0F2236)">
+    <div class="dd-badge"><span data-k="stage_word">Stage</span> 4 · <span data-k="nav_impl">Implementation</span></div>
+    <div class="dd-title" data-k="impl_title">Teach the task and notice what happens</div>
+    <div class="dd-sub" data-k="impl_intro"></div>
+  </div>
+  <div class="dd-body" id="implBody"></div>
+  <footer>
+    <div class="fl" data-k="footer_left">VISTA</div>
+    <div class="fr" data-k="footer_right">Saved in this browser only.</div>
+  </footer>
+</div>
 
 <!-- ═══════════════════════════════════════════════════ FINAL AUDIT ═══ -->
 <div class="view" id="view-final">
   <div class="audit-header" style="background:linear-gradient(135deg,#1A0A2E,#0F2236)">
-    <div class="ah-label" data-k="nav_final">Final Audit</div>
+    <div class="ah-label"><span data-k="stage_word">Stage</span> 5 · <span data-k="nav_final">Final Audit</span></div>
     <div class="ah-title" data-k="final_header_title">Final Audit</div>
     <div class="ah-sub" data-k="final_header_sub">Complete after teaching the task. Use your notes and student work to review what happened.</div>
     <div class="ah-progress" id="finalProgress"></div>
@@ -564,11 +580,24 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   </div>
   <div class="audit-body" id="finalBody"></div>
   <footer>
-    <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship</div>
-    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
+    <div class="fl" data-k="footer_left">VISTA</div>
+    <div class="fr" data-k="footer_right">Saved in this browser only.</div>
   </footer>
 </div>
 
+<!-- ═══════════════════════════════════════════════════ REFLECTION ═══ -->
+<div class="view" id="view-reflection">
+  <div class="dd-header" style="background:linear-gradient(135deg,#12351F,#0F2236)">
+    <div class="dd-badge"><span data-k="stage_word">Stage</span> 6 · <span data-k="path_f_title">Reflection and Next Cycle</span></div>
+    <div class="dd-title" data-k="reflect_title">What you learned, and where it goes next</div>
+    <div class="dd-sub" data-k="reflect_intro"></div>
+  </div>
+  <div class="audit-body" id="reflectBody"></div>
+  <footer>
+    <div class="fl" data-k="footer_left">VISTA</div>
+    <div class="fr" data-k="footer_right">Saved in this browser only.</div>
+  </footer>
+</div>
 
 <!-- ═══════════════════════════════════════════════════ REFERENCES ═══ -->
 <div class="view" id="view-refs">
@@ -584,12 +613,14 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
     <div id="refsBody"></div>
   </div>
   <footer>
-    <div class="fl" data-k="footer_left">VISTA Protocol · v1.0 · CNG AI Innovation Fellowship</div>
-    <div class="fr" data-k="footer_right">Save your notes before leaving this page.</div>
+    <div class="fl" data-k="footer_left">VISTA</div>
+    <div class="fr" data-k="footer_right">Saved in this browser only.</div>
   </footer>
 </div>
+</main>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 
 <script>
 // Inject data
@@ -599,15 +630,15 @@ const STRINGS = {
   en: {
     nav_brand: "VISTA",
     nav_initial: "Initial Audit",
-    nav_deepdive: "AHTR",
-    dd_badge: "Augmented Human Thinking Routine",
+    nav_deepdive: "AI-HTR",
+    dd_badge: "AI–Human Thinking Routine",
     nav_final: "Final Audit",
     nav_refs: "References",
     step_badge_1: "Step 1",
     step_badge_2: "Step 2",
     step_badge_3: "Step 3",
     path_a_title: "Initial Audit",
-    path_b_title: "The Augmented Human Thinking Routine",
+    path_b_title: "The AI–Human Thinking Routine (AI-HTR)",
     path_c_title: "Final Audit",
     path_c_sub: "After teaching, use student work and observations to decide what to keep or change.",
     path_c_btn: "Begin Final Audit →",
@@ -644,14 +675,14 @@ const STRINGS = {
     final_q8: "What will you change next time, and what evidence will tell you if it helped?",
     final_q8_ph: "Backwards design from what you actually observed. Start from the evidence you collected — what does it tell you about what the task should have asked for instead?",
     final_q9: "What would you share with a colleague, including what you are still unsure about?",
-    final_q9_ph: "Not a pitch for the fellowship. An honest account of what you found hard, what surprised you, and what you would want them to know before they start. This becomes part of your transfer session.",
+    final_q9_ph: "An honest account of what you found hard, what surprised you, and what you would want them to know before they start.",
 
     final_submit_note: "Save a report to preserve this stage of your thinking before beginning the next cycle.",
     nav_save: "Save Draft",
     nav_pdf: "PDF",
     lang_toggle: "🇪🇸 Español",
     
-    launch_badge: "CNG AI Innovation Fellowship",
+    launch_badge: "A self-guided professional-learning cycle",
     launch_title_1: "VISTA",
     launch_title_2: "Assessment Protocol",
     launch_sub: "VISTA: Visibility Into Student Thinking and Agency — Colegio Nueva Granada",
@@ -670,7 +701,7 @@ const STRINGS = {
     path_a_title: "Initial Audit",
     path_a_sub: "Describe the task, identify the thinking students need to do, and choose an initial AI-use level. Work independently before consulting AI.",
     path_a_btn: "Begin Initial Audit →",
-    path_b_title: "The Augmented Human Thinking Routine",
+    path_b_title: "The AI–Human Thinking Routine (AI-HTR)",
     path_b_sub: "Think first, test your task with AI, then challenge what you see through your subject expertise. Use four moves to decide who does the thinking and what evidence you can trust.",
     path_b_btn: "Begin the Routine →",
     path_note: "Audit → Test and revise → Teach and collect evidence → Reflect. Save a report at each stage.",
@@ -710,7 +741,7 @@ const STRINGS = {
     btn_submit: "Save Initial Audit Report →",
     
     sail_col1: "Level",
-    sail_col2: "What AI may do (CNG SAIL)",
+    sail_col2: "What AI may do",
     sail_col3: "What learning this protects",
     sail_rows: [
       ["L1","No AI","AI is off-limits. Brain, books, academic sources only.","Full cognitive load on the student. Use when the struggle itself is the learning — first drafts, initial problem-solving, forming interpretations before any external support."],
@@ -793,7 +824,7 @@ const STRINGS = {
     scenario_audit: "Audit",
     scenario_redesign: "Redesign",
     
-    deepdive_intro_title: "The Augmented Human Thinking Routine",
+    deepdive_intro_title: "The AI–Human Thinking Routine",
     deepdive_intro: "Bring your initial judgment and the actual task. In each move, make your own interpretation before asking AI to challenge or extend it. Record what changes your mind, what you reject, and why.",
     deepdive_prompt_label: "Use this prompt with your AI tool of choice",
     deepdive_send_label: "Or send your audit directly",
@@ -809,21 +840,21 @@ const STRINGS = {
     deepdive_r4: "How did this AI session change — or not change — your SAIL positioning decision?",
     deepdive_r4_ph: "Record whether your SAIL choice changed and what led to that decision.",
     
-    footer_left: "VISTA Protocol · v1.0 · CNG AI Innovation Fellowship 2026–2027 · Andrew Cajina",
+    footer_left: "VISTA",
     footer_right: "Save your notes before leaving this page.",
   },
   es: {
     nav_brand: "VISTA",
     nav_initial: "Auditoría Inicial",
-    nav_deepdive: "RHPA",
-    dd_badge: "Rutina de Pensamiento Humano Aumentado",
+    nav_deepdive: "AI-HTR",
+    dd_badge: "Rutina de Pensamiento IA–Humano",
     nav_final: "Auditoría Final",
     nav_refs: "Referencias",
     step_badge_1: "Paso 1",
     step_badge_2: "Paso 2",
     step_badge_3: "Paso 3",
     path_a_title: "Auditoría Inicial",
-    path_b_title: "La Rutina de Pensamiento Humano Aumentado",
+    path_b_title: "La Rutina de Pensamiento IA–Humano (AI-HTR)",
     path_c_title: "Auditoría Final",
     path_c_sub: "Después de enseñar, usa trabajos y observaciones para decidir qué mantener o cambiar.",
     path_c_btn: "Comenzar Auditoría Final →",
@@ -860,17 +891,17 @@ const STRINGS = {
     final_q8: "¿Qué cambiarás la próxima vez y cómo sabrás si ayudó?",
     final_q8_ph: "Diseño inverso desde lo que realmente observaste. Comienza desde la evidencia que recopilaste — ¿qué te dice sobre lo que la tarea debería haber pedido?",
     final_q9: "¿Qué compartirías con un colega, incluyendo tus dudas?",
-    final_q9_ph: "No un argumento de venta para el fellowship. Un relato honesto de lo que encontraste difícil, lo que te sorprendió, y lo que querrías que supieran antes de comenzar.",
+    final_q9_ph: "Un relato honesto de lo que encontraste difícil, lo que te sorprendió, y lo que querrías que supieran antes de comenzar.",
 
     final_submit_note: "Guarda un informe para conservar esta etapa de tu reflexión antes del siguiente ciclo.",
     nav_save: "Guardar Borrador",
     nav_pdf: "PDF",
     lang_toggle: "🇺🇸 English",
     
-    launch_badge: "Fellowship de Innovación en IA · CNG",
+    launch_badge: "Un ciclo autoguiado de aprendizaje profesional",
     launch_title_1: "VISTA",
     launch_title_2: "Protocolo de Diseño",
-    launch_sub: "VISTA: Visibilidad del Pensamiento y la Agencia Estudiantil — CNG",
+    launch_sub: "VISTA: Visibilidad e Indagación del Pensamiento y la Agencia Estudiantil",
     vista_v: "Visibilidad e",
     vista_i: "Indagación",
     vista_s: "del",
@@ -886,7 +917,7 @@ const STRINGS = {
     path_a_title: "Auditoría Inicial",
     path_a_sub: "Describe la tarea, identifica qué deben pensar los estudiantes y elige un nivel inicial de uso de IA. Trabaja de forma independiente antes de consultar IA.",
     path_a_btn: "Comenzar Auditoría Inicial →",
-    path_b_title: "La Rutina de Pensamiento Humano Aumentado",
+    path_b_title: "La Rutina de Pensamiento IA–Humano (AI-HTR)",
     path_b_sub: "Piensa primero, prueba tu tarea con IA y cuestiona lo que observas desde tu experiencia disciplinar. Usa cuatro movimientos para decidir quién piensa y qué evidencia puedes interpretar.",
     path_b_btn: "Comenzar la Rutina →",
     path_note: "Audita → Prueba y revisa → Enseña y recoge evidencia → Reflexiona. Guarda un informe en cada etapa.",
@@ -926,7 +957,7 @@ const STRINGS = {
     btn_submit: "Guardar informe inicial →",
     
     sail_col1: "Nivel",
-    sail_col2: "Qué puede hacer la IA (SAIL CNG)",
+    sail_col2: "Qué puede hacer la IA",
     sail_col3: "Qué aprendizaje protege",
     sail_rows: [
       ["L1","Sin IA","La IA no está permitida. Solo cerebro, libros y fuentes académicas.","Carga cognitiva completa en el estudiante. Úsalo cuando la lucha misma es el aprendizaje."],
@@ -976,7 +1007,7 @@ const STRINGS = {
     scenario_audit: "Auditoría",
     scenario_redesign: "Rediseño",
     
-    deepdive_intro_title: "La Rutina de Pensamiento Humano Aumentado",
+    deepdive_intro_title: "La Rutina de Pensamiento IA–Humano",
     deepdive_intro: "Trae tu juicio inicial y la tarea real. En cada movimiento, interpreta primero antes de pedir a la IA que cuestione o amplíe tus ideas. Registra qué te hace cambiar de opinión, qué rechazas y por qué.",
     deepdive_prompt_label: "Usa este prompt con tu herramienta de IA",
     deepdive_send_label: "O envía tu auditoría directamente",
@@ -992,7 +1023,7 @@ const STRINGS = {
     deepdive_r4: "¿Cómo cambió — o no cambió — tu posicionamiento SAIL esta sesión?",
     deepdive_r4_ph: "Indica si cambió tu elección SAIL y qué te llevó a esa decisión.",
     
-    footer_left: "Protocolo VISTA · v1.0 · Fellowship de Innovación en IA · CNG 2026–2027 · Andrew Cajina",
+    footer_left: "VISTA",
     footer_right: "Guarda tus notas antes de salir de esta página.",
   }
 };
@@ -1352,16 +1383,183 @@ let state = {
   selectedLens: null,
   uploads: [],
   completedSteps: new Set(),
+  redesignSail: null,
+  implReady: new Set(),
   draft: {}
 };
+// ── PRODUCT STRINGS (v3) ──────────────────────────────────────────────────────
+// Added for the self-guided product. These extend the content above and replace the
+// strings that were specific to the original fellowship deployment.
+Object.assign(STRINGS.en, {
+  lang_toggle: "Español",
+  skip_link: "Skip to content",
+  nav_start: "Start", nav_redesign: "Redesign", nav_impl: "Implementation", nav_reflect: "Reflection",
+  nav_report: "Report", nav_cycles: "My cycles", stage_word: "Stage",
+  launch_badge: "A self-guided professional-learning cycle",
+  launch_title_1: "VISTA", launch_title_2: "Visibility Into Student Thinking and Agency",
+  start_begin: "Begin with your own task →", start_example: "Explore a worked example",
+  start_privacy: "No account. Your work is saved in this browser on this device and is not sent anywhere. Download a backup to keep a copy or move to another device.",
+  start_how: "How a cycle works",
+  phase_before: "Before you teach", phase_before_time: "about 60 to 90 minutes, in one or two sittings",
+  phase_during: "In your classroom", phase_during_time: "your normal teaching time, plus brief notes",
+  phase_after: "After you teach", phase_after_time: "about 30 to 45 minutes",
+  path_b_sub: "Predict what AI can do with your task, test the prediction, and judge the output by the standards of your subject and your classroom.",
+  path_r_title: "Redesign", path_r_sub: "Decide what must stay the student’s own thinking, what AI may do, and what evidence will show the difference. Keeping the task unchanged or excluding AI are valid outcomes.",
+  path_i_title: "Implementation", path_i_sub: "Teach the task. Collect only the evidence that answers your question, without identifying students.",
+  path_f_title: "Reflection and Next Cycle", path_f_sub: "Name what you learned, what is still uncertain, and what you will carry into another assessment.",
+  path_note: "Time estimates are approximate. You can stop at any point and return; each stage shows what you decided earlier.",
+  start_d1_h: "What VISTA does not do",
+  start_d1: "It does not detect AI use, score your task, evaluate you, or write answers for you. The guidance you see is fixed text selected by your own choices, not AI analysis of your responses. The judgments are yours.",
+  start_d2_h: "New to generative AI?",
+  start_d2: "Before auditing, spend twenty minutes giving an AI tool a task from your own course and reading what it produces as you would read student work. An honest audit is easier once you have seen what these tools do in your subject.",
+  start_d3_h: "Student privacy",
+  start_d3: "Do not enter student names or anything that identifies an individual student, here or in any AI tool you open from this page. Describe patterns and anonymised examples instead.",
+  footer_left: "VISTA · Visibility Into Student Thinking and Agency · © Andrew Cajina",
+  footer_right: "Saved in this browser only. Download a backup to keep a copy.",
+  footer_method: "The method", footer_privacy: "Privacy", footer_print: "Printable protocol", footer_schools: "For schools",
+  upload_section_title: "Import existing notes (optional)",
+  upload_section_sub: "If you already wrote about this task elsewhere, you can bring the text in from a document. The file is read on this device and is not uploaded or kept; only the text you review is saved with this cycle.",
+  btn_draft: "Save now", btn_submit: "Initial Audit report",
+  submit_ready: "Your work saves automatically. To finish this stage, describe the task, identify the learning, explain your evidence and AI predictions, estimate offloading, and justify your SAIL choices.",
+  final_submit_note: "After this stage, the reflection asks what you will carry forward.",
+  final_q9_ph: "An honest account of what you found hard, what surprised you, and what you would want a colleague to know before they start.",
+  sail_col2: "What AI may do",
+  deepdive_intro: "Bring your initial judgment and the actual task. In each step, make your own interpretation before asking AI to challenge or extend it. Record what changes your mind, what you reject, and why. Allow about 30 minutes.",
+  redesign_title: "Decide what stays the student’s work",
+  redesign_intro: "Use what the routine showed. Decide the division of work between student and AI, revise the task if it needs it, and plan the smallest amount of evidence that would tell you whether students understand.",
+  impl_title: "Teach the task and notice what happens",
+  impl_intro: "This stage happens in your classroom. Use this page before teaching to check you are ready, and afterwards to note what you saw while it is fresh.",
+  reflect_title: "What you learned, and where it goes next",
+  reflect_intro: "A cycle is complete when you can say what changed in your thinking, what the evidence does not settle, and what you will do differently with another assessment."
+});
+Object.assign(STRINGS.es, {
+  lang_toggle: "English",
+  skip_link: "Ir al contenido",
+  nav_start: "Inicio", nav_redesign: "Rediseño", nav_impl: "Implementación", nav_reflect: "Reflexión",
+  nav_report: "Informe", nav_cycles: "Mis ciclos", stage_word: "Etapa",
+  launch_badge: "Un ciclo autoguiado de aprendizaje profesional",
+  launch_title_1: "VISTA", launch_title_2: "Visibilidad e Indagación del Pensamiento y la Agencia Estudiantil",
+  start_begin: "Comenzar con tu propia tarea →", start_example: "Explorar un ejemplo resuelto",
+  start_privacy: "Sin cuenta. Tu trabajo se guarda en este navegador y en este dispositivo, y no se envía a ningún lugar. Descarga una copia de seguridad para conservarlo o pasarlo a otro dispositivo.",
+  start_how: "Cómo funciona un ciclo",
+  phase_before: "Antes de enseñar", phase_before_time: "entre 60 y 90 minutos, en una o dos sesiones",
+  phase_during: "En tu aula", phase_during_time: "tu tiempo habitual de clase, más unas notas breves",
+  phase_after: "Después de enseñar", phase_after_time: "entre 30 y 45 minutos",
+  path_b_sub: "Predice qué puede hacer la IA con tu tarea, comprueba la predicción y juzga el resultado con los criterios de tu disciplina y de tu aula.",
+  path_r_title: "Rediseño", path_r_sub: "Decide qué pensamiento debe seguir siendo del estudiante, qué puede hacer la IA y qué evidencia mostrará la diferencia. Mantener la tarea igual o excluir la IA también son decisiones válidas.",
+  path_i_title: "Implementación", path_i_sub: "Enseña la tarea. Recoge solo la evidencia que responda a tu pregunta, sin identificar a estudiantes.",
+  path_f_title: "Reflexión y siguiente ciclo", path_f_sub: "Nombra lo que aprendiste, lo que sigue siendo incierto y lo que llevarás a otra evaluación.",
+  path_note: "Los tiempos son aproximados. Puedes detenerte en cualquier momento y volver; cada etapa muestra lo que decidiste antes.",
+  start_d1_h: "Lo que VISTA no hace",
+  start_d1: "No detecta el uso de IA, no califica tu tarea, no te evalúa ni escribe respuestas por ti. La orientación que ves es texto fijo que depende de tus propias selecciones, no un análisis de tus respuestas hecho por IA. Los juicios son tuyos.",
+  start_d2_h: "¿Empiezas con la IA generativa?",
+  start_d2: "Antes de auditar, dedica veinte minutos a darle a una herramienta de IA una tarea de tu propio curso y lee lo que produce como leerías el trabajo de un estudiante. Es más fácil auditar con honestidad cuando has visto qué hacen estas herramientas en tu materia.",
+  start_d3_h: "Privacidad de los estudiantes",
+  start_d3: "No escribas nombres de estudiantes ni datos que identifiquen a una persona, ni aquí ni en las herramientas de IA que abras desde esta página. Describe patrones y ejemplos anónimos.",
+  footer_left: "VISTA · Visibilidad e Indagación del Pensamiento y la Agencia Estudiantil · © Andrew Cajina",
+  footer_right: "Guardado solo en este navegador. Descarga una copia de seguridad para conservarlo.",
+  footer_method: "El método", footer_privacy: "Privacidad", footer_print: "Protocolo imprimible", footer_schools: "Para colegios",
+  upload_section_title: "Importar notas existentes (opcional)",
+  upload_section_sub: "Si ya escribiste sobre esta tarea en otro lugar, puedes traer el texto desde un documento. El archivo se lee en este dispositivo y no se sube ni se conserva; solo se guarda con este ciclo el texto que revises.",
+  btn_draft: "Guardar ahora", btn_submit: "Informe de la Auditoría Inicial",
+  submit_ready: "Tu trabajo se guarda automáticamente. Para terminar esta etapa, describe la tarea, identifica el aprendizaje, explica tu evidencia y tus predicciones sobre la IA, estima la delegación y justifica tus niveles SAIL.",
+  final_submit_note: "Después de esta etapa, la reflexión pregunta qué llevarás contigo.",
+  final_q9_ph: "Un relato honesto de lo que te resultó difícil, lo que te sorprendió y lo que querrías que un colega supiera antes de empezar.",
+  sail_col2: "Qué puede hacer la IA",
+  deepdive_intro: "Trae tu juicio inicial y la tarea real. En cada paso, interpreta primero antes de pedir a la IA que cuestione o amplíe tus ideas. Registra qué te hace cambiar de opinión, qué rechazas y por qué. Calcula unos 30 minutos.",
+  redesign_title: "Decide qué sigue siendo trabajo del estudiante",
+  redesign_intro: "Usa lo que mostró la rutina. Decide cómo se reparte el trabajo entre estudiante e IA, revisa la tarea si lo necesita y planea la mínima evidencia que te diría si los estudiantes comprenden.",
+  impl_title: "Enseña la tarea y observa qué ocurre",
+  impl_intro: "Esta etapa ocurre en tu aula. Usa esta página antes de enseñar para comprobar que todo está listo y, después, para anotar lo que viste mientras lo recuerdas bien.",
+  reflect_title: "Lo que aprendiste y hacia dónde continúa",
+  reflect_intro: "Un ciclo está completo cuando puedes decir qué cambió en tu forma de pensar, qué no resuelve la evidencia y qué harás distinto con otra evaluación."
+});
+// Short labels used in the “carried forward” recaps and the stages added in v3.
+const UI = {
+  en: {
+    recap_head: "What you recorded earlier", recap_none: "Nothing from earlier stages yet. You can work in any order, but each stage builds on the one before.", recap_more: "Show full text", recap_less: "Show less",
+    recap_task: "The task and the thinking it develops", recap_prediction: "Your prediction about AI and student roles", recap_rating: "Your offloading estimate", recap_sail: "Initial SAIL level", recap_check: "What you wanted to check",
+    recap_trial: "What the AI trial showed", recap_missed: "What the AI output missed", recap_room: "Where the task is vulnerable in your room",
+    recap_decision: "Your redesign decision", recap_rsail: "Revised SAIL level", recap_revised: "Revised task", recap_evidence: "Evidence you planned to collect", recap_supports: "Supports and the route without AI",
+    recap_collected: "Evidence you collected", recap_adjust: "What changed during teaching", recap_assumption: "The assumption the evidence challenged", recap_nextq: "What you want to investigate next",
+    back: "← Back to", next: "Continue to", report_btn: "Report for this stage",
+    ahtr_done: "Routine finished? Next you decide what the trial means for the task.",
+    redesign_done: "When the task is ready, teach it. Come back here afterwards; your work will be waiting in this browser.",
+    impl_done: "After teaching, the Final Audit asks you to compare what you expected with what you saw.",
+    reflect_done: "This cycle is complete when these notes say what you would want to remember in six months.",
+    no_rating: "You have not recorded an offloading estimate yet. The suggestions below depend on it.", go_estimate: "Go to the estimate in the Initial Audit",
+    who_head: "Who does what — the student or the AI?", who_sub: "Here you make the decision that matters: which part of the thinking must stay the student’s, and how you will make it visible.",
+    rsail_label: "Your SAIL level after the routine", rsail_hint: "Select every level the revised task uses. It may be the same as before, and No AI is as defensible as any other level if it protects the learning.", rsail_initial: "Initial choice",
+    ev_label: "What evidence will you collect, and what will it not be able to show?", ev_ph: "Name the smallest piece of evidence that would answer your question. Why would it reflect the student’s own thinking? What could it miss?",
+    sup_label: "What supports will students have, and what is the route without AI?", sup_ph: "Which students need scaffolds to reach the same thinking? How can a student take part without AI at the same intellectual demand?",
+    examples_head: "Illustrative examples from five subjects", examples_note: "These are constructed examples to show the kind of reasoning involved. They are not research findings and not a model answer for your task.",
+    ex_task: "Task", ex_audit: "Audit", ex_redesign: "Redesign",
+    ready_head: "Before you teach", ready_sub: "Four quick checks. Tick what is true; anything unticked is worth a minute before the lesson.",
+    ready_instructions: "The task instructions tell students which AI use is allowed, and why.", ready_route: "A student can complete the task without AI at the same intellectual demand.", ready_evidence: "I know what I will observe or collect, and it is no more than I need.", ready_privacy: "My notes will describe patterns and anonymised examples, not named students.",
+    during_head: "After you teach", during_sub: "Brief notes are enough. Write what you saw before you interpret it.",
+    when_label: "When did you teach it, and with whom?", when_ph: "e.g. Two Grade 10 sections, week of 12 May. No student names.",
+    coll_label: "What evidence did you collect or observe?", coll_ph: "Two or three anonymised observations or work samples are enough. Describe what you saw or collected; interpretation comes in the Final Audit.",
+    adj_label: "What did you change while teaching, and why?", adj_ph: "Anything you adjusted on the day: instructions, AI permissions, timing, supports.",
+    prop_head: "Collect only what answers your question", prop_body: "Evidence is useful when it reduces a real uncertainty about student understanding. More records are not better evidence. If the task itself already shows the thinking, add nothing.",
+    leave_head: "Leaving for a while?", leave_body: "Your work stays in this browser on this device. If you may use another device, or if this browser clears its data, download a backup first. You can import it later from My cycles.", leave_btn: "Download a backup",
+    carry_head: "Carry it forward", carry_sub: "The purpose of a cycle is better judgment on the next task, not a finished document.",
+    unc_label: "What remains uncertain after this cycle?", unc_ph: "What does your evidence not settle? What would you want to see before feeling confident?",
+    tr_label: "Which assessment will you look at next, and what will you carry over?", tr_ph: "Name the next task. Which question, move, or kind of evidence from this cycle would you reuse, and which would you drop?",
+    done_head: "What you have now", done_body: "A record of one assessment examined from prediction to classroom evidence: what you expected AI could do, what you tested, what you changed, what students showed, and what is still open. It is your professional reasoning, in your words. VISTA has not scored it.",
+    done_report: "Full cycle report (print or save as PDF)", done_backup: "Download a backup", done_next: "Start the next cycle",
+    import_btn: "Import text from a document",
+    ready_done: "Initial Audit complete. Next: test your prediction in the thinking routine.",
+    title: "VISTA — Assessment audit and redesign"
+  },
+  es: {
+    recap_head: "Lo que registraste antes", recap_none: "Aún no hay nada de las etapas anteriores. Puedes trabajar en cualquier orden, pero cada etapa se apoya en la anterior.", recap_more: "Mostrar el texto completo", recap_less: "Mostrar menos",
+    recap_task: "La tarea y el pensamiento que desarrolla", recap_prediction: "Tu predicción sobre el papel de la IA y del estudiante", recap_rating: "Tu estimación de delegación", recap_sail: "Nivel SAIL inicial", recap_check: "Lo que querías comprobar",
+    recap_trial: "Qué mostró la prueba con IA", recap_missed: "Qué le faltó al resultado de la IA", recap_room: "Dónde es vulnerable la tarea en tu aula",
+    recap_decision: "Tu decisión de rediseño", recap_rsail: "Nivel SAIL revisado", recap_revised: "Tarea revisada", recap_evidence: "Evidencia que planeaste recoger", recap_supports: "Apoyos y la vía sin IA",
+    recap_collected: "Evidencia que recogiste", recap_adjust: "Qué cambió durante la enseñanza", recap_assumption: "El supuesto que la evidencia cuestionó", recap_nextq: "Lo que quieres investigar después",
+    back: "← Volver a", next: "Continuar a", report_btn: "Informe de esta etapa",
+    ahtr_done: "¿Terminaste la rutina? Ahora decides qué implica la prueba para la tarea.",
+    redesign_done: "Cuando la tarea esté lista, enséñala. Vuelve después; tu trabajo seguirá en este navegador.",
+    impl_done: "Después de enseñar, la Auditoría Final te pide comparar lo que esperabas con lo que viste.",
+    reflect_done: "Este ciclo está completo cuando estas notas dicen lo que querrías recordar dentro de seis meses.",
+    no_rating: "Aún no has registrado una estimación de delegación. Las sugerencias siguientes dependen de ella.", go_estimate: "Ir a la estimación en la Auditoría Inicial",
+    who_head: "¿Quién hace qué: el estudiante o la IA?", who_sub: "Aquí tomas la decisión que importa: qué parte del pensamiento debe seguir siendo del estudiante y cómo la harás visible.",
+    rsail_label: "Tu nivel SAIL después de la rutina", rsail_hint: "Selecciona todos los niveles que usa la tarea revisada. Puede ser el mismo de antes, y Sin IA es tan defendible como cualquier otro nivel si protege el aprendizaje.", rsail_initial: "Elección inicial",
+    ev_label: "¿Qué evidencia recogerás y qué no podrá mostrar?", ev_ph: "Nombra la evidencia mínima que respondería a tu pregunta. ¿Por qué reflejaría el pensamiento propio del estudiante? ¿Qué podría no captar?",
+    sup_label: "¿Qué apoyos tendrán los estudiantes y cuál es la vía sin IA?", sup_ph: "¿Qué estudiantes necesitan andamiajes para llegar al mismo pensamiento? ¿Cómo puede participar un estudiante sin IA con la misma exigencia intelectual?",
+    examples_head: "Ejemplos ilustrativos de cinco materias", examples_note: "Son ejemplos construidos para mostrar el tipo de razonamiento. No son hallazgos de investigación ni una respuesta modelo para tu tarea.",
+    ex_task: "Tarea", ex_audit: "Auditoría", ex_redesign: "Rediseño",
+    ready_head: "Antes de enseñar", ready_sub: "Cuatro comprobaciones rápidas. Marca lo que sea cierto; lo que quede sin marcar merece un minuto antes de la clase.",
+    ready_instructions: "Las instrucciones indican a los estudiantes qué uso de IA está permitido y por qué.", ready_route: "Un estudiante puede completar la tarea sin IA con la misma exigencia intelectual.", ready_evidence: "Sé qué observaré o recogeré, y no es más de lo que necesito.", ready_privacy: "Mis notas describirán patrones y ejemplos anónimos, no estudiantes con nombre.",
+    during_head: "Después de enseñar", during_sub: "Bastan notas breves. Escribe lo que viste antes de interpretarlo.",
+    when_label: "¿Cuándo la enseñaste y con quiénes?", when_ph: "p. ej. Dos grupos de décimo, semana del 12 de mayo. Sin nombres de estudiantes.",
+    coll_label: "¿Qué evidencia recogiste u observaste?", coll_ph: "Bastan dos o tres observaciones o muestras de trabajo anónimas. Describe lo que viste o recogiste; la interpretación viene en la Auditoría Final.",
+    adj_label: "¿Qué cambiaste mientras enseñabas y por qué?", adj_ph: "Lo que ajustaste ese día: instrucciones, permisos de IA, tiempos, apoyos.",
+    prop_head: "Recoge solo lo que responda a tu pregunta", prop_body: "La evidencia es útil cuando reduce una incertidumbre real sobre la comprensión de los estudiantes. Más registros no son mejor evidencia. Si la tarea ya muestra el pensamiento, no añadas nada.",
+    leave_head: "¿Vas a dejarlo por un tiempo?", leave_body: "Tu trabajo permanece en este navegador y en este dispositivo. Si vas a usar otro dispositivo, o si este navegador borra sus datos, descarga antes una copia de seguridad. Podrás importarla después desde Mis ciclos.", leave_btn: "Descargar copia de seguridad",
+    carry_head: "Llévalo contigo", carry_sub: "El propósito de un ciclo es un mejor juicio en la siguiente tarea, no un documento terminado.",
+    unc_label: "¿Qué sigue siendo incierto después de este ciclo?", unc_ph: "¿Qué no resuelve tu evidencia? ¿Qué querrías ver antes de sentir confianza?",
+    tr_label: "¿Qué evaluación revisarás después y qué llevarás contigo?", tr_ph: "Nombra la siguiente tarea. ¿Qué pregunta, paso o tipo de evidencia de este ciclo reutilizarías y cuál dejarías?",
+    done_head: "Lo que tienes ahora", done_body: "Un registro de una evaluación examinada desde la predicción hasta la evidencia del aula: qué esperabas que pudiera hacer la IA, qué probaste, qué cambiaste, qué mostraron los estudiantes y qué sigue abierto. Es tu razonamiento profesional, con tus palabras. VISTA no lo ha calificado.",
+    done_report: "Informe completo del ciclo (imprimir o guardar en PDF)", done_backup: "Descargar copia de seguridad", done_next: "Comenzar el siguiente ciclo",
+    import_btn: "Importar texto desde un documento",
+    ready_done: "Auditoría Inicial completa. Siguiente paso: comprueba tu predicción en la rutina de pensamiento.",
+    title: "VISTA — Auditoría y rediseño de evaluaciones"
+  }
+};
+function u(key) { return UI[lang][key] || UI.en[key] || key; }
+
 const TOTAL_STEPS = 6;
 
 // ── LANG ──────────────────────────────────────────────────────────────────────
-function toggleLang() {
-  if (!saveDraft(true)) return;
-  lang = lang === 'en' ? 'es' : 'en';
-  applyStrings(); // applyStrings now calls rebuild functions
+function setLang(next) {
+  next = next === 'es' ? 'es' : 'en';
+  if (next === lang) return;
+  window.VistaDraft = captureDraft(); // keep everything typed so far before the views are rebuilt
+  lang = next;
+  applyStrings(); // applyStrings calls the rebuild functions
 }
+function toggleLang() { setLang(lang === 'en' ? 'es' : 'en'); }
 
 function t(key) {
   return STRINGS[lang][key] || STRINGS['en'][key] || key;
@@ -1400,34 +1598,122 @@ function applyStrings() {
   });
   // Flag switches with language
   document.getElementById('langToggle').setAttribute('data-active-lang', lang);
-  document.title = lang === 'es' ? 'Protocolo VISTA — CNG' : 'VISTA Protocol — CNG';
+  document.getElementById('langToggle').setAttribute('lang', lang === 'es' ? 'en' : 'es');
+  document.documentElement.lang = lang;
+  document.title = u('title');
   // Rebuild all views to apply new language
   rebuildAudit();
   rebuildDeepDive();
+  rebuildRedesign();
+  rebuildImplementation();
   rebuildFinal();
+  rebuildReflection();
   associateLabels();
-  if (currentView === 'refs') rebuildRefs();
   renderBibliography();
+  const scrolled = window.scrollY;
+  showView(currentView);
+  window.scrollTo(0, scrolled);
+  window.VistaLocal?.languageChanged(lang);
 }
 
 // ── VIEW SWITCHING ────────────────────────────────────────────────────────────
+const VIEW_ORDER = ['launch','initial','deepdive','redesign','implementation','final','reflection'];
+const VIEW_BODY = {initial:'auditBody',deepdive:'deepdiveBody',redesign:'redesignBody',implementation:'implBody',final:'finalBody',reflection:'reflectBody'};
+const VIEW_NAV = {launch:'navStart',initial:'navInitial',deepdive:'navDeep',redesign:'navRedesign',implementation:'navImpl',final:'navFinal',reflection:'navReflect',refs:'navRefs'};
+const VIEW_LABEL = {launch:'nav_start',initial:'nav_initial',deepdive:'nav_deepdive',redesign:'nav_redesign',implementation:'nav_impl',final:'nav_final',reflection:'nav_reflect'};
 function showView(name) {
+  if (!document.getElementById('view-' + name)) name = 'launch';
   currentView = name;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
-  document.querySelectorAll('.nav-tab,.bn-tab').forEach(t => t.classList.remove('active'));
-  if (name === 'initial') { document.getElementById('navInitial').classList.add('active'); document.getElementById('bnInitial')?.classList.add('active'); }
-  if (name === 'deepdive') { document.getElementById('navDeep').classList.add('active'); document.getElementById('bnDeep')?.classList.add('active'); refreshDeepDiveContext(); }
-  if (name === 'final') { document.getElementById('navFinal').classList.add('active'); document.getElementById('bnFinal')?.classList.add('active'); associateLabels(); }
-  if (name === 'refs') { document.getElementById('navRefs').classList.add('active'); document.getElementById('bnRefs')?.classList.add('active'); rebuildRefs(); }
-  let back=document.getElementById('auditBack');
-  if(!back){back=document.createElement('button');back.id='auditBack';back.className='btn-draft-sm';document.querySelector('.nav')?.after(back);if(!back.isConnected)document.body.appendChild(back);}
-  (document.getElementById(name==='final'?'finalBody':name==='deepdive'?'deepdiveBody':'auditBody')).prepend(back);
-  back.style.marginBottom='16px';
-  back.hidden=!['deepdive','final'].includes(name);
-  back.textContent=lang==='es'?'← Volver y revisar':'← Back and revise';
-  back.onclick=()=>showView(name==='final'?'deepdive':'initial');
-  window.scrollTo(0,0);
+  document.querySelectorAll('.stagebar .nav-tab').forEach(tab => { tab.classList.remove('active'); tab.removeAttribute('aria-current'); });
+  const tab = document.getElementById(VIEW_NAV[name]);
+  if (tab) {
+    tab.classList.add('active'); tab.setAttribute('aria-current', 'step');
+    const bar = document.getElementById('stagebar');
+    if (bar && bar.scrollWidth > bar.clientWidth) bar.scrollLeft = Math.max(0, tab.offsetLeft - (bar.clientWidth - tab.offsetWidth) / 2);
+  }
+  if (name === 'deepdive' || name === 'redesign') refreshDeepDiveContext();
+  if (name === 'refs') rebuildRefs();
+  refreshRecaps();
+  associateLabels();
+  let back = document.getElementById('auditBack');
+  if (!back) { back = document.createElement('button'); back.type = 'button'; back.id = 'auditBack'; back.className = 'back-link'; }
+  const idx = VIEW_ORDER.indexOf(name);
+  if (idx >= 2) {
+    const prev = VIEW_ORDER[idx - 1];
+    document.getElementById(VIEW_BODY[name]).prepend(back);
+    back.hidden = false;
+    back.textContent = u('back') + ' ' + t(VIEW_LABEL[prev]);
+    back.onclick = () => showView(prev);
+  } else back.hidden = true;
+  window.scrollTo(0, 0);
+  document.getElementById('pf').style.width = '0%';
+  window.VistaLocal?.viewChanged(name);
+}
+
+// ── CARRIED-FORWARD RECAPS ────────────────────────────────────────────────────
+// Each stage shows, read-only, what the teacher recorded in earlier stages.
+const RECAP = {
+  deepdive: [['s1task','recap_task'],['humanAI','recap_prediction'],['@rating','recap_rating'],['@sail','recap_sail'],['lr1','recap_check']],
+  redesign: [['s1task','recap_task'],['@rating','recap_rating'],['@sail','recap_sail'],['dd1','recap_trial'],['dd2','recap_missed'],['dd3','recap_room']],
+  implementation: [['dd4','recap_decision'],['@rsail','recap_rsail'],['dd4redesign','recap_revised'],['redesignEvidence','recap_evidence'],['redesignSupports','recap_supports']],
+  final: [['humanAI','recap_prediction'],['@rating','recap_rating'],['dd4','recap_decision'],['@rsail','recap_rsail'],['implEvidence','recap_collected'],['implAdjust','recap_adjust']],
+  reflection: [['humanAI','recap_prediction'],['fq5','recap_assumption'],['fq6','recap_nextq']]
+};
+function buildRecap(view) {
+  const box = document.createElement('details');
+  box.className = 'recap'; box.id = 'recap-' + view; box.open = true;
+  box.innerHTML = `<summary>${u('recap_head')}</summary><dl class="recap-list"></dl><button type="button" class="recap-toggle" hidden></button>`;
+  const toggle = box.querySelector('.recap-toggle');
+  toggle.onclick = () => { const full = box.classList.toggle('full'); toggle.textContent = u(full ? 'recap_less' : 'recap_more'); };
+  return box;
+}
+function recapValue(source) {
+  if (source === '@sail') return state.sailLevel || '';
+  if (source === '@rsail') return state.redesignSail || '';
+  if (source === '@rating') {
+    if (!state.rating) return '';
+    const card = STRINGS[lang].rating_cards.find(c => c.d === state.rating);
+    return (card ? card.label : state.rating) + ' — ' + STRINGS[lang].decisions[state.rating].verdict;
+  }
+  return document.getElementById(source)?.value?.trim() || '';
+}
+function refreshRecaps() {
+  Object.keys(RECAP).forEach(view => {
+    const box = document.getElementById('recap-' + view);
+    if (!box) return;
+    const list = box.querySelector('.recap-list'), toggle = box.querySelector('.recap-toggle');
+    list.replaceChildren();
+    let long = false;
+    RECAP[view].forEach(([source, label]) => {
+      const value = recapValue(source);
+      if (!value) return;
+      const dt = document.createElement('dt'), dd = document.createElement('dd');
+      dt.textContent = u(label); dd.textContent = value; // textContent: teacher text is never parsed as markup
+      if (value.length > 240) long = true;
+      list.append(dt, dd);
+    });
+    if (!list.children.length) {
+      const none = document.createElement('p'); none.className = 'recap-none'; none.textContent = u('recap_none');
+      list.append(none);
+    }
+    toggle.hidden = !long;
+    toggle.textContent = u(box.classList.contains('full') ? 'recap_less' : 'recap_more');
+  });
+}
+// Closing bar of a stage: what comes next, plus save and report.
+function stageNav(stage, nextView, note) {
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `<div class="submit-bar">
+    <div class="submit-status">${note}</div>
+    <div class="submit-actions">
+      <button type="button" class="btn-draft-sm" onclick="saveDraft()">${t('btn_draft')}</button>
+      <button type="button" class="btn-draft-sm" onclick="window.VistaLocal?.report('${stage}')">${u('report_btn')}</button>
+      ${nextView ? `<button type="button" class="btn-sub" onclick="showView('${nextView}')">${u('next')} ${t(VIEW_LABEL[nextView])} →</button>` : ''}
+    </div>
+  </div>`;
+  return wrap;
 }
 
 // ── PROGRESS ─────────────────────────────────────────────────────────────────
@@ -1445,9 +1731,9 @@ const visObs = new IntersectionObserver(entries => {
 // ── AUDIT BUILDER ─────────────────────────────────────────────────────────────
 // ── UPLOAD (task document only, optional) ─────────────────────────────────────
 function buildUploadTop() {
- const wrap=document.createElement('div');
- wrap.innerHTML=`<button class="btn-draft-sm" onclick="window.VistaCloud?.import('initial')">${lang==='es'?'Enviar respuestas por texto, documento o audio':'Submit responses as text, a document, or audio'}</button>`;
- return wrap;
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `<button type="button" class="back-link" onclick="window.VistaLocal?.import('initial')">${u('import_btn')}</button>`;
+  return wrap;
 }
 
 // ── LIGHT REFLECTION (Initial Audit only — one optional flag) ─────────────
@@ -1469,10 +1755,11 @@ function checkLightReflection() {
 function buildSubmitBar() {
   const s = STRINGS[lang];
   return `<div class="submit-bar">
-    <div class="submit-status" id="submitStatus"><strong>0/${TOTAL_STEPS} ${lang==='es'?'pasos':'steps'}</strong> — ${s.submit_ready}</div>
+    <div class="submit-status" id="submitStatus">${s.submit_ready}</div>
     <div class="submit-actions">
-      <button class="btn-draft-sm" onclick="saveDraft()">${s.btn_draft}</button>
-      <button class="btn-sub" onclick="submitAudit()">${s.btn_submit}</button><button class="btn-draft-sm" onclick="showView('deepdive')">${lang==='es'?'Continuar a la rutina →':'Continue to the routine →'}</button>
+      <button type="button" class="btn-draft-sm" onclick="saveDraft()">${s.btn_draft}</button>
+      <button type="button" class="btn-draft-sm" onclick="submitAudit()">${s.btn_submit}</button>
+      <button type="button" class="btn-sub" onclick="showView('deepdive')">${u('next')} ${t('nav_deepdive')} →</button>
     </div>
   </div>`;
 }
@@ -1483,6 +1770,7 @@ function rebuildFinal() {
   if (!body) return;
   body.innerHTML = '';
   const s = STRINGS[lang];
+  body.appendChild(buildRecap('final'));
 
   // Callout warning
   const warn = document.createElement('div');
@@ -1511,26 +1799,8 @@ function rebuildFinal() {
     ]
   ));
 
-  // Section 3: How thinking changed
-  body.appendChild(buildFinalSection(
-    s.final_s3_title, s.final_s3_sub, '#1A4A2A',
-    [
-      {id:'fq7', label:s.final_q7, ph:s.final_q7_ph},
-      {id:'fq8', label:s.final_q8, ph:s.final_q8_ph},
-      {id:'fq9', label:s.final_q9, ph:s.final_q9_ph, wide:true},
-    ]
-  ));
-
-  // Submit
-  const submitWrap = document.createElement('div');
-  submitWrap.innerHTML = `<div class="submit-bar">
-    <div class="submit-status"><strong>${s.final_submit_note ? lang==='es'?'Auditoría Final':'Final Audit' : ''}</strong> ${s.final_submit_note || ''}</div>
-    <div class="submit-actions">
-      <button class="btn-draft-sm" onclick="saveDraft()">${s.btn_draft}</button>
-      <button class="btn-sub" style="background:#5C1A6B" onclick="submitFinal()">${lang==='es'?'Guardar informe final →':'Save Final Audit Report →'}</button>
-    </div>
-  </div>`;
-  body.appendChild(submitWrap);
+  // Section 3 (how thinking changed) is Stage 6, Reflection and Next Cycle.
+  body.appendChild(stageNav('final', 'reflection', s.final_submit_note));
 
   document.querySelectorAll('#finalBody .step-block').forEach(el => visObs.observe(el));
   restoreState();
@@ -1561,7 +1831,7 @@ function buildFinalSection(title, sub, accentColor, questions) {
   return div;
 }
 
-function submitFinal() { window.VistaCloud?.report('final'); }
+function submitFinal() { saveDraft(true); window.VistaLocal?.report('final'); }
 
 function rebuildAudit() {
   const body = document.getElementById('auditBody');
@@ -1579,8 +1849,8 @@ function rebuildAudit() {
   // Step 2: Upload (optional, task doc only) — after task description
   body.appendChild(buildStep(2, t('upload_section_title'), t('upload_section_sub'),
     lang==='es'
-      ? 'Solo PDF. Opcional — puedes completar toda la auditoría sin él.'
-      : 'PDF only. Optional — you can complete the whole audit without it.',
+      ? 'Opcional: puedes completar toda la auditoría sin esto. Quita cualquier dato que identifique a estudiantes.'
+      : 'Optional: you can complete the whole audit without it. Remove anything that identifies students.',
     buildUploadTop()
   , true));
 
@@ -2130,9 +2400,7 @@ function auditReady() {
 function updateSubmitStatus() {
   const el = document.getElementById('submitStatus');
   if (!el) return;
-  el.textContent = auditReady()
-    ? (lang==='es'?'Listo para guardar. Después, continúa con la rutina.':'Ready to save. Next, continue to the thinking routine.')
-    : t('submit_ready');
+  el.textContent = auditReady() ? u('ready_done') : t('submit_ready');
 }
 
 // ── DEEP DIVE BUILDER ─────────────────────────────────────────────────────────
@@ -2140,6 +2408,7 @@ function rebuildDeepDive() {
   const body = document.getElementById('deepdiveBody');
   body.innerHTML = '';
   const ES = lang === 'es';
+  body.appendChild(buildRecap('deepdive'));
 
   // ── HOW TO USE — the routine, front and center ──────────────────────────
   const how = document.createElement('div');
@@ -2148,7 +2417,7 @@ function rebuildDeepDive() {
   how.innerHTML = `<div style="font-size:14px;color:#fff;line-height:1.6">${ES?'En cada paso, formula tu propio juicio antes de consultar IA. Verifica las sugerencias con la tarea, tus criterios y fuentes confiables. Usa los prompts que necesites.':'At each step, make your own judgment before consulting AI. Check suggestions against the task, your criteria, and reliable sources. Use the prompts you need.'}</div>`;
   body.appendChild(how);
   const check=document.createElement('section');check.className='dd-section';check.id='aiCheck';
-  check.innerHTML=`<h2>${ES?'Comprueba qué puede hacer la IA y explora rediseños parciales':'Check What AI Could Do & Partial Redesign Pathways'}</h2><p class="thinking-guide">${ES?'Prueba tu tarea con IA en el Paso 1. Compara el resultado con tu predicción y usa las rutas siguientes para decidir qué cambiar. Puedes volver a la auditoría y revisar tus decisiones.':'Try your task with AI in Step 1. Compare the result with your prediction, then use the pathways below to decide what to change. You can return to the audit and revise your decisions.'}</p><button class="btn-draft-sm" onclick="showView('initial');document.getElementById('step4').scrollIntoView()">${ES?'← Revisar mi predicción':'← Revisit my prediction'}</button>`;
+  check.innerHTML=`<h2>${ES?'Comprueba qué puede hacer la IA':'Check what AI could do'}</h2><p class="thinking-guide">${ES?'Prueba tu tarea con IA en el Paso 1 y compara el resultado con tu predicción. Puedes volver a la auditoría y revisar tus decisiones; las opciones de rediseño llegan en la siguiente etapa.':'Try your task with AI in Step 1 and compare the result with your prediction. You can return to the audit and revise your decisions; the redesign options come in the next stage.'}</p><button type="button" class="back-link" onclick="showView('initial');document.getElementById('step4').scrollIntoView()">${ES?'← Revisar mi predicción':'← Revisit my prediction'}</button>`;
   body.appendChild(check);
 
   // helper to build a "you first → then AI" step
@@ -2214,11 +2483,6 @@ function rebuildDeepDive() {
   f1.innerHTML=`<div class="rf-label">${ES?'Anota: \u00bfacert\u00f3 tu predicci\u00f3n? \u00bfQu\u00e9 hizo la IA de forma convincente, y qu\u00e9 no pudo?':'Note: was your prediction right? What did AI do convincingly, and what couldn\u2019t it?'}</div><textarea class="rf-area" id="dd1" style="min-height:120px" placeholder="${ES?'S\u00e9 espec\u00edfico sobre tu materia.':'Be specific to your subject.'}"></textarea>`;
   m1.appendChild(f1);
   body.appendChild(m1);
-  const pathways=buildRating();pathways.querySelector('.rating-grid')?.remove();
-  pathways.querySelectorAll('.rc').forEach(el=>el.remove());
-  body.appendChild(pathways);
-  if(state.rating) updatePathways();
-
   // ── MOVE 2 ──────────────────────────────────────────────────────────────
   const m2 = makeDDSection(ES?'Paso 2 \u00b7 \u00bfEn qu\u00e9 puedes confiar de lo que produjo?':'Step 2 \u00b7 How much of it can you trust?', ES?'La IA suena segura aunque se equivoque. Ponte cr\u00edtico antes de creerle.':'AI sounds confident even when it\u2019s wrong. Get critical before you believe it.');
   const you2=document.createElement('div');
@@ -2264,8 +2528,55 @@ function rebuildDeepDive() {
   m3.appendChild(researchPrompt('context'));
   body.appendChild(m3);
 
+  body.appendChild(stageNav('ahtr', 'redesign', u('ahtr_done')));
+
+  document.querySelectorAll('.dd-section').forEach(el => visObs.observe(el));
+  restoreState();
+}
+// ── STAGE 3: REDESIGN ─────────────────────────────────────────────────────────
+function buildRedesignSail() {
+  const wrap = document.createElement('div');
+  wrap.className = 'rfb rsail';
+  const levels = ['L1','L2','L3','L4','L5'];
+  const chosen = (state.redesignSail || '').split(', ');
+  wrap.innerHTML = `<div class="rf-label" id="rsailLabel">${u('rsail_label')}</div>
+    <p class="thinking-guide">${u('rsail_hint')}</p>
+    <div class="sail-chips" role="group" aria-labelledby="rsailLabel">${STRINGS[lang].sail_rows.map((r, i) =>
+      `<button type="button" class="sail-chip${chosen.includes(levels[i]) ? ' on' : ''}" data-rlevel="${levels[i]}" aria-pressed="${chosen.includes(levels[i])}" onclick="selectRedesignSail(this)"><strong>${r[0]}</strong> ${r[1]}</button>`).join('')}</div>
+    <p class="thinking-guide" id="rsailInitial"></p>`;
+  return wrap;
+}
+function selectRedesignSail(chip) {
+  chip.classList.toggle('on');
+  chip.setAttribute('aria-pressed', chip.classList.contains('on') ? 'true' : 'false');
+  state.redesignSail = [...document.querySelectorAll('.sail-chip.on')].map(el => el.dataset.rlevel).join(', ') || null;
+}
+function buildExamples() {
+  const box = document.createElement('details');
+  box.className = 'evidence-guide examples';
+  box.innerHTML = `<summary>${u('examples_head')}</summary><p>${u('examples_note')}</p>` + SCENARIOS[lang].map(s =>
+    `<div class="ex-card"><h4>${s.subject}</h4><p><strong>${u('ex_task')}:</strong> ${s.task}</p><p><strong>${u('ex_audit')}:</strong> ${s.audit}</p><p><strong>${u('ex_redesign')}:</strong> ${s.redesign}</p></div>`).join('');
+  return box;
+}
+function rebuildRedesign() {
+  const body = document.getElementById('redesignBody');
+  if (!body) return;
+  body.innerHTML = '';
+  const ES = lang === 'es';
+  body.appendChild(buildRecap('redesign'));
+  const missing = document.createElement('div');
+  missing.id = 'noRatingNote'; missing.className = 'research-prompt'; missing.hidden = Boolean(state.rating);
+  missing.innerHTML = `<p style="margin-top:0">${u('no_rating')}</p><button type="button" class="back-link" onclick="showView('initial');document.getElementById('step4')?.scrollIntoView()">${u('go_estimate')}</button>`;
+  body.appendChild(missing);
+  const pathways = buildRating(); pathways.querySelector('.rating-grid')?.remove();
+  pathways.querySelectorAll('.rc').forEach(el => el.remove());
+  pathways.querySelector('.rs-grid')?.remove();
+  body.appendChild(pathways);
+  if (state.rating) updatePathways();
+  body.appendChild(buildExamples());
+
   // ── MOVE 4 ──────────────────────────────────────────────────────────────
-  const m4 = makeDDSection(ES?'Paso 4 \u00b7 \u00bfQui\u00e9n hace qu\u00e9 \u2014 el estudiante o la IA?':'Step 4 \u00b7 Who does what \u2014 the student or the AI?', ES?'Aqu\u00ed tomas la decisi\u00f3n que importa: qu\u00e9 parte del pensamiento debe seguir siendo del estudiante, y c\u00f3mo lo har\u00e1s visible.':'Here you make the decision that matters: which part of the thinking must stay the student\u2019s, and how you\u2019ll make it visible.');
+  const m4 = makeDDSection(u('who_head'), u('who_sub'));
   const you4=document.createElement('div');
   you4.style.cssText='background:var(--lgold);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px';
   const sailBlock = state.sailLevel
@@ -2274,7 +2585,7 @@ function rebuildDeepDive() {
         <div style="margin-bottom:6px">${ES?'<strong>\u00bfYa hiciste la Auditor\u00eda Inicial?</strong> Ingresa el nivel SAIL que elegiste:':'<strong>Already ran an Initial Audit?</strong> Enter the SAIL level you chose:'} <input id="ahtrsail" type="text" aria-label="${ES?'Nivel SAIL, L1 a L5':'SAIL level, L1 through L5'}" placeholder="L1\u2013L5" style="width:70px;border:1px solid var(--border);border-radius:4px;padding:3px 7px;font-size:12px;font-family:\'DM Mono\',monospace" oninput="this.value=this.value.toUpperCase()"> ${ES?'\u00bfSigue teniendo sentido despu\u00e9s de lo que viste?':'Does it still hold after what you just saw?'}</div>
         <div style="color:var(--teal);font-style:italic">${ES?'\u00bfEstas corriendo esta rutina por tu cuenta? Elige el nivel que encaje seg\u00fan los Pasos 1\u20133 \u2014 puedes formalizarlo en una Auditor\u00eda Inicial despu\u00e9s.':'Running this on its own? Pick the level that fits based on Steps 1\u20133 \u2014 you can formalize it in an Initial Audit later.'}</div>
       </div>`;
-  you4.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px">${ES?'\u270d\ufe0f T\u00fa decides':'\u270d\ufe0f Your call'}</div><div style="font-size:13.5px;color:var(--navy);font-weight:500;line-height:1.5;margin-bottom:8px">${ES?'Basándote en los tres pasos anteriores: \u00bfqu\u00e9 parte del trabajo puede ayudar a hacer la IA, y qu\u00e9 parte DEBE hacer el estudiante con su propia cabeza para que el aprendizaje ocurra?':'Based on the last three steps: which part of the work can AI help with, and which part MUST the student do with their own mind for the learning to happen?'}</div>
+  you4.innerHTML=`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px">${ES?'\u270d\ufe0f T\u00fa decides':'\u270d\ufe0f Your call'}</div><div style="font-size:13.5px;color:var(--navy);font-weight:500;line-height:1.5;margin-bottom:8px">${ES?'Con base en los tres pasos de la rutina: \u00bfqu\u00e9 parte del trabajo puede ayudar a hacer la IA, y qu\u00e9 parte DEBE hacer el estudiante con su propia cabeza para que el aprendizaje ocurra?':'Based on the three steps of the routine: which part of the work can AI help with, and which part MUST the student do with their own mind for the learning to happen?'}</div>
     ${sailBlock}`;
   m4.appendChild(you4);
   const ai4=document.createElement('div');
@@ -2290,21 +2601,99 @@ function rebuildDeepDive() {
   evidenceGuide.innerHTML=ES?`<summary>Elige evidencia que resuelva tu duda</summary><p><strong>¿Qué no puedes inferir todavía del trabajo?</strong> Elige la evidencia que cierre esa brecha.</p><ul><li>Decisiones: examina qué aceptó, rechazó o revisó el estudiante y sus razones.</li><li>Comprensión independiente: usa una breve explicación, demostración o aplicación a una situación nueva.</li><li>Cambio en el pensamiento: compara un intento anterior con una revisión justificada.</li><li>Si la tarea ya aporta evidencia suficiente, no añadas otro registro.</li></ul><p>Permite una vía sin IA con la misma exigencia intelectual y modos de expresión adecuados al aprendizaje.</p>`:`<summary>Choose evidence that resolves your uncertainty</summary><p><strong>What can you still not infer from the work?</strong> Choose evidence that closes that gap.</p><ul><li>Decision-making: examine what the student accepted, rejected, or revised and their reasons.</li><li>Independent understanding: use a brief explanation, demonstration, or application in a new situation.</li><li>Change in thinking: compare an earlier attempt with a justified revision.</li><li>If the task already provides sufficient evidence, add no extra record.</li></ul><p>Offer a non-AI route with equivalent intellectual demand and modes of expression suited to the learning.</p>`;
   m4.appendChild(evidenceGuide);
   m4.appendChild(f4);
+  m4.appendChild(buildRedesignSail());
   const f4b = document.createElement('div'); f4b.className='rfb';
   f4b.innerHTML=`<div class="rf-label" style="color:var(--muted);font-weight:400">${ES?'Pega o enlaza tu tarea rediseñada (opcional) — para tenerla a mano cuando la reflexiones más tarde.':'Paste or link your redesigned task (optional) — so you have it on hand when you reflect on it later.'}</div><textarea class="rf-area" id="dd4redesign" style="min-height:80px" placeholder="${ES?'Tarea rediseñada, enlace, o notas rápidas.':'Redesigned task, a link, or quick notes.'}"></textarea>`;
   m4.appendChild(f4b);
+  const plan = document.createElement('div'); plan.className = 'rf-grid';
+  plan.innerHTML = `<div class="rfb"><label class="rf-label" for="redesignEvidence">${u('ev_label')}</label><textarea class="rf-area" id="redesignEvidence" style="min-height:110px" placeholder="${u('ev_ph')}"></textarea></div>
+    <div class="rfb"><label class="rf-label" for="redesignSupports">${u('sup_label')}</label><textarea class="rf-area" id="redesignSupports" style="min-height:110px" placeholder="${u('sup_ph')}"></textarea></div>`;
+  m4.appendChild(plan);
   m4.appendChild(researchPrompt('feedback'));
   body.appendChild(m4);
 
-  // ── CLOSING ─────────────────────────────────────────────────────────────
-  const close=document.createElement('div'); close.className='dd-section';
-  close.style.cssText='background:var(--navy);border-radius:12px;padding:22px 26px;margin-top:8px';
-  close.innerHTML=`<div style="font-size:16px;color:var(--gold);margin-bottom:10px">${ES?'Antes de enseñar':'Before you teach'}</div><div style="font-size:13px;color:#fff;line-height:1.65">${ES?'Actualiza las instrucciones de la tarea con el nivel SAIL elegido y una opción sin IA. Decide qué observarás o recogerás para comprobar el aprendizaje. Guarda tus notas y enseña la tarea. Después, vuelve a la Auditoría Final.':'Update the task instructions with your chosen SAIL level and a way to participate without AI. Decide what you will observe or collect to check learning. Save your notes and teach the task. Then return to the Final Audit.'}</div><button class="btn-draft-sm" style="margin-top:16px" onclick="saveDraft()">${t('btn_draft')}</button>`;
-  body.appendChild(close);
 
-  document.querySelectorAll('.dd-section').forEach(el => visObs.observe(el));
+
+  body.appendChild(stageNav('redesign', 'implementation', u('redesign_done')));
+  document.querySelectorAll('#redesignBody .dd-section').forEach(el => visObs.observe(el));
   restoreState();
 }
+
+// ── STAGE 4: IMPLEMENTATION ───────────────────────────────────────────────────
+function rebuildImplementation() {
+  const body = document.getElementById('implBody');
+  if (!body) return;
+  body.innerHTML = '';
+  body.appendChild(buildRecap('implementation'));
+
+  const ready = makeDDSection(u('ready_head'), u('ready_sub'));
+  const list = document.createElement('div');
+  list.className = 'ready-list';
+  list.innerHTML = ['instructions','route','evidence','privacy'].map(key =>
+    `<label class="ready-item"><input type="checkbox" class="impl-ready" data-key="${key}"${state.implReady.has(key) ? ' checked' : ''} onchange="toggleReady(this)"><span>${u('ready_' + key)}</span></label>`).join('');
+  ready.appendChild(list);
+  const prop = document.createElement('div');
+  prop.className = 'research-prompt';
+  prop.innerHTML = `<div class="research-kicker">${u('prop_head')}</div><p style="margin-top:0">${u('prop_body')}</p>`;
+  ready.appendChild(prop);
+  body.appendChild(ready);
+
+  const after = makeDDSection(u('during_head'), u('during_sub'));
+  const grid = document.createElement('div');
+  grid.className = 'rf-grid';
+  grid.innerHTML = `
+    <div class="rfb wide"><label class="rf-label" for="implWhen">${u('when_label')}</label><input type="text" class="rf-area rf-line" id="implWhen" placeholder="${u('when_ph')}"></div>
+    <div class="rfb wide"><label class="rf-label" for="implEvidence">${u('coll_label')}</label><textarea class="rf-area" id="implEvidence" style="min-height:140px" placeholder="${u('coll_ph')}"></textarea></div>
+    <div class="rfb wide"><label class="rf-label" for="implAdjust">${u('adj_label')}</label><textarea class="rf-area" id="implAdjust" placeholder="${u('adj_ph')}"></textarea></div>`;
+  after.appendChild(grid);
+  body.appendChild(after);
+
+  const leave = document.createElement('div');
+  leave.className = 'dd-section leave-box';
+  leave.innerHTML = `<div class="leave-head">${u('leave_head')}</div><p>${u('leave_body')}</p><button type="button" class="btn-draft-sm" onclick="window.VistaLocal?.backup()">${u('leave_btn')}</button>`;
+  body.appendChild(leave);
+
+  body.appendChild(stageNav('implementation', 'final', u('impl_done')));
+  document.querySelectorAll('#implBody .dd-section').forEach(el => visObs.observe(el));
+  restoreState();
+}
+function toggleReady(box) {
+  if (box.checked) state.implReady.add(box.dataset.key); else state.implReady.delete(box.dataset.key);
+}
+
+// ── STAGE 6: REFLECTION AND NEXT CYCLE ────────────────────────────────────────
+function rebuildReflection() {
+  const body = document.getElementById('reflectBody');
+  if (!body) return;
+  body.innerHTML = '';
+  const s = STRINGS[lang];
+  body.appendChild(buildRecap('reflection'));
+  body.appendChild(buildFinalSection(s.final_s3_title, s.final_s3_sub, '#1A4A2A', [
+    {id:'fq7', label:s.final_q7, ph:s.final_q7_ph},
+    {id:'fq8', label:s.final_q8, ph:s.final_q8_ph},
+    {id:'fq9', label:s.final_q9, ph:s.final_q9_ph, wide:true},
+  ]));
+  const carry = document.createElement('div');
+  carry.className = 'step-block';
+  carry.innerHTML = `<div class="step-head"><div class="step-num" style="background:#1A3A5C">→</div><div class="step-head-text"><h2>${u('carry_head')}</h2><p>${u('carry_sub')}</p></div></div>
+    <div class="rf-grid">
+      <div class="rfb"><label class="rf-label" for="nextUncertain">${u('unc_label')}</label><textarea class="rf-area" id="nextUncertain" style="min-height:110px" placeholder="${u('unc_ph')}"></textarea></div>
+      <div class="rfb"><label class="rf-label" for="nextTransfer">${u('tr_label')}</label><textarea class="rf-area" id="nextTransfer" style="min-height:110px" placeholder="${u('tr_ph')}"></textarea></div>
+    </div>`;
+  body.appendChild(carry);
+  const done = document.createElement('div');
+  done.className = 'cycle-complete'; done.id = 'cycleComplete';
+  done.innerHTML = `<h2>${u('done_head')}</h2><p>${u('done_body')}</p><p class="cycle-complete-note">${u('reflect_done')}</p>
+    <div class="submit-actions">
+      <button type="button" class="btn-sub" onclick="window.VistaLocal?.report('reflection')">${u('done_report')}</button>
+      <button type="button" class="btn-draft-sm" onclick="window.VistaLocal?.backup()">${u('done_backup')}</button>
+      <button type="button" class="btn-draft-sm" onclick="window.VistaLocal?.nextCycle()">${u('done_next')}</button>
+    </div>`;
+  body.appendChild(done);
+  document.querySelectorAll('#reflectBody .step-block').forEach(el => visObs.observe(el));
+  restoreState();
+}
+
 // Short excerpts checked against original publications; questions are VISTA applications.
 function researchPrompt(key) {
  const quotes={
@@ -2357,6 +2746,8 @@ Be specific to my subject.`;
 }
 
 function refreshDeepDiveContext() {
+  const noRating = document.getElementById('noRatingNote'); if (noRating) noRating.hidden = Boolean(state.rating);
+  const initialSail = document.getElementById('rsailInitial'); if (initialSail) initialSail.textContent = state.sailLevel ? u('rsail_initial') + ': ' + state.sailLevel : '';
   const prediction=document.getElementById('initialPrediction');if(prediction)prediction.textContent=(lang==='es'?'Tu predicción inicial: ':'Your initial prediction: ')+(document.getElementById('humanAI')?.value || (lang==='es'?'Puedes escribirla aquí si no hiciste la auditoría inicial.':'You can write it below if you started here.'));
   const prompt = document.getElementById('generatedPrompt');
   if (prompt) prompt.textContent = generatePrompt();
@@ -2380,75 +2771,41 @@ function copyText(btn) {
 }
 
 // ── SAVE / SUBMIT ─────────────────────────────────────────────────────────────
+// A field that is not on the page at this moment keeps the value it had when last saved.
 function captureDraft() {
-  const draft = {
-    lang, meta: {
-      teacher: document.getElementById('ft')?.value,
-      discipline: document.getElementById('fd')?.value,
-      assessment: document.getElementById('fa')?.value,
-      date: document.getElementById('fdate')?.value,
-    },
-    task: document.getElementById('s1task')?.value,
-    learningEvidence: document.getElementById('learningEvidence')?.value,
-    humanAI: document.getElementById('humanAI')?.value,
+  const prev = window.VistaDraft || {};
+  const v = (id, old) => { const el = document.getElementById(id); return el ? el.value : (old ?? ''); };
+  const group = (name, map) => Object.fromEntries(Object.entries(map).map(([key, id]) => [key, v(id, prev[name]?.[key])]));
+  return {
+    lang,
+    meta: group('meta', {teacher:'ft', discipline:'fd', assessment:'fa', date:'fdate'}),
+    task: v('s1task', prev.task),
+    learningEvidence: v('learningEvidence', prev.learningEvidence),
+    humanAI: v('humanAI', prev.humanAI),
     classifier: [...state.selectedTypes],
     rating: state.rating,
     sail: state.sailLevel,
-    sailJustify: document.getElementById('sailJustify')?.value,
-    reflection: {
-      r1: document.getElementById('r1')?.value,
-      r2: document.getElementById('r2')?.value,
-      r3: document.getElementById('r3')?.value,
-      r4: document.getElementById('r4')?.value,
-    },
-    min_reflection: {
-      min_r1: document.getElementById('min_r1')?.value,
-      min_r2: document.getElementById('min_r2')?.value,
-      min_r3: document.getElementById('min_r3')?.value,
-      min_r4: document.getElementById('min_r4')?.value,
-      min_exemplar: document.getElementById('min_exemplar_text')?.value,
-    },
-    deepdive: {
-      prediction: document.getElementById('ddYou1')?.value,
-      dd1: document.getElementById('dd1')?.value,
-      dd2: document.getElementById('dd2')?.value,
-      dd3: document.getElementById('dd3')?.value,
-      dd4: document.getElementById('dd4')?.value,
-      dd4redesign: document.getElementById('dd4redesign')?.value,
-      standaloneSail: document.getElementById('ahtrsail')?.value,
-    },
-    light_reflection: {
-      lr1: document.getElementById('lr1')?.value,
-    },
-    final_audit: {
-      fq1: document.getElementById('fq1')?.value,
-      fq2: document.getElementById('fq2')?.value,
-      fq3: document.getElementById('fq3')?.value,
-      fq4: document.getElementById('fq4')?.value,
-      fq5: document.getElementById('fq5')?.value,
-      fq6: document.getElementById('fq6')?.value,
-      fq7: document.getElementById('fq7')?.value,
-      fq8: document.getElementById('fq8')?.value,
-      fq9: document.getElementById('fq9')?.value,
-    },
-    final_meta: {
-      teacher: document.getElementById('ftf')?.value,
-      discipline: document.getElementById('fdf')?.value,
-      assessment: document.getElementById('faf')?.value,
-      cycle: document.getElementById('fcycle')?.value,
-    },
+    sailJustify: v('sailJustify', prev.sailJustify),
+    reflection: group('reflection', {r1:'r1', r2:'r2', r3:'r3', r4:'r4'}),
+    min_reflection: group('min_reflection', {min_r1:'min_r1', min_r2:'min_r2', min_r3:'min_r3', min_r4:'min_r4', min_exemplar:'min_exemplar_text'}),
+    deepdive: group('deepdive', {prediction:'ddYou1', dd1:'dd1', dd2:'dd2', dd3:'dd3', dd4:'dd4', dd4redesign:'dd4redesign', standaloneSail:'ahtrsail'}),
+    light_reflection: group('light_reflection', {lr1:'lr1'}),
+    redesign: {...group('redesign', {evidence:'redesignEvidence', supports:'redesignSupports'}), sail: state.redesignSail},
+    implementation: {...group('implementation', {when:'implWhen', evidence:'implEvidence', adjustments:'implAdjust'}), ready: [...state.implReady]},
+    final_audit: group('final_audit', {fq1:'fq1', fq2:'fq2', fq3:'fq3', fq4:'fq4', fq5:'fq5', fq6:'fq6', fq7:'fq7', fq8:'fq8', fq9:'fq9'}),
+    final_meta: group('final_meta', {teacher:'ftf', discipline:'fdf', assessment:'faf', cycle:'fcycle'}),
+    next: group('next', {uncertain:'nextUncertain', transfer:'nextTransfer'}),
     savedAt: new Date().toISOString()
   };
-  return draft;
 }
-function saveDraft(silent=false) {
- window.VistaDraft=captureDraft();
- window.VistaCloud?.changed();
- if(!silent) window.VistaCloud?.save();
- return true;
+// Saving is automatic; this is the explicit "Save now". Returns false only if nothing could be captured.
+function saveDraft(silent = false) {
+  window.VistaDraft = captureDraft();
+  if (silent) window.VistaLocal?.changed(); else window.VistaLocal?.save();
+  return true;
 }
 
-function submitAudit() { window.VistaCloud?.report('initial'); }
+function submitAudit() { saveDraft(true); window.VistaLocal?.report('initial'); }
 
 // ── TOAST ─────────────────────────────────────────────────────────────────────
 function showToast(msg) {
@@ -2519,9 +2876,23 @@ function restoreState() {
       fq1:'fq1', fq2:'fq2', fq3:'fq3', fq4:'fq4', fq5:'fq5', fq6:'fq6', fq7:'fq7', fq8:'fq8', fq9:'fq9'
     });
     restoreGroup(d.final_meta, {teacher:'ftf', discipline:'fdf', assessment:'faf', cycle:'fcycle'});
+    restoreGroup(d.redesign, {evidence:'redesignEvidence', supports:'redesignSupports'});
+    if (d.redesign?.sail) state.redesignSail = d.redesign.sail;
+    document.querySelectorAll('.sail-chip').forEach(chip => {
+      const on = (state.redesignSail || '').split(', ').includes(chip.dataset.rlevel);
+      chip.classList.toggle('on', on); chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    restoreGroup(d.implementation, {when:'implWhen', evidence:'implEvidence', adjustments:'implAdjust'});
+    if (Array.isArray(d.implementation?.ready)) state.implReady = new Set(d.implementation.ready);
+    document.querySelectorAll('.impl-ready').forEach(box => { box.checked = state.implReady.has(box.dataset.key); });
+    restoreGroup(d.next, {uncertain:'nextUncertain', transfer:'nextTransfer'});
+    [['ftf','ft'],['fdf','fd'],['faf','fa']].forEach(([to, from]) => {
+      const target = document.getElementById(to), source = document.getElementById(from);
+      if (target && source && !target.value && source.value) target.value = source.value;
+    });
     updateProgressBar();
     updateSubmitStatus();
-  } catch(e) {}
+  } catch(e) { console.error('VISTA could not restore part of this cycle', e); }
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
@@ -2728,7 +3099,7 @@ function makeKeyboardClickable(el, role='button') {
 }
 
 function enhanceKeyboardControls() {
-  document.querySelectorAll('.nav-brand,.nav-lang,.nav-tab,.path-card,.sc-card,.upload-zone,.ui-remove').forEach(el => {
+  document.querySelectorAll('.path-card,.sc-card,.upload-zone,.ui-remove').forEach(el => {
     makeKeyboardClickable(el, el.classList.contains('nav-tab') ? 'tab' : 'button');
   });
   document.querySelectorAll('.cl-card').forEach(el => {
@@ -2757,14 +3128,25 @@ associateLabels();
 applyStrings();
 renderBibliography();
 
-window.VistaForm={capture:captureDraft,load(d){
- window.VistaDraft=structuredClone(d);
- state={selectedTypes:new Set(),rating:null,sailLevel:null,selectedLens:null,uploads:[],completedSteps:new Set(),draft:{}};
- document.querySelectorAll('.view input,.view textarea').forEach(el=>{el.value='';});
- lang=d.lang==='es'?'es':'en';
- applyStrings();rebuildAudit();rebuildDeepDive();rebuildFinal();restoreState();
-}};
+const todayLabel = () => new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+// Bridge to the storage module (src/local.js). The page works without it; nothing is persisted until it loads.
+window.VistaForm = {
+  capture: captureDraft,
+  lang: () => lang,
+  setLang,
+  view: () => currentView,
+  show: showView,
+  text: u,
+  load(d) {
+    window.VistaDraft = structuredClone(d || {});
+    state = {selectedTypes:new Set(), rating:null, sailLevel:null, selectedLens:null, uploads:[], completedSteps:new Set(), redesignSail:null, implReady:new Set(), draft:{}};
+    document.querySelectorAll('.view input:not([type=checkbox]),.view textarea').forEach(el => { el.value = ''; });
+    applyStrings();
+    const date = document.getElementById('fdate');
+    if (date && !date.value) date.value = todayLabel();
+  }
+};
 </script>
-<script type="module" src="/assets/cloud.js"></script>
+<script type="module" src="/assets/local.js"></script>
 </body>
 </html>
