@@ -44,3 +44,15 @@ Not yet verified: physical phones; Safari application; screen readers; live prin
 6. Continue first-time journey review with teachers, report/page-break inspection, public-page Spanish, and further failure-mode testing (partial storage writes, corrupted local index, import capacity). Existing green tests do not establish that every storage failure is recoverable.
 
 Do not merge this branch or promote a preview to production until release decisions are made.
+
+## Second iteration: introduction and reasoning record
+
+The start page now uses the working environment's paper/ink palette and a task-first heading. The six stages are grouped before/during/after teaching. Preparation, output, saving, and external AI access are explained before beginning. New English and Spanish copy is implemented; Spanish still needs human linguistic review. Mobile preparation content stacks vertically, and the main action uses the full available width.
+
+Keyboard-triggered stage changes move focus into the destination heading/header. A browser assertion checks that the new stage owns focus after continuing.
+
+Reports now place selected teacher responses before the full stage record: prediction, AI-trial observation, redesign decision, implementation evidence, interpretation of evidence, and uncertainty. These are verbatim fields, not generated summaries. Empty statements are omitted from the selected-response section while remaining marked in the full record. A regression test ensures reports ending at Initial Audit do not include a revised SAIL level or later-stage statements.
+
+Verified: build, 17 unit tests, both Chromium browser suites, and all 33 accessibility scans pass. The synthetic full-cycle PDF has seven A4 pages; every page was rendered and visually inspected with no clipping found. This does not establish behavior for every possible teacher response length. The selected-response section adds length intentionally; the complete record is retained.
+
+The first desktop/mobile review prompted a second layout correction: preparation columns now stack on phones, and the primary action spans the width. The original Fable/Opus branch is untouched.

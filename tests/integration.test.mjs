@@ -13,7 +13,7 @@ test('a full-cycle report covers all six stages in order, in English and Spanish
     const {title, draft} = exampleCycle(lang);
     const snapshot = sanitizeDraft(draft); // the example must survive the same validation as teacher data
     const text = buildReport({title, stage: 'reflection', snapshot, lang});
-    const positions = STAGE_ORDER.map(s => text.indexOf('## ' + {en: {initial: 'Initial Audit', ahtr: 'AI-HTR', redesign: 'Redesign', implementation: 'Implementation', final: 'Final Audit', reflection: 'Reflection and Next Cycle'}, es: {initial: 'Auditoría Inicial', ahtr: 'AI-HTR', redesign: 'Rediseño', implementation: 'Implementación', final: 'Auditoría Final', reflection: 'Reflexión y siguiente ciclo'}}[lang][s]));
+    const positions = STAGE_ORDER.map(s => text.split('\n').indexOf('## ' + {en: {initial: 'Initial Audit', ahtr: 'AI-HTR', redesign: 'Redesign', implementation: 'Implementation', final: 'Final Audit', reflection: 'Reflection and Next Cycle'}, es: {initial: 'Auditoría Inicial', ahtr: 'AI-HTR', redesign: 'Rediseño', implementation: 'Implementación', final: 'Auditoría Final', reflection: 'Reflexión y siguiente ciclo'}}[lang][s]));
     assert.ok(positions.every(p => p > 0), 'every stage heading present: ' + positions);
     assert.deepEqual([...positions].sort((a, b) => a - b), positions);
     assert.ok(text.includes(snapshot.next.transfer) && text.includes(snapshot.redesign.evidence) && text.includes(snapshot.implementation.evidence));
@@ -28,4 +28,15 @@ test('the printable report escapes everything a teacher typed', () => {
   const html = reportDocument({title: '<script>alert(1)</script>', stage: 'reflection', snapshot: {task: '<img src=x onerror=1>', meta: {teacher: '"><b>x'}, next: {uncertain: '</p><script>x</script>'}}});
   assert.ok(!/<script|<img|<b>/i.test(html));
   assert.ok(html.includes('&lt;img src=x onerror=1&gt;'));
+});
+
+test('reports respect the selected stage and preserve selected reasoning verbatim', () => {
+  const snapshot = {humanAI: 'Prediction: students justify the model.', deepdive: {dd1: 'Observed output <not evidence of understanding>.', dd4: 'Later redesign decision.'}, redesign: {sail: 'L5'}, implementation: {evidence: 'Later classroom evidence.'}, next: {uncertain: 'Later uncertainty.'}};
+  const initial = buildReport({title: 'Stage boundary', stage: 'initial', snapshot});
+  for (const future of ['Later redesign decision.', 'L5', 'Later classroom evidence.', 'Later uncertainty.', snapshot.deepdive.dd1]) assert.ok(!initial.includes(future), future);
+  const full = reportDocument({title: 'Full record', stage: 'reflection', snapshot});
+  assert.ok(full.includes('Your reasoning: selected responses'));
+  assert.ok(full.includes('Observed output &lt;not evidence of understanding&gt;.'));
+  assert.ok(!full.includes('Observed output <not evidence'));
+  assert.ok(full.includes('Later uncertainty.'));
 });

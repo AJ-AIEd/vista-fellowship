@@ -50,6 +50,7 @@ const shots = process.env.VISTA_SHOTS || require('node:os').tmpdir();
   await page.locator('#lr1').fill('Check their explanation on a new data set.');
   await page.locator('#view-initial .btn-sub').click(); // continue to the routine
   assert.equal(await page.locator('#view-deepdive').isVisible(),true);
+  assert.equal(await page.evaluate(() => document.getElementById('view-deepdive').contains(document.activeElement)), true, 'stage transition places keyboard focus in the new stage');
   assert.match(await page.locator('#generatedPrompt').textContent(), /Algebra 2/);
   // Earlier decisions are carried forward into the next stage.
   assert.match(await page.locator('#recap-deepdive').textContent(), /AI can fit a model/);

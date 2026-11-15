@@ -461,7 +461,9 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
       </div>
       <p class="start-privacy" data-k="start_privacy">No account. Your work is saved in this browser on this device and is not sent anywhere. Download a backup to keep a copy or move to another device.</p>
 
+      <p class="start-requirements" data-k="start_requirements"></p>
       <h2 class="start-h" data-k="start_how">How a cycle works</h2>
+      <div class="journey-grid">
       <div class="phase">
         <div class="phase-label"><span data-k="phase_before">Before you teach</span><em data-k="phase_before_time">about 60 to 90 minutes, in one or two sittings</em></div>
         <div class="stage-cards">
@@ -482,6 +484,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
           <div class="path-card" onclick="showView('final')"><div class="path-step-badge">5</div><div class="path-title" data-k="path_c_title">Final Audit</div><div class="path-sub" data-k="path_c_sub"></div></div>
           <div class="path-card" onclick="showView('reflection')"><div class="path-step-badge">6</div><div class="path-title" data-k="path_f_title">Reflection and Next Cycle</div><div class="path-sub" data-k="path_f_sub"></div></div>
         </div>
+      </div>
       </div>
       <p class="path-note" data-k="path_note">Time estimates are approximate. You can stop at any point and return; each stage shows what you decided earlier.</p>
 
@@ -1396,7 +1399,8 @@ Object.assign(STRINGS.en, {
   nav_start: "Start", nav_redesign: "Redesign", nav_impl: "Implementation", nav_reflect: "Reflection",
   nav_report: "Report", nav_cycles: "My cycles", stage_word: "Stage",
   launch_badge: "A self-guided professional-learning cycle",
-  launch_title_1: "VISTA", launch_title_2: "Visibility Into Student Thinking and Agency",
+  launch_title_1: "Start with one assessment.", launch_title_2: "Make the thinking behind it visible.",
+  start_requirements: "Begin independently: no AI account is needed for the Initial Audit. For the AI-HTR, you will use an AI tool of your choice outside VISTA; its access requirements may vary. VISTA itself does not call an AI model.",
   start_begin: "Begin with your own task →", start_example: "Explore a worked example",
   start_privacy: "No account. Your work is saved in this browser on this device and is not sent anywhere. Download a backup to keep a copy or move to another device.",
   start_how: "How a cycle works",
@@ -1438,7 +1442,8 @@ Object.assign(STRINGS.es, {
   nav_start: "Inicio", nav_redesign: "Rediseño", nav_impl: "Implementación", nav_reflect: "Reflexión",
   nav_report: "Informe", nav_cycles: "Mis ciclos", stage_word: "Etapa",
   launch_badge: "Un ciclo autoguiado de aprendizaje profesional",
-  launch_title_1: "VISTA", launch_title_2: "Visibilidad e Indagación del Pensamiento y la Agencia Estudiantil",
+  launch_title_1: "Empieza con una evaluación.", launch_title_2: "Haz visible el pensamiento que requiere.",
+  start_requirements: "Empieza de forma independiente: no necesitas una cuenta de IA para la Auditoría Inicial. En la AI-HTR usarás una herramienta de IA de tu elección fuera de VISTA; sus requisitos de acceso pueden variar. VISTA no consulta ningún modelo de IA.",
   start_begin: "Comenzar con tu propia tarea →", start_example: "Explorar un ejemplo resuelto",
   start_privacy: "Sin cuenta. Tu trabajo se guarda en este navegador y en este dispositivo, y no se envía a ningún lugar. Descarga una copia de seguridad para conservarlo o pasarlo a otro dispositivo.",
   start_how: "Cómo funciona un ciclo",
@@ -1635,6 +1640,7 @@ const VIEW_NAV = {launch:'navStart',initial:'navInitial',deepdive:'navDeep',rede
 const VIEW_LABEL = {launch:'nav_start',initial:'nav_initial',deepdive:'nav_deepdive',redesign:'nav_redesign',implementation:'nav_impl',final:'nav_final',reflection:'nav_reflect'};
 function showView(name) {
   if (!document.getElementById('view-' + name)) name = 'launch';
+  const moveFocus = document.activeElement?.matches('button,[role=button],[role=tab]') && currentView !== name;
   currentView = name;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
@@ -1659,6 +1665,10 @@ function showView(name) {
     back.textContent = u('back') + ' ' + t(VIEW_LABEL[prev]);
     back.onclick = () => showView(prev);
   } else back.hidden = true;
+  if (moveFocus) {
+    const heading = document.querySelector('#view-' + name + ' h1, #view-' + name + ' .audit-header, #view-' + name + ' .dd-header');
+    if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({preventScroll: true}); }
+  }
   window.scrollTo({top: 0, left: 0, behavior: 'instant'});
   document.getElementById('pf').style.width = '0%';
   window.VistaLocal?.viewChanged(name);

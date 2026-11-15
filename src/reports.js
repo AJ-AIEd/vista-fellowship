@@ -164,13 +164,22 @@ export function reportModel({title, stage, snapshot, createdAt = new Date().toIS
     [FIELDS.initial[3][lang === 'es' ? 2 : 1], display('classifier', snapshot.classifier, lang)],
     [FIELDS.initial[4][lang === 'es' ? 2 : 1], display('rating', snapshot.rating, lang)],
     [FIELDS.initial[5][lang === 'es' ? 2 : 1], snapshot.sail || ''],
-    [FIELDS.redesign[1][lang === 'es' ? 2 : 1], snapshot.redesign?.sail || '']
+    [FIELDS.redesign[1][lang === 'es' ? 2 : 1], stages.includes('redesign') ? snapshot.redesign?.sail || '' : '']
   ].filter(([, v]) => v);
+  // Selected teacher statements only; do not summarise, score, or fill missing reasoning.
+  const reasoning = [
+    ['initial', 'humanAI'], ['ahtr', 'deepdive.dd1'],
+    ['redesign', 'deepdive.dd4'], ['implementation', 'implementation.evidence'],
+    ['final', 'final_audit.fq3'], ['reflection', 'next.uncertain']
+  ].filter(([part]) => stages.includes(part)).map(([part, path]) => {
+    const field = FIELDS[part].find(([key]) => key === path);
+    return {label: field[lang === 'es' ? 2 : 1], value: display(path, valueAt(snapshot, path), lang)};
+  }).filter(item => item.value.trim());
   return {
     lang, stage, title: title || tx.none, createdAt,
     heading: `VISTA — ${stageName(stage, lang)} ${tx.report}`,
     teacher: snapshot.meta?.teacher || tx.none, department: snapshot.meta?.discipline || tx.none,
-    summary, sections, handoff: handoff(stage, lang), tx
+    summary, reasoning, sections, handoff: handoff(stage, lang), tx
   };
 }
 // Plain-text (Markdown-compatible) report.
@@ -178,6 +187,7 @@ export function buildReport(options) {
   const m = reportModel(options), tx = m.tx;
   const lines = [m.heading, `${tx.cycle}: ${m.title}`, `${tx.created}: ${m.createdAt}`, `${tx.teacher}: ${m.teacher}`, `${tx.department}: ${m.department}`, '', tx.preface, ''];
   if (m.summary.length) { lines.push(`## ${tx.summary}`); for (const [k, v] of m.summary) lines.push(`- ${k}: ${v}`); lines.push(''); }
+  if (m.reasoning.length) { lines.push(`## ${m.lang === 'es' ? 'Tu razonamiento: respuestas seleccionadas' : 'Your reasoning: selected responses'}`); for (const item of m.reasoning) lines.push(`### ${item.label}`, item.value, ''); }
   for (const s of m.sections) {
     lines.push(`## ${s.name}`);
     if (s.submission) lines.push(`### ${tx.reviewed}`, s.submission, '');
@@ -225,6 +235,7 @@ footer{margin-top:30px;padding-top:10px;border-top:1px solid #d9d2c6;font:8.5pt/
 <p class="meta">${e(tx.teacher)}: ${e(m.teacher)} · ${e(tx.department)}: ${e(m.department)}</p>
 <p class="note">${e(tx.preface)}</p></header>
 ${m.summary.length ? `<section><h2>${e(tx.summary)}</h2><table>${m.summary.map(([k, v]) => `<tr><th scope="row">${e(k)}</th><td>${e(v)}</td></tr>`).join('')}</table></section>` : ''}
+${m.reasoning.length ? `<section class="reasoning"><h2>${m.lang === 'es' ? 'Tu razonamiento: respuestas seleccionadas' : 'Your reasoning: selected responses'}</h2><p class="meta">${m.lang === 'es' ? 'Tus palabras, sin resumir. Las respuestas completas aparecen a continuación.' : 'Your own words, without summarising. Full stage responses follow.'}</p>${m.reasoning.map(item => `<div class="item"><h3>${e(item.label)}</h3><p class="answer">${e(item.value)}</p></div>`).join('')}</section>` : ''}
 ${m.sections.map(section).join('')}
 <section><h2>${e(tx.continueHead)}</h2><p>${e(tx.continueBody)}</p><h3>${e(tx.handoffHead)}</h3><p class="handoff">${e(m.handoff)}</p></section>
 <footer>${e(tx.footer)}</footer>
