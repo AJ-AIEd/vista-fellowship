@@ -20,6 +20,7 @@ for (const [pkg, files] of Object.entries(fonts)) for (const f of files) await c
 await rm('dist', {recursive: true, force: true});
 await mkdir('dist', {recursive: true});
 for (const name of await readdir('.')) if (/\.(html|css|ico|png|svg|webmanifest|txt)$/.test(name)) await copyFile(name, 'dist/' + name);
-// cng/ holds the school-specific fellowship pages; public/ holds their documents.
-for (const name of ['assets', 'css', 'js', 'cng', 'public']) await cp(name, 'dist/' + name, {recursive: true});
+// Preserve school archives in source, but do not publish them in product previews.
+// Reintroducing these materials requires an explicit ownership and privacy review.
+for (const name of ['assets', 'css', 'js']) await cp(name, 'dist/' + name, {recursive: true});
 console.log('Built dist/');

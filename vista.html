@@ -1566,6 +1566,18 @@ function t(key) {
 }
 
 function applyStrings() {
+  const metadata = lang === 'es'
+    ? {Teacher: 'Docente', Department: 'Departamento', Assessment: 'Evaluación', Date: 'Fecha', Cycle: 'Ciclo'}
+    : {Teacher: 'Teacher', Department: 'Department', Assessment: 'Assessment', Date: 'Date', Cycle: 'Cycle'};
+  const hints = lang === 'es'
+    ? {Teacher: 'Tu nombre', Department: 'p. ej. Matemáticas de secundaria', Assessment: 'Nombre de la tarea que vas a revisar', Cycle: 'p. ej. Iteración 1, noviembre de 2026'}
+    : {Teacher: 'Your name', Department: 'e.g. High School Mathematics', Assessment: 'Name of task being audited', Cycle: 'e.g. Iteration 1, Nov 2026'};
+  document.querySelectorAll('[data-k-meta]').forEach(label => {
+    const key = label.dataset.kMeta;
+    label.textContent = metadata[key] || key;
+    const input = document.getElementById(label.htmlFor);
+    if (input && hints[key]) input.placeholder = hints[key];
+  });
   document.querySelectorAll('[data-k]').forEach(el => {
     const k = el.getAttribute('data-k');
     if (STRINGS[lang][k] !== undefined) el.textContent = STRINGS[lang][k];
@@ -1647,7 +1659,7 @@ function showView(name) {
     back.textContent = u('back') + ' ' + t(VIEW_LABEL[prev]);
     back.onclick = () => showView(prev);
   } else back.hidden = true;
-  window.scrollTo(0, 0);
+  window.scrollTo({top: 0, left: 0, behavior: 'instant'});
   document.getElementById('pf').style.width = '0%';
   window.VistaLocal?.viewChanged(name);
 }
@@ -3109,6 +3121,21 @@ function enhanceKeyboardControls() {
   document.querySelectorAll('.rc,.sail-row').forEach(el => {
     makeKeyboardClickable(el, el.classList.contains('sail-row')?'checkbox':'radio');
     el.setAttribute('aria-checked', el.classList.contains('on') ? 'true' : 'false');
+  });
+  document.querySelectorAll('.ptabs').forEach(list => {
+    list.setAttribute('role', 'tablist');
+    list.setAttribute('aria-label', lang === 'es' ? 'Tipo de aprendizaje' : 'Learning type');
+    if (!list.dataset.arrowReady) {
+      list.dataset.arrowReady = 'true';
+      list.addEventListener('keydown', event => {
+        const tabs = [...list.querySelectorAll('.ptab')];
+        const index = tabs.indexOf(document.activeElement);
+        if (index < 0 || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        tabs[next].focus(); tabs[next].click();
+      });
+    }
   });
   document.querySelectorAll('.ptab').forEach(el => {
     makeKeyboardClickable(el, 'tab');

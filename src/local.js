@@ -162,7 +162,7 @@ function showContextNotice() {
 
 // ── cycles ───────────────────────────────────────────────────────────────────
 function openCycle(id, {skipSave = false} = {}) {
-  if (!skipSave && dirty) persist();
+  if (!skipSave && dirty && !persist()) return false;
   const loaded = store.load(id);
   if (!loaded) return false;
   current = {id, rev: loaded.meta.rev}; submissions = loaded.draft.submissions || {}; dirty = false; conflicted = false;
@@ -173,15 +173,16 @@ function openCycle(id, {skipSave = false} = {}) {
   return true;
 }
 function blankCycle(meta = {}) {
-  if (dirty) persist();
+  if (dirty && !persist()) return false;
   current = null; submissions = {}; dirty = false; conflicted = false; lastSaved = null;
   if (storageOK) store.setActive(null);
   F.load({meta});
   setStatus('idle'); notice(''); refreshChrome();
+  return true;
 }
 function begin() {
   const meta = current && store?.meta(current.id);
-  if (meta?.example) blankCycle();
+  if (meta?.example && !blankCycle()) return;
   F.show('initial');
 }
 function lastView() {
@@ -190,9 +191,9 @@ function lastView() {
 }
 function resume() { F.show(lastView()); }
 function example() {
+  if (dirty && !persist()) return;
   if (!storageOK) { F.load(exampleCycle(lang()).draft); F.show('initial'); notice(tx('example_notice'), [], 'example'); return; }
   const sample = exampleCycle(lang());
-  if (dirty) persist();
   const existing = store.list().find(c => c.example && c.title === sample.title);
   const id = existing ? existing.id : store.create({title: sample.title, draft: sample.draft, example: true}).id;
   openCycle(id, {skipSave: true});
@@ -200,7 +201,7 @@ function example() {
 }
 function nextCycle() {
   const d = F.capture();
-  blankCycle({teacher: d.meta?.teacher || '', discipline: d.meta?.discipline || ''});
+  if (!blankCycle({teacher: d.meta?.teacher || '', discipline: d.meta?.discipline || ''})) return;
   F.show('initial'); toast(tx('next_started'));
 }
 function backup(ids) {
@@ -270,7 +271,7 @@ function openCycles() {
       const actions = el('div', {class: 'cycle-actions'});
       const isCurrent = current?.id === c.id;
       const normal = () => actions.replaceChildren(
-        el('button', {type: 'button', class: 'primary', text: isCurrent ? tx('current') : tx('open'), onclick: () => { if (!isCurrent) openCycle(c.id); d.close(); F.show(isCurrent ? F.view() : 'launch'); }}),
+        el('button', {type: 'button', class: 'primary', text: isCurrent ? tx('current') : tx('open'), onclick: () => { if (!isCurrent && !openCycle(c.id)) { d.close(); return; } d.close(); F.show(isCurrent ? F.view() : 'launch'); }}),
         el('button', {type: 'button', text: tx('rename'), onclick: renaming}),
         el('button', {type: 'button', text: tx('export'), onclick: () => backup([c.id])}),
         el('button', {type: 'button', class: 'danger', text: tx('del'), onclick: deleting})
@@ -307,7 +308,7 @@ function openCycles() {
   const form = el('form', {class: 'cycle-new', onsubmit: e => {
     e.preventDefault();
     const name = nameInput.value.trim();
-    if (dirty) persist();
+    if (dirty && !persist()) { d.close(); return; }
     if (name && storageOK) openCycle(store.create({title: name, draft: {meta: {assessment: name}}}).id, {skipSave: true});
     else blankCycle({assessment: name});
     d.close(); F.show('initial');

@@ -1,6 +1,8 @@
 // Browser checks for the account-free workspace and the public pages.
 // Run `npm run build && npm run serve` first. Uses synthetic data only.
-const {chromium} = require('playwright');
+const engines = require('playwright');
+const browserName = process.env.VISTA_ENGINE || 'chromium';
+const chromium = engines[browserName];
 const assert = require('node:assert/strict');
 const fs = require('node:fs'), os = require('node:os'), path = require('node:path'), zlib = require('node:zlib');
 const base = process.env.VISTA_URL || 'http://127.0.0.1:8765';
@@ -196,6 +198,16 @@ function docx(text) {
   [dl] = await Promise.all([page.waitForEvent('download'), page.locator('#cycleNotice button').click()]);
   const rescue = path.join(tmp, 'rescue.json'); await dl.saveAs(rescue);
   assert.match(fs.readFileSync(rescue, 'utf8'), /Typed while storage is blocked/);
+  // Failed saving must not discard the only copy when opening an example or a new cycle.
+  await page.locator('#navStart').click();
+  await page.locator('#startExample').click();
+  await page.locator('#navInitial').click();
+  assert.equal(await page.locator('#s1task').inputValue(), 'Typed while storage is blocked.');
+  await page.locator('#cycleButton').click();
+  await page.locator('#newCycleName').fill('Must not replace unsaved work');
+  await page.locator('.cycle-new button').click();
+  assert.equal(await page.locator('#s1task').inputValue(), 'Typed while storage is blocked.');
+
   await ctx.close();
 
   // ── 7. Spanish: preference persists, example and new stages are translated ──
@@ -217,6 +229,9 @@ function docx(text) {
   await page.keyboard.press('Escape');
   const untranslated = await page.evaluate(() => [...document.querySelectorAll('[data-k]')].filter(el => !STRINGS.es[el.dataset.k]).map(el => el.dataset.k));
   assert.deepEqual(untranslated, [], 'every labelled element has a Spanish string');
+  assert.equal(await page.locator('label[for=ft]').textContent(), 'Docente');
+  assert.equal(await page.locator('#fa').getAttribute('placeholder'), 'Nombre de la tarea que vas a revisar');
+  assert.equal(await page.locator('label[for=fcycle]').textContent(), 'Ciclo');
   await ctx.close();
 
   // ── 8. keyboard-only start, and every control in the tool has an accessible name ──
@@ -236,7 +251,7 @@ function docx(text) {
 
   // ── 9. public pages: load, links resolve, no overflow, inquiry form works ──
   ctx = await newContext(); page = watch(await ctx.newPage());
-  const seen = new Set(), queue = ['/', '/schools', '/method', '/privacy', '/vista', '/vista-print', '/cng/', '/cng/teacher-hub', '/cng/proposal', '/cng/es'];
+  const seen = new Set(), queue = ['/', '/schools', '/method', '/privacy', '/vista', '/vista-print'];
   for (const route of queue) {
     const res = await page.goto(base + route); assert.equal(res.status(), 200, route);
     const links = await page.evaluate(() => [...document.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
@@ -244,12 +259,13 @@ function docx(text) {
     assert.equal(await page.locator('h1').count() >= 1, true, 'h1 on ' + route);
   }
   for (const href of seen) { const res = await ctx.request.get(base + href); assert.equal(res.status(), 200, 'broken internal link ' + href); }
-  for (const [from, to] of [['/teacher-hub', '/cng/teacher-hub'], ['/proposal', '/cng/proposal'], ['/es', '/cng/es'], ['/launch', '/']]) { await page.goto(base + from); assert.equal(new URL(page.url()).pathname, to); }
+  for (const [from, to] of [['/teacher-hub', '/cng/teacher-hub'], ['/proposal', '/cng/proposal'], ['/es', '/cng/es'], ['/launch', '/']]) { const response = await ctx.request.get(base + from, {maxRedirects: 0}); assert.equal(response.status(), 307); assert.equal(response.headers().location, to); }
   assert.equal((await ctx.request.get(base + '/no-such-page')).status(), 404);
+  for (const path of ['/cng/', '/cng/proposal', '/public/docs/Journal_Article_Draft.docx']) assert.equal((await ctx.request.get(base + path)).status(), 404, 'school archive is excluded from product builds');
   for (const width of [390, 768, 1280]) for (const route of ['/', '/schools', '/method', '/privacy']) {
     await page.setViewportSize({width, height: 900}); await page.goto(base + route);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `overflow ${route} @${width}`);
-    if (width !== 768) await page.screenshot({path: `${shots}/site${route === '/' ? '-home' : route.replace('/', '-')}-${width}.png`, fullPage: true});
+    if (width !== 768) await page.screenshot({path: `${shots}/site${route === '/' ? '-home' : route.replace('/', '-')}-${width}.png`, fullPage: true, animations: 'disabled'});
   }
   await page.setViewportSize({width: 1280, height: 900}); await page.goto(base + '/schools');
   for (const text of ['testimonial', 'Not yet known', 'hypothesis', 'not enforced by technical access restrictions', 'Start with a supported pilot', 'No pilot price has been published', 'no accounts, no school workspace']) assert.ok((await page.locator('main').textContent()).includes(text), 'schools page states: ' + text);

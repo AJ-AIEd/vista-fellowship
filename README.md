@@ -54,3 +54,9 @@ Set `VISTA_URL` to run the browser tests against a deployment and `VISTA_SHOTS` 
 - `docs/REVIEW.md` — independent-review report: test status, framework alignment, release blockers, decisions
 - `docs/research-quote-provenance.md` — sources of the two quotations in the tool
 - `legacy/cloud/` — the earlier Supabase account integration, not built or deployed
+
+## Independent quality review
+
+See `docs/QUALITY-PASS.md` for verified changes, limitations, and owner decisions. Product builds preserve but exclude `cng/` and `public/` from deployment output.
+
+Run `npx playwright install chromium firefox webkit` once for browser checks. `npm run test:a11y` scans public pages and teacher stages at three widths. `VISTA_ENGINE=firefox node tests/vista-flow.cjs` (or `webkit`) checks the protected pathways and six-stage flow; the full PDF suite uses Chromium.

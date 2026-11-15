@@ -1,4 +1,6 @@
-const { chromium } = require('playwright');
+const engines = require('playwright');
+const browserName = process.env.VISTA_ENGINE || 'chromium';
+const chromium = engines[browserName];
 const assert = require('node:assert/strict');
 const base = process.env.VISTA_URL || 'http://127.0.0.1:8765';
 const shots = process.env.VISTA_SHOTS || require('node:os').tmpdir();
@@ -106,7 +108,7 @@ const shots = process.env.VISTA_SHOTS || require('node:os').tmpdir();
   assert.equal(await page.locator('#dd4').inputValue(),'Routine note dd4');
   assert.equal(await page.locator('.sail-chip.on').count(),2);
   assert.equal(await page.locator('#redesignEvidence').inputValue(),'Unseen data set, short explanation.');
-  await page.screenshot({path:shots+'/vista-redesign-desktop.png',fullPage:true});
+  await page.screenshot({path:shots+'/vista-redesign-desktop.png',fullPage:true, animations: 'disabled'});
   await page.locator('#navImpl').click();
   assert.equal(await page.locator('.impl-ready:checked').count(),2);
   assert.equal(await page.locator('#implEvidence').inputValue(),'Most explanations used the table.');
@@ -116,7 +118,7 @@ const shots = process.env.VISTA_SHOTS || require('node:os').tmpdir();
   assert.equal(await page.locator('#fq9').inputValue(),'Evidence 9');
   assert.equal(await page.locator('#nextTransfer').inputValue(),'The quadratic modelling task.');
   await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
-  await page.screenshot({path:shots+'/vista-reflection-desktop.png',fullPage:true});
+  await page.screenshot({path:shots+'/vista-reflection-desktop.png',fullPage:true, animations: 'disabled'});
   // Every view fits a phone, including all rating branches.
   await page.setViewportSize({width:390,height:844});
   for (const view of ['launch','initial','deepdive','redesign','implementation','final','reflection','refs']) {
@@ -127,7 +129,7 @@ const shots = process.env.VISTA_SHOTS || require('node:os').tmpdir();
       await page.waitForFunction(r=>document.getElementById('dp-'+r).classList.contains('show'),rating);
       assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth), 'phone rating overflow: '+rating);
     }
-    await page.screenshot({path:shots+'/vista-'+view+'-phone.png',fullPage:true});
+    await page.screenshot({path:shots+'/vista-'+view+'-phone.png',fullPage:true, animations: 'disabled'});
   }
   await page.goto(base+'/vista-print');
   assert.ok(await page.locator('.doc-title').count());

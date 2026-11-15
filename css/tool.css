@@ -195,3 +195,26 @@ footer .fr a:hover{color:var(--gold)}
   #view-redesign,#view-implementation,#view-reflection{display:none!important}
   main{padding-top:0}
 }
+
+/* Readable working text and comfortable touch controls on small screens. */
+.tf-area{font-weight:400}
+.tf-area::placeholder,.mf input::placeholder{color:#766e66;opacity:1}
+@media(max-width:640px){
+  .tf-area,.mf input,.vista-dialog input,.vista-dialog textarea,.vista-dialog select{font-size:16px}
+  .tf-label{font-size:11px;line-height:1.5;letter-spacing:.04em}
+  .cl-desc,.cl-eg,.step-sub,.dd-section-sub{font-size:14px;line-height:1.6}
+  .cl-grid{grid-template-columns:minmax(0,1fr)}
+  .cl-card{padding:18px}
+  .recap-list dt{font-size:12px}
+  .recap-list dd{font-size:15px;line-height:1.6}
+  .sail-chip,.mini-copy,.back-link,.cycle-actions button,.dialog-tools button{min-height:44px}
+}
+
+/* Separate accent colors for text on light and dark surfaces. */
+:root{--muted:#53636d}
+.nav-cycle-k,.pb-copy{color:#efbe63}
+.tc{color:#12674f}.te{color:#795210}
+.pw-auto{color:#80530f}
+.dd-section{--gold:#80530f}
+.dd-section .prompt-box{--gold:#efbe63}
+.leave-head{color:#efbe63}
