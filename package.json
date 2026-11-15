@@ -1,19 +1,25 @@
 {
-  "name": "vista-fellowship",
-  "version": "2.0.0",
+  "name": "vista",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node --test tests/*.test.mjs"
+    "serve": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node tests/vista-flow.cjs && node tests/site.cjs",
+    "test:a11y": "node tests/accessibility.cjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "2.117.2",
-    "@huggingface/transformers": "4.3.0",
-    "pdfjs-dist": "6.3.289",
-    "mammoth": "1.13.0"
+    "mammoth": "1.13.0",
+    "pdfjs-dist": "6.3.289"
   },
   "devDependencies": {
-    "esbuild": "0.28.2"
+    "@axe-core/playwright": "4.14.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource/dm-mono": "^5.3.0",
+    "@fontsource/dm-sans": "^5.3.0",
+    "esbuild": "0.28.2",
+    "playwright": "1.65.1"
   }
 }
