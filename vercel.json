@@ -5,9 +5,43 @@
       "source": "/launch",
       "destination": "/",
       "permanent": false
+    },
+    {
+      "source": "/teacher-hub",
+      "destination": "/cng/teacher-hub",
+      "permanent": false
+    },
+    {
+      "source": "/proposal",
+      "destination": "/cng/proposal",
+      "permanent": false
+    },
+    {
+      "source": "/es",
+      "destination": "/cng/es",
+      "permanent": false
     }
   ],
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "installCommand": "npm ci"
+  "installCommand": "npm ci",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    }
+  ]
 }

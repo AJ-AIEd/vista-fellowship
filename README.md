@@ -1,132 +1,55 @@
-# VISTA Fellowship — CNG AI Innovation Fellowship 2026–2027
+# VISTA — Visibility Into Student Thinking and Agency
 
-Static website and assessment-design tool for the CNG AI Innovation Fellowship.
+A self-guided professional-learning tool for auditing and redesigning assessment in AI-rich classrooms, with a public site for teachers and schools. Author: Andrew Cajina.
 
-Andrew Cajina · High School Mathematics · Colegio Nueva Granada · Bogotá, Colombia
+- Production: https://v2-vista-fellowship.vercel.app (Vercel project `v2-vista-fellowship`). Do not deploy to the old `vista-fellowship` project.
+- Production branch: `main`. Work on feature branches and review a Vercel preview before merging.
 
-## Production
+## What is in the site
 
-- Live site: https://v2-vista-fellowship.vercel.app
-- GitHub: `AJ-AIEd/vista-fellowship`
-- Production branch: `main`
-- Vercel project: `v2-vista-fellowship`
-
-Do not deploy this repository to the old `vista-fellowship` Vercel project. Its root-directory configuration is broken.
-
-## Routes
-
-| URL | File | Audience |
+| URL | File | Purpose |
 |---|---|---|
-| `/` | `index.html` | Launch page |
-| `/teacher-hub` | `teacher-hub.html` | Fellowship teachers |
-| `/vista` | `vista.html` | Interactive VISTA protocol |
-| `/vista-print` | `vista-print.html` | Printable protocol |
-| `/proposal` | `proposal.html` | Administrators and reviewers |
-| `/es` | `es.html` | Spanish proposal |
-| `/launch` | Redirects to `/` | Legacy route |
+| `/` | `index.html` | Public home |
+| `/schools` | `schools.html` | School offer, licence, evidence status, inquiry form |
+| `/method` | `method.html` | The methodology and its limits |
+| `/privacy` | `privacy.html` | What is stored and where |
+| `/vista` | `vista.html` | The tool: six stages, account-free |
+| `/vista-print` | `vista-print.html` | Blank printable protocol (audit, routine, final audit only) |
+| `/cng/…` | `cng/*.html` | CNG fellowship pages, kept as a record. Not part of the product. Old URLs redirect here. |
 
-`vercel.json` enables clean URLs, so `/vista` serves `vista.html`.
+## The tool
 
-## Technology
+Six stages: Initial Audit → Augmented Human Thinking Routine (AHTR) → Redesign → Implementation → Final Audit → Reflection and Next Cycle. English and Spanish.
 
-- Static HTML, CSS, and vanilla JavaScript
-- No framework and no build step
-- Shared design tokens in `css/shared.css`
-- Page-specific CSS and JavaScript remain inline
-- Google Fonts: Fraunces, DM Sans, and DM Mono
-- Vercel Web Analytics script on public pages
+There is no login and no backend. Cycles are stored in the browser's `localStorage`; teachers can keep several cycles, export and import backup files, and print or save reports as PDF. See `docs/ARCHITECTURE.md`.
 
-## VISTA workflow
+### Protected decision logic
 
-The interactive tool has four views:
+Do not casually change: the learning-type cards, the offloading ratings and decision banners, the discipline pathways (`PATHWAYS`), the Minimally-rated reflection path, and how classifier, rating, and pathways are coupled. `tests/vista-flow.cjs` covers all 15 pathways and must keep passing.
 
-1. Initial Audit — describe a task, classify learning vulnerability, rate cognitive offloading, choose a SAIL level, and record a final flag.
-2. Augmented Human Thinking Routine — four teacher-first moves for testing the task with AI and recording a redesign decision.
-3. Final Audit — nine reflection questions completed after enactment.
-4. References — bibliography grouped by research area.
-
-### Teacher workflow checks
-
-The instructions in English, Spanish, the teacher hub, and printable protocol focus on teacher actions and student evidence. Research references are optional. All rating branches and reflection fields remain available.
-
-Run the browser regression check with Playwright installed and a local server running:
+## Develop
 
 ```bash
-python3 -m http.server 8765 --bind 127.0.0.1
-# In another terminal:
-node tests/vista-flow.cjs
+npm ci --ignore-scripts
+npm run build        # bundles src/ into assets/ and writes dist/
+npm test             # unit tests: storage, reports, imports
+npm run serve        # serves dist/ on http://127.0.0.1:8765 with clean URLs and redirects
+npm run test:browser # in another terminal; needs Playwright with Chromium
 ```
 
-Set `VISTA_BROWSER` to an installed Chromium browser executable if needed. Set `VISTA_URL` to check a deployment. The check covers all 15 redesign pathways, keyboard choices, minimally-rated reflections, draft reload, language changes, final-audit navigation, and phone overflow. It uses an isolated browser context and synthetic data.
+Set `VISTA_URL` to run the browser tests against a deployment and `VISTA_SHOTS` to choose where screenshots go.
 
-### Protected decision engine
+## Before going live
 
-Do not casually refactor or restyle:
-
-- Initial Audit vulnerability cards
-- Cognitive Offloading ratings and decision banners
-- Discipline-specific redesign pathways
-- The Minimally-rated reflection/exemplar path
-- Classifier/rating/pathway coupling
-
-Changes to those areas require explicit scope and regression testing.
-
-## Draft storage and privacy
-
-Drafts are stored only in the current browser under:
-
-```text
-dlp_draft_v2
-```
-
-There is no backend, login, database, or shared Knowledge Hub submission. The Save buttons write one draft to localStorage on the current device. Clearing browser data removes it.
-
-Uploaded PDFs are not transmitted or persisted. Teachers should not select documents that identify individual students.
-
-If shared submission is added later, define authentication, permissions, retention, deletion, and student-data governance before implementation.
+1. Set `inquiryEmail` in `js/site-config.js`. Until then the inquiry form shows the message for copying and says nothing was sent.
+2. Read `docs/RIGHTS-AND-OPEN-ISSUES.md`. Several items need the owner's decision before any commercial use.
 
 ## Documents
 
-Downloadable proposal files live in `public/docs/`. The current public proposal is:
-
-```text
-public/docs/CNG_Fellowship_Proposal_v9.docx
-```
-
-## Deployment workflow
-
-Work directly on `main` for the current project workflow:
-
-```bash
-git add -A
-git commit -m "Describe the change"
-git push
-npx vercel --prod
-```
-
-Before accepting the deployment, confirm the CLI reports:
-
-```text
-Deploying aj-aieds-projects/v2-vista-fellowship
-```
-
-Production must alias to:
-
-```text
-https://v2-vista-fellowship.vercel.app
-```
-
-## Verification checklist
-
-- All primary routes return HTTP 200.
-- `/launch` redirects to `/`.
-- Teacher Hub proposal link opens the current PDF.
-- VISTA keyboard controls work with Enter and Space.
-- Initial Audit task and SAIL level appear correctly in AHTR.
-- Saved drafts restore Initial Audit, AHTR, and Final Audit fields.
-- Page layouts do not create document-level horizontal overflow at phone width.
-- Browser console contains no errors.
-
-## Current architecture constraint
-
-`vista.html` is a large single-file application. Prefer small, targeted edits. Extract content or configuration only when protected pathway behavior is covered by tests.
+- `docs/ARCHITECTURE.md` — how the tool is put together and where the boundaries are
+- `docs/LICENSING-PHASES.md` — the current offer and how access control, organisations, and payment could be added later
+- `docs/RIGHTS-AND-OPEN-ISSUES.md` — ownership, citation, privacy, and unverified items
+- `docs/facilitator-guide.md` — draft guide for licensed schools (not published on the site)
+- `docs/OPUS-HANDOFF.md` — routine follow-up tasks
+- `docs/research-quote-provenance.md` — sources of the two quotations in the tool
+- `legacy/cloud/` — the earlier Supabase account integration, not built or deployed
