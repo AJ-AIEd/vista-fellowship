@@ -216,7 +216,7 @@ function docx(text) {
   await page.locator('#langToggle').click();
   assert.equal(await page.evaluate(() => document.documentElement.lang), 'es');
   await page.reload(); await ready(page);
-  assert.match(await page.locator('#startOwn').textContent(), /Comenzar con tu propia tarea/);
+  assert.match(await page.locator('#startOwn').textContent(), /Repensar una evaluación/);
   await page.locator('#startExample').click();
   assert.match(await page.locator('#s1task').inputValue(), /precios de reventa/);
   for (const [view, text] of [['redesign', /Tu nivel SAIL después de la rutina/], ['implementation', /Antes de enseñar/], ['reflection', /Lo que tienes ahora/], ['final', /Lo que registraste antes/]]) {
@@ -268,7 +268,7 @@ function docx(text) {
     if (width !== 768) await page.screenshot({path: `${shots}/site${route === '/' ? '-home' : route.replace('/', '-')}-${width}.png`, fullPage: true, animations: 'disabled'});
   }
   await page.setViewportSize({width: 1280, height: 900}); await page.goto(base + '/schools');
-  for (const text of ['testimonial', 'Not yet known', 'hypothesis', 'not enforced by technical access restrictions', 'Start with a supported pilot', 'No pilot price has been published', 'no accounts, no school workspace']) assert.ok((await page.locator('main').textContent()).includes(text), 'schools page states: ' + text);
+  for (const text of ['testimonial', 'Not yet known', 'hypothesis', 'not enforced by technical access restrictions', 'Start with a supported pilot', 'No pilot price has been published', 'no school workspace']) assert.ok((await page.locator('main').textContent()).includes(text), 'schools page states: ' + text);
   for (const [id, value] of [['iq-name', 'Synthetic Person'], ['iq-role', 'Director of Learning'], ['iq-school', 'Example International School'], ['iq-reply', 'person@example.org'], ['iq-context', 'Departments disagree about take-home tasks.']]) await page.locator('#' + id).fill(value);
   await page.getByRole('button', {name: 'Prepare my inquiry'}).click();
   assert.match(await page.locator('#inquiryOutput').textContent(), /Example International School[\s\S]*take-home tasks/);

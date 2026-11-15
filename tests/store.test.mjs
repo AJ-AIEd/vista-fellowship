@@ -81,3 +81,27 @@ test('imported files cannot smuggle markup or unknown values into fields that re
   assert.equal(draftHasContent({meta: {teacher: 'Name only'}}), false);
   assert.equal(draftHasContent({next: {uncertain: 'something'}}), true);
 });
+
+test('exploration and annotations survive backup recovery without replacing existing work', () => {
+  const a=createStore(memory());
+  const draft={learning:{entry:'tools',question:'What do students need to judge?',prompt:'Same prompt',modelA:'A',modelB:'B',outputA:'First response',outputB:'Second response',supportOrigin:'A colleague modelled one source check.'},annotations:[{quote:'Interpret the source',note:'Whose interpretation is this?'}]};
+  a.create({title:'Inquiry',draft});
+  const b=createStore(memory());b.create({title:'Existing',draft:{task:'Keep this'}});
+  const [made]=b.importBackup(a.exportBackup());
+  assert.equal(b.load(made.id).draft.learning.question,draft.learning.question);
+  assert.equal(b.load(made.id).draft.learning.outputB,'Second response');
+  assert.deepEqual(b.load(made.id).draft.annotations,draft.annotations);
+  assert.equal(b.list().length,2);
+});
+test('annotation imports are bounded and retain only known string fields',()=>{
+  const draft=sanitizeDraft({annotations:[{quote:'A passage',note:'<script>untrusted text</script>',owner:'forged'},{quote:4,note:{}},null]});
+  assert.deepEqual(draft.annotations,[{quote:'A passage',note:'<script>untrusted text</script>'}]);
+  assert.equal(sanitizeDraft({annotations:Array.from({length:150},()=>({quote:'q',note:'n'}))}).annotations.length,100);
+});
+
+test('an emerging idea and exploration return path survive save and backup import',()=>{
+ const store=createStore(memory());const cycle=store.create({title:'Inquiry',draft:{learning:{idea:'Keep close reading',ideaStatus:'explore',returnStage:'redesign',prediction:'An omission matters',proposal:'Discuss one checkpoint'}}});
+ const recovered=createStore(memory());recovered.importBackup(store.exportBackup());
+ const draft=recovered.load(recovered.list()[0].id).draft;
+ for(const key of ['idea','ideaStatus','returnStage','prediction','proposal'])assert.equal(draft.learning[key],store.load(cycle.id).draft.learning[key]);
+});

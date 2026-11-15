@@ -11,6 +11,7 @@ const TYPES = ['proc', 'conc', 'eval', 'crea', 'emb'], RATINGS = ['full', 'subs'
 const READY = ['instructions', 'route', 'evidence', 'privacy'];
 const STAGES = ['initial', 'ahtr', 'redesign', 'implementation', 'final', 'reflection'];
 const GROUPS = {
+  learning: ['entry','arc','question','responsibility','sources','checked','insight','next','supportNeed','supportOrigin','prompt','modelA','modelB','outputA','outputB','noticed','implication','purpose','prediction','claimType','possible','replace','assumption','alternative','verify','idea','prompted','whyIdea','investigate','outcomes','ideaStatus','proposal','returnStage'],
   meta: ['teacher', 'discipline', 'assessment', 'date'],
   reflection: ['r1', 'r2', 'r3', 'r4'],
   min_reflection: ['min_r1', 'min_r2', 'min_r3', 'min_r4', 'min_exemplar'],
@@ -56,13 +57,14 @@ export function sanitizeDraft(input) {
       sources: Array.isArray(s.sources) ? s.sources.slice(0, 20).map(x => ({name: text(x?.name).slice(0, 250)})).filter(x => x.name) : []
     };
   }
+  out.annotations = Array.isArray(d.annotations) ? d.annotations.slice(0, 100).filter(isObject).map(a => ({quote: text(a.quote), note: text(a.note)})).filter(a => a.quote && a.note) : [];
   out.savedAt = text(d.savedAt).slice(0, 40);
   return out;
 }
 export function draftHasContent(d) {
   const s = sanitizeDraft(d);
   if (s.task || s.learningEvidence || s.humanAI || s.sailJustify || s.classifier.length || s.rating || s.sail) return true;
-  if (Object.keys(s.submissions).length || s.redesign.sail || s.implementation.ready.length) return true;
+  if (s.annotations.length || Object.keys(s.submissions).length || s.redesign.sail || s.implementation.ready.length) return true;
   return Object.entries(GROUPS).some(([g, keys]) => g !== 'meta' && g !== 'final_meta' && keys.some(k => s[g][k]));
 }
 const cleanTitle = (t, fallback) => (text(t).trim().slice(0, 200) || fallback);

@@ -16,16 +16,18 @@ const fs = require('node:fs');
     };
     for (const width of [390, 768, 1280]) {
       await page.setViewportSize({width,height:900});
-      for (const route of ['/', '/schools', '/method', '/privacy']) {
+      for (const route of ['/', '/schools', '/method', '/privacy', '/field-guide', '/prototypes']) {
         await page.goto(base + route); await scan(`${route} @${width}`);
       }
       await page.goto(base + '/vista?example');
       await page.waitForFunction(() => document.documentElement.dataset.vistaReady === 'true');
-      for (const view of ['launch','initial','deepdive','redesign','implementation','final','reflection']) {
+      for (const view of ['launch','initial','deepdive','redesign','implementation','final','reflection','learn']) {
         await page.evaluate(view => showView(view), view);
         await page.emulateMedia({reducedMotion:'reduce'});
         await scan(`${view} @${width}`);
       }
+      await page.locator('#accountButton').click();await page.locator('#accountDialog').waitFor();await scan(`account overlay @${width}`);await page.keyboard.press('Escape');await page.locator('#accountDialog').waitFor({state:'detached'});
+      for(const concept of ['guided','notebook','workspace']){await page.goto(base+'/vista?concept='+concept+'&example');await page.waitForFunction(()=>Boolean(window.VistaStudio));await scan(`concept ${concept} @${width}`);}
     }
     const output = process.env.VISTA_A11Y || '../../outputs/accessibility.json';
     fs.writeFileSync(output, JSON.stringify(results,null,2));

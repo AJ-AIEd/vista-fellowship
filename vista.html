@@ -409,6 +409,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </style>
 <link rel="stylesheet" href="/protocol-research.css">
 <link rel="stylesheet" href="/css/tool.css">
+<link rel="stylesheet" href="/css/studio.css">
 </head>
 <body>
 <a class="skip-link" href="#main" data-k="skip_link">Skip to content</a>
@@ -1597,8 +1598,8 @@ function applyStrings() {
   document.getElementById('langToggle').textContent = t('lang_toggle');
   const ahSub = document.getElementById('auditHeaderSub');
   if (ahSub) ahSub.textContent = lang === 'es'
-    ? 'Completa esto solo, antes de cualquier IA o conversación'
-    : 'Start independently, before consulting AI';
+    ? 'Para esta tarea: predice antes de probar con IA'
+    : 'For this task: predict before testing with AI';
   const refsT = document.getElementById('refs-title');
   if (refsT) refsT.textContent = lang === 'es'
     ? 'Fuentes citadas en el Protocolo VISTA'
@@ -2800,6 +2801,8 @@ function captureDraft() {
   const group = (name, map) => Object.fromEntries(Object.entries(map).map(([key, id]) => [key, v(id, prev[name]?.[key])]));
   return {
     lang,
+    learning: window.VistaStudio?.capture().learning || prev.learning || {},
+    annotations: window.VistaStudio?.capture().annotations || prev.annotations || [],
     meta: group('meta', {teacher:'ft', discipline:'fd', assessment:'fa', date:'fdate'}),
     task: v('s1task', prev.task),
     learningEvidence: v('learningEvidence', prev.learningEvidence),
@@ -2969,8 +2972,8 @@ const BIBLIOGRAPHY = [
     es: "Mishra, P., y Koehler, M. J. (2006). Conocimiento tecnológico pedagógico del contenido. <em>Teachers College Record, 108</em>(6), 1017–1054."
   },
   {
-    en: "Perkins, M., Roe, J., Postmil, D., McGaughran, J., & Hickerson, A. (2024). The SAIL framework: A scale for the integration of AI literacy in higher education. <em>Journal of University Teaching and Learning Practice, 21</em>(6).",
-    es: "Perkins, M. et al. (2024). El marco SAIL. <em>Journal of University Teaching and Learning Practice, 21</em>(6)."
+    en: "Perkins, M., Furze, L., Roe, J., & MacVaugh, J. (2024). The Artificial Intelligence Assessment Scale (AIAS): A Framework for Ethical Integration of Generative AI in Educational Assessment. <em>Journal of University Teaching and Learning Practice, 21</em>(6). https://doi.org/10.53761/q3azde36",
+    es: "Perkins, M., Furze, L., Roe, J., & MacVaugh, J. (2024). The Artificial Intelligence Assessment Scale (AIAS): A Framework for Ethical Integration of Generative AI in Educational Assessment. <em>Journal of University Teaching and Learning Practice, 21</em>(6). https://doi.org/10.53761/q3azde36"
   },
   {
     en: "Ryan, R. M., & Deci, E. L. (2000). Self-determination theory and the facilitation of intrinsic motivation. <em>American Psychologist, 55</em>(1), 68–78.",
@@ -3041,7 +3044,7 @@ function rebuildRefs() {
              'Chiu, T. K. F. (2025). A holistic approach to the roles of AI in education. <em>Educational Technology Research and Development</em>. Advance online publication.',
              'Meishar-Tal, H., Levenberg, A., & Hadad, H. (2025). AI integration in teaching: Teachers&#39; perceptions, knowledge and behavioral intention. <em>Education and Information Technologies</em>.',
              'Mishra, P., & Koehler, M. J. (2006). Technological pedagogical content knowledge: A framework for teacher knowledge. <em>Teachers College Record, 108</em>(6), 1017–1054.',
-             'Perkins, M., Roe, J., Postmil, D., McGaughran, J., & Hickerson, A. (2024). The SAIL framework: A scale for the integration of AI literacy in higher education. <em>Journal of University Teaching and Learning Practice, 21</em>(6).']
+             'Perkins, M., Furze, L., Roe, J., & MacVaugh, J. (2024). The Artificial Intelligence Assessment Scale (AIAS): A Framework for Ethical Integration of Generative AI in Educational Assessment. <em>Journal of University Teaching and Learning Practice, 21</em>(6). https://doi.org/10.53761/q3azde36']
     },
     {
       en: 'Science of Learning',

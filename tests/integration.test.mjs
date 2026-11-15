@@ -40,3 +40,22 @@ test('reports respect the selected stage and preserve selected reasoning verbati
   assert.ok(!full.includes('Observed output <not evidence'));
   assert.ok(full.includes('Later uncertainty.'));
 });
+
+test('exploration-only records and annotations are included safely in both report formats',()=>{
+ const snapshot={learning:{question:'Does the synthesis follow?',outputA:'<img src=x>',checked:'The original limits its claim.'},annotations:[{quote:'<script>source passage</script>',note:'Question this passage.'}]};
+ for(const lang of ['en','es']){
+  const options={title:'Inquiry',stage:'initial',snapshot,lang};
+  const text=buildReport(options),html=reportDocument(options);
+  assert.ok(text.includes(snapshot.learning.checked));
+  assert.ok(html.includes('&lt;script&gt;source passage&lt;/script&gt;'));
+  assert.ok(!html.includes('<img src=x>'));
+  assert.ok(!html.includes('undefined'));
+ }
+});
+
+test('emerging ideas and professional judgments appear in both report formats without invented decisions',()=>{
+ const snapshot=sanitizeDraft({learning:{idea:'A tentative <checkpoint>',ideaStatus:'explore',proposal:'Ask colleagues before implementation'}});
+ assert.ok(buildReport({title:'Inquiry',stage:'initial',snapshot}).includes('A tentative <checkpoint>'));
+ const html=reportDocument({title:'Inquiry',stage:'initial',snapshot});
+ assert.ok(html.includes('A tentative &lt;checkpoint&gt;'));assert.ok(html.includes('Ask colleagues before implementation'));
+});

@@ -1,3 +1,4 @@
+import {COPY} from './studio-content.js';
 // Report building for VISTA cycles. Pure functions: no DOM, no network.
 // A report records the teacher's own responses. Nothing is inferred, scored, or generated.
 
@@ -147,7 +148,9 @@ export function reportModel({title, stage, snapshot, createdAt = new Date().toIS
   if (!STAGE_NAMES.en[stage]) throw new Error('Unknown report stage');
   const tx = TEXT[lang];
   const stages = STAGE_ORDER.slice(0, STAGE_ORDER.indexOf(stage) + 1);
-  if (!stages.some(s => stageHasContent(snapshot, s))) throw new Error(tx.empty);
+  const exploration = ['question','responsibility','sources','checked','insight','next','supportOrigin','supportNeed','prompt','modelA','modelB','outputA','outputB','noticed','implication','purpose','prediction','claimType','possible','replace','assumption','alternative','verify','idea','prompted','whyIdea','investigate','outcomes','ideaStatus','proposal'].filter(key => snapshot.learning?.[key]?.trim()).map(key => ({label:COPY[lang][key], value:snapshot.learning[key]}));
+  const annotations = Array.isArray(snapshot.annotations) ? snapshot.annotations : [];
+  if (!stages.some(s => stageHasContent(snapshot, s)) && !exploration.length && !annotations.length) throw new Error(tx.empty);
   const sections = stages.map(part => {
     const submission = snapshot.submissions?.[part];
     const hasSubmission = Boolean(submission?.text?.trim());
@@ -179,13 +182,15 @@ export function reportModel({title, stage, snapshot, createdAt = new Date().toIS
     lang, stage, title: title || tx.none, createdAt,
     heading: `VISTA — ${stageName(stage, lang)} ${tx.report}`,
     teacher: snapshot.meta?.teacher || tx.none, department: snapshot.meta?.discipline || tx.none,
-    summary, reasoning, sections, handoff: handoff(stage, lang), tx
+    summary, reasoning, exploration, annotations, sections, handoff: handoff(stage, lang), tx
   };
 }
 // Plain-text (Markdown-compatible) report.
 export function buildReport(options) {
   const m = reportModel(options), tx = m.tx;
   const lines = [m.heading, `${tx.cycle}: ${m.title}`, `${tx.created}: ${m.createdAt}`, `${tx.teacher}: ${m.teacher}`, `${tx.department}: ${m.department}`, '', tx.preface, ''];
+  if (m.exploration.length) { lines.push(`## ${COPY[m.lang].learn}`); for (const item of m.exploration) lines.push(`### ${item.label}`, item.value, ''); }
+  if (m.annotations.length) { lines.push(`## ${COPY[m.lang].annotations}`); for (const item of m.annotations) lines.push(item.quote, item.note, ''); }
   if (m.summary.length) { lines.push(`## ${tx.summary}`); for (const [k, v] of m.summary) lines.push(`- ${k}: ${v}`); lines.push(''); }
   if (m.reasoning.length) { lines.push(`## ${m.lang === 'es' ? 'Tu razonamiento: respuestas seleccionadas' : 'Your reasoning: selected responses'}`); for (const item of m.reasoning) lines.push(`### ${item.label}`, item.value, ''); }
   for (const s of m.sections) {
@@ -234,6 +239,8 @@ footer{margin-top:30px;padding-top:10px;border-top:1px solid #d9d2c6;font:8.5pt/
 <p class="meta">${e(stageName(m.stage, m.lang))} ${e(tx.report)} · ${e(when)}</p>
 <p class="meta">${e(tx.teacher)}: ${e(m.teacher)} · ${e(tx.department)}: ${e(m.department)}</p>
 <p class="note">${e(tx.preface)}</p></header>
+${m.exploration.length ? `<section><h2>${e(COPY[m.lang].learn)}</h2>${m.exploration.map(i=>`<div class="item"><h3>${e(i.label)}</h3><p class="answer">${e(i.value)}</p></div>`).join('')}</section>` : ''}
+${m.annotations.length ? `<section><h2>${e(COPY[m.lang].annotations)}</h2>${m.annotations.map(i=>`<div class="item"><h3>${e(COPY[m.lang].quote)}</h3><p class="answer">${e(i.quote)}</p><h3>${e(COPY[m.lang].note)}</h3><p class="answer">${e(i.note)}</p></div>`).join('')}</section>` : ''}
 ${m.summary.length ? `<section><h2>${e(tx.summary)}</h2><table>${m.summary.map(([k, v]) => `<tr><th scope="row">${e(k)}</th><td>${e(v)}</td></tr>`).join('')}</table></section>` : ''}
 ${m.reasoning.length ? `<section class="reasoning"><h2>${m.lang === 'es' ? 'Tu razonamiento: respuestas seleccionadas' : 'Your reasoning: selected responses'}</h2><p class="meta">${m.lang === 'es' ? 'Tus palabras, sin resumir. Las respuestas completas aparecen a continuación.' : 'Your own words, without summarising. Full stage responses follow.'}</p>${m.reasoning.map(item => `<div class="item"><h3>${e(item.label)}</h3><p class="answer">${e(item.value)}</p></div>`).join('')}</section>` : ''}
 ${m.sections.map(section).join('')}

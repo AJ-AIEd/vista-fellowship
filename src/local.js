@@ -1,3 +1,4 @@
+import {installStudio} from './studio.js';
 // Account-free workspace for the VISTA tool: cycles, autosave, backups, reports, imports.
 // All data stays in this browser. This module makes no network requests.
 import {createStore, StoreError, draftHasContent, INDEX_KEY} from './store.js';
@@ -17,7 +18,7 @@ const T = {
     failed: 'Not saved', blocked: 'This browser is not allowing VISTA to save (private window, blocked storage, or storage full). Your notes are still on this page. Download them now so nothing is lost.',
     download_now: 'Download my notes', conflict: 'This cycle was changed in another tab or window.', keep_mine: 'Keep this tab’s version', load_other: 'Load the other version',
     updated_elsewhere: 'Updated from another tab', deleted_elsewhere: 'This cycle was deleted in another tab. Your notes are still on this page; saving will store them as a new cycle.',
-    example_notice: 'You are viewing a worked example. Every response is synthetic, written to illustrate the process; it is not a record of a real class. You can edit it freely.', start_own: 'Start my own cycle',
+    example_notice: 'Worked example. Every response is synthetic. You can edit them; they illustrate the process and are not a record of a real class.', start_own: 'Start my own cycle',
     recovered: 'A draft saved by an earlier version of VISTA was found in this browser and has been brought into your cycles.',
     resume: 'Resume', at: 'at',
     cycles_title: 'My cycles', cycles_intro: 'Each cycle follows one assessment from first audit to reflection. Cycles are stored in this browser on this device only.',
@@ -41,7 +42,7 @@ const T = {
     failed: 'No guardado', blocked: 'Este navegador no permite que VISTA guarde (ventana privada, almacenamiento bloqueado o lleno). Tus notas siguen en esta página. Descárgalas ahora para no perder nada.',
     download_now: 'Descargar mis notas', conflict: 'Este ciclo se modificó en otra pestaña o ventana.', keep_mine: 'Conservar la versión de esta pestaña', load_other: 'Cargar la otra versión',
     updated_elsewhere: 'Actualizado desde otra pestaña', deleted_elsewhere: 'Este ciclo se eliminó en otra pestaña. Tus notas siguen en esta página; al guardar se almacenarán como un ciclo nuevo.',
-    example_notice: 'Estás viendo un ejemplo resuelto. Todas las respuestas son ficticias, escritas para ilustrar el proceso; no es el registro de una clase real. Puedes editarlo libremente.', start_own: 'Comenzar mi propio ciclo',
+    example_notice: 'Ejemplo ficticio. Puedes editar estas respuestas; ilustran el proceso y no son el registro de una clase real.', start_own: 'Comenzar mi propio ciclo',
     recovered: 'Se encontró en este navegador un borrador guardado por una versión anterior de VISTA y se añadió a tus ciclos.',
     resume: 'Continuar', at: 'en',
     cycles_title: 'Mis ciclos', cycles_intro: 'Cada ciclo sigue una evaluación desde la primera auditoría hasta la reflexión. Los ciclos se guardan solo en este navegador y en este dispositivo.',
@@ -97,6 +98,7 @@ function setStatus(next) {
   const time = lastSaved ? ' · ' + lastSaved.toLocaleTimeString(lang(), {hour: '2-digit', minute: '2-digit'}) : '';
   node.textContent = {idle: tx('idle'), saved: tx('saved') + time, saving: tx('saving'), unsaved: tx('unsaved'), failed: tx('failed')}[next];
   node.dataset.state = next;
+  const mobile = $('mobileSaveIndicator'); if (mobile) { mobile.textContent = node.textContent; mobile.dataset.state = next; }
 }
 function notice(message, actions = [], kind = 'info') {
   const bar = $('cycleNotice'); if (!bar) return;
@@ -187,7 +189,7 @@ function begin() {
 }
 function lastView() {
   if (!current || !storageOK) return 'initial';
-  try { const v = storage.getItem(VIEW_KEY + current.id); return VIEW_STAGE[v] ? v : 'initial'; } catch { return 'initial'; }
+  try { const v = storage.getItem(VIEW_KEY + current.id); return (v === 'learn' || VIEW_STAGE[v]) ? v : 'initial'; } catch { return 'initial'; }
 }
 function resume() { F.show(lastView()); }
 function example() {
@@ -216,6 +218,7 @@ function backup(ids) {
 
 // ── chrome: cycle label, stepper, resume ─────────────────────────────────────
 function refreshChrome() {
+  window.VistaStudio?.refresh();
   const meta = current && store?.meta(current.id);
   const label = $('cycleLabel'); if (label) label.textContent = meta ? meta.title : '';
   const draft = window.VistaDraft || {};
@@ -227,12 +230,12 @@ function refreshChrome() {
   }
   const resumeBtn = $('startResume');
   if (resumeBtn) {
-    resumeBtn.hidden = !(meta && furthest);
-    if (meta && furthest) resumeBtn.textContent = `${tx('resume')}: ${meta.title} (${tx('at')} ${stageName(VIEW_STAGE[lastView()], lang())}) →`;
+    resumeBtn.hidden = !(meta && (furthest || draftHasContent(draft)));
+    if (meta && (furthest || draftHasContent(draft))) resumeBtn.textContent = `${tx('resume')}: ${meta.title} (${tx('at')} ${stageName(VIEW_STAGE[lastView()], lang()) || tx('cycles_title')}) →`;
   }
 }
 function viewChanged(view) {
-  if (current && storageOK && VIEW_STAGE[view]) { try { storage.setItem(VIEW_KEY + current.id, view); } catch { /* not essential */ } }
+  if (current && storageOK && (view === 'learn' || VIEW_STAGE[view])) { try { storage.setItem(VIEW_KEY + current.id, view); } catch { /* not essential */ } }
   window.VistaDraft = snapshot();
   refreshChrome();
 }
@@ -327,10 +330,34 @@ function openCycles() {
   d.append(head('cyclesHeading', tx('cycles_title'), d), el('p', {class: 'dialog-intro', text: tx('cycles_intro')}), list, message, form,
     el('div', {class: 'dialog-tools'}, [
       el('button', {type: 'button', text: tx('export_all'), onclick: () => backup()}),
+      el('button', {type:'button', id:'compareCyclesButton', text:lang()==='es'?'Comparar ciclos':'Compare cycles', onclick:()=>{d.close();compareCycles();}}),
       el('label', {for: 'backupFile', class: 'file-button', tabindex: '0', role: 'button', text: tx('import_backup'), onkeydown: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); file.click(); } }}), file
     ]), el('p', {class: 'dialog-note', text: tx('storage_note')}), usage);
   render();
   d.showModal();
+}
+
+function compareCycles() {
+  const cycles = storageOK ? store.list() : [];
+  const d = dialog('compareCyclesDialog', 'compareCyclesHeading');
+  d.append(head('compareCyclesHeading', lang() === 'es' ? 'Comparar ciclos' : 'Compare cycles', d));
+  if (cycles.length < 2) { d.append(el('p', {text: lang() === 'es' ? 'Conserva al menos dos ciclos para comparar sus notas.' : 'Keep at least two cycles to compare their notes.'})); d.showModal(); return; }
+  const content = el('div', {class:'cycle-comparison'});
+  const selectors = [0,1].map((index) => {
+    const id = 'compareCycle' + index;
+    const select = el('select', {id}, cycles.map((cycle,i) => el('option', {value:cycle.id,text:cycle.title,selected:i===index})));
+    select.onchange = render;
+    d.append(el('label', {for:id,text:(lang()==='es'?'Ciclo ':'Cycle ')+(index+1)}),select);
+    return select;
+  });
+  function render() {
+    content.replaceChildren(...selectors.map(select => {
+      const loaded = store.load(select.value), draft = current?.id === select.value ? snapshot() : loaded.draft;
+      const fields = [['Task / Tarea',draft.task],['Prediction / Predicción',draft.humanAI],['Decision / Decisión',draft.deepdive?.dd4],['Evidence / Evidencia',draft.implementation?.evidence],['Uncertainty / Incertidumbre',draft.next?.uncertain],['Next inquiry / Siguiente pregunta',draft.learning?.next || draft.next?.transfer]];
+      return el('section', {}, [el('h3',{text:loaded.meta.title}),...fields.flatMap(([label,value]) => [el('h4',{text:label}),el('p',{text:value || (lang()==='es'?'Sin respuesta.':'Not recorded.')})])]);
+    }));
+  }
+  d.append(el('p',{text:lang()==='es'?'Comparación de tus propias notas; no mide progreso ni competencia.':'A comparison of your own notes; it does not measure growth or competence.'}),content);render();d.showModal();
 }
 
 function report(stage) {
@@ -339,6 +366,7 @@ function report(stage) {
   const d = dialog('reportDialog', 'reportHeading');
   const withContent = STAGE_ORDER.filter(s => stageHasContent(draft, s));
   d.append(head('reportHeading', tx('report_title'), d));
+  if (!withContent.length && (draft.learning?.question || draft.annotations?.length)) withContent.push('initial');
   if (!withContent.length) { d.append(el('p', {class: 'dialog-empty', id: 'reportEmpty', text: tx('report_empty')})); d.showModal(); return; }
   if (!STAGE_ORDER.includes(stage)) stage = withContent[withContent.length - 1];
   const meta = current && store?.meta(current.id);
@@ -414,7 +442,7 @@ window.addEventListener('storage', e => {
   if (dirty) showConflict(); else { const view = F.view(); openCycle(current.id, {skipSave: true}); F.show(view); toast(tx('updated_elsewhere')); }
 });
 
-window.VistaLocal = {save: () => { dirty = true; if (persist()) toast(tx('saved')); }, changed, report, import: importText, openCycles, begin, resume, example, nextCycle, backup, viewChanged, languageChanged};
+window.VistaLocal = {importCopy: (title, draft) => { if (dirty && !persist()) return false; if (!storageOK) { storageFailure(); return false; } const made = store.create({title, draft}); openCycle(made.id, {skipSave:true}); F.show('initial'); return true; }, save: () => { dirty = true; if (persist()) toast(tx('saved')); }, changed, report, import: importText, openCycles, begin, resume, example, nextCycle, backup, viewChanged, languageChanged};
 
 // ── start ────────────────────────────────────────────────────────────────────
 (function start() {
@@ -434,3 +462,5 @@ window.VistaLocal = {save: () => { dirty = true; if (persist()) toast(tx('saved'
   else if (VIEW_STAGE[params.get('view')]) F.show(params.get('view'));
   document.documentElement.dataset.vistaReady = 'true';
 })();
+
+installStudio({snapshot, changed});

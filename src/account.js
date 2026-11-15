@@ -1,0 +1,45 @@
+// Optional account overlay. Guest notes never upload automatically.
+import {createClient} from '@supabase/supabase-js';
+import {config} from '../legacy/cloud/config.js';
+import {accountAddress} from '../legacy/cloud/auth.js';
+let client;
+export async function openAccount({snapshot,importCopy,returnFocus,lang='en'}) {
+ const recovering=location.hash.includes('type=recovery');
+ const es=lang==='es';const t=(en,spanish)=>es?spanish:en;
+ if(document.getElementById('accountDialog')?.open)return;
+ const previousFocus=returnFocus||document.activeElement;
+ const n=(tag,props={},kids=[])=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(props)){if(k==='text')e.textContent=v;else if(k.startsWith('on'))e[k]=v;else if(v!==false)e.setAttribute(k,v===true?'':v);}e.append(...[].concat(kids).filter(Boolean));return e;};
+ const button=(text,fn)=>n('button',{type:'button',text,onclick:fn});
+ const d=n('dialog',{id:'accountDialog',class:'vista-dialog account-dialog','aria-labelledby':'accountTitle'}),body=n('div'),status=n('p',{id:'accountStatus',role:'status','aria-live':'polite'});
+ let mode='signin',busy=false,generation=0;
+ const title=n('h2',{id:'accountTitle',text:t('Your VISTA account','Tu cuenta VISTA')});
+ const close=button(t('Continue as guest','Continuar como invitado'),()=>d.close());
+ d.append(n('div',{class:'dialog-head'},[title,close]),n('p',{text:t('You can use the whole workspace without signing in. Account copies are optional and separate from this browser’s autosave.','Puedes usar todo el espacio sin iniciar sesión. Las copias de la cuenta son opcionales y distintas del guardado de este navegador.')}),body,status);
+ document.body.append(d);d.addEventListener('close',()=>{generation++;d.remove();if(previousFocus){previousFocus.disabled=false;previousFocus.focus();}});d.showModal();
+ client ||= createClient(config.url,config.key,{auth:{storageKey:'vista-auth-v1',detectSessionInUrl:true},global:{fetch:(url,options)=>fetch(url,{...options,signal:options?.signal||AbortSignal.timeout(12000)})}});
+ async function run(fn){if(busy)return;busy=true;body.querySelectorAll('button').forEach(b=>b.disabled=true);status.textContent=t('Working…','Procesando…');try{await fn();}catch(e){status.textContent=t('Account request failed. Your local notes are still safe on this page. ','La solicitud falló. Tus notas locales siguen en esta página. ')+(e?.message||'');}finally{busy=false;body.querySelectorAll('button').forEach(b=>b.disabled=false);}}
+ function form(){const email=n('input',{id:'accountIdentity',type:mode==='signup'||mode==='reset'?'email':'text',required:true,autocomplete:'username'});const password=n('input',{id:'accountPassword',type:'password',required:true,minlength:mode==='signup'?12:8,autocomplete:mode==='signup'?'new-password':'current-password'});
+  const submit=n('button',{type:'submit',text:mode==='signup'?t('Create account','Crear cuenta'):mode==='reset'?t('Send recovery email','Enviar correo de recuperación'):t('Sign in','Iniciar sesión')});
+  const form=n('form',{onsubmit:e=>{e.preventDefault();run(async()=>{const identity=email.value.trim();const address=identity.includes('@')?identity:accountAddress(identity);let result;
+   if(mode==='reset'){result=await client.auth.resetPasswordForEmail(address,{redirectTo:location.origin+'/vista'});if(result.error)throw result.error;status.textContent=t('If this email has an account, a recovery message has been requested. Follow its link on this device.','Si este correo tiene cuenta, se ha solicitado un mensaje de recuperación. Abre el enlace en este dispositivo.');return;}
+   if(mode==='signup') result=await client.auth.signUp({email:address,password:password.value});else result=await client.auth.signInWithPassword({email:address,password:password.value});
+   password.value='';if(result.error)throw result.error;if(!result.data.session){status.textContent=t('Check your email to confirm your account, then return to sign in.','Comprueba tu correo para confirmar la cuenta y vuelve a iniciar sesión.');return;}await dashboard();
+  });}},[n('label',{for:'accountIdentity',text:mode==='signin'?t('Email or existing account name','Correo o nombre de cuenta existente'):t('Email','Correo electrónico')}),email]);
+  if(mode!=='reset')form.append(n('label',{for:'accountPassword',text:mode==='signup'?t('Password (at least 12 characters)','Contraseña (al menos 12 caracteres)'):t('Password','Contraseña')}),password);
+  form.append(submit,n('div',{class:'account-options'},[button(mode==='signin'?t('Create an account','Crear una cuenta'):t('Back to sign in','Volver a iniciar sesión'),()=>{mode=mode==='signin'?'signup':'signin';status.textContent='';render();}),mode==='signin'?button(t('Forgot password?','¿Olvidaste tu contraseña?'),()=>{mode='reset';render();}):null]));
+  if(mode==='reset')form.append(n('p',{class:'dialog-note',text:t('Older name-only accounts do not have a deliverable email address. Keep a backup; email recovery is available only for email accounts.','Las cuentas antiguas con solo nombre no tienen correo de recuperación. Conserva una copia; la recuperación por correo solo sirve para cuentas con correo real.')}));return form;
+ }
+ async function dashboard(){const mine=++generation;const{data:{user},error}=await client.auth.getUser();if(error)throw error;if(!user){render();return;}
+  const{data,error:listError}=await client.from('vista_cycles').select('id,title,updated_at').order('updated_at',{ascending:false});if(listError)throw listError;if(!d.open||mine!==generation)return;
+  close.textContent=t('Close','Cerrar');body.replaceChildren(n('p',{text:t('Signed in. This list contains your account’s saved copies. Opening a copy adds a new local cycle; it never replaces existing local notes.','Sesión iniciada. Esta lista contiene las copias de tu cuenta. Abrir una copia añade un ciclo local nuevo; nunca reemplaza tus notas locales.')}));
+  body.append(button(t('Save a new account copy of this cycle','Guardar una copia nueva de este ciclo en la cuenta'),()=>run(async()=>{const draft=snapshot();const title=(draft.meta?.assessment||draft.learning?.question||t('Untitled cycle','Ciclo sin título')).slice(0,200);if(!draft.task&&!draft.learning?.question)throw new Error(t('Add a task or an inquiry question first.','Añade primero una tarea o pregunta.'));const{error}=await client.from('vista_cycles').insert({user_id:user.id,title,draft});if(error)throw error;await dashboard();status.textContent=t('A new copy is saved to your account. Later local edits do not sync automatically.','Se guardó una copia nueva. Los cambios locales posteriores no se sincronizan automáticamente.');})));
+  const list=n('div',{class:'account-cycle-list'});for(const cycle of data||[]){list.append(n('article',{},[n('strong',{text:cycle.title}),n('small',{text:new Date(cycle.updated_at).toLocaleDateString(lang)}),button(t('Open as a new local cycle','Abrir como ciclo local nuevo'),()=>run(async()=>{const{data:row,error}=await client.from('vista_cycles').select('title,draft').eq('id',cycle.id).single();if(error)throw error;if(importCopy(row.title,row.draft)){d.close();}else status.textContent=t('Resolve the local saving warning first.','Resuelve primero el aviso de guardado local.');}))]));}
+  if(!data?.length)list.append(n('p',{text:t('No account copies yet. Your local cycles remain in My cycles.','Aún no hay copias en la cuenta. Tus ciclos locales siguen en Mis ciclos.')}));body.append(list,n('p',{class:'dialog-note',text:t('Signing out does not clear this browser’s local notes. Keep backups and use a private device for private work.','Cerrar sesión no borra las notas locales del navegador. Conserva copias y utiliza un dispositivo privado para trabajo privado.')}),button(t('Sign out','Cerrar sesión'),()=>run(async()=>{const{error}=await client.auth.signOut();if(error)throw error;body.replaceChildren();mode='signin';render();status.textContent=t('Signed out. Local notes have been preserved.','Sesión cerrada. Las notas locales se conservaron.');})));
+ }
+ function render(){body.replaceChildren(form());}
+ render();
+ try{const{data:{session}}=await client.auth.getSession();if(session)await dashboard();}catch{status.textContent=t('Account access is unavailable. You can continue as a guest.','El acceso a la cuenta no está disponible. Puedes continuar como invitado.');}
+ if(recovering){
+  body.replaceChildren();const p=n('input',{id:'recoveryPassword',type:'password',minlength:12,required:true,autocomplete:'new-password'});body.append(n('form',{onsubmit:e=>{e.preventDefault();run(async()=>{const{error}=await client.auth.updateUser({password:p.value});p.value='';if(error)throw error;history.replaceState(null,'',location.pathname);await dashboard();status.textContent=t('Password updated.','Contraseña actualizada.');});}},[n('label',{for:'recoveryPassword',text:t('New password (at least 12 characters)','Contraseña nueva (al menos 12 caracteres)')}),p,n('button',{type:'submit',text:t('Update password','Actualizar contraseña')})]));
+ }
+}
