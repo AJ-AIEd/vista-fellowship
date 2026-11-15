@@ -1640,7 +1640,7 @@ const VIEW_NAV = {launch:'navStart',initial:'navInitial',deepdive:'navDeep',rede
 const VIEW_LABEL = {launch:'nav_start',initial:'nav_initial',deepdive:'nav_deepdive',redesign:'nav_redesign',implementation:'nav_impl',final:'nav_final',reflection:'nav_reflect'};
 function showView(name) {
   if (!document.getElementById('view-' + name)) name = 'launch';
-  const moveFocus = document.activeElement?.matches('button,[role=button],[role=tab]') && currentView !== name;
+  const moveFocus = currentView !== name && document.documentElement.dataset.vistaReady === 'true';
   currentView = name;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');

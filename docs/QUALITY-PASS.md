@@ -56,3 +56,5 @@ Reports now place selected teacher responses before the full stage record: predi
 Verified: build, 17 unit tests, both Chromium browser suites, and all 33 accessibility scans pass. The synthetic full-cycle PDF has seven A4 pages; every page was rendered and visually inspected with no clipping found. This does not establish behavior for every possible teacher response length. The selected-response section adds length intentionally; the complete record is retained.
 
 The first desktop/mobile review prompted a second layout correction: preparation columns now stack on phones, and the primary action spans the width. The original Fable/Opus branch is untouched.
+
+Cross-browser follow-up: Firefox passed the new transition assertion. WebKit exposed macOS's click/focus difference; stage changes now move focus based on the ready application changing views, without assuming a clicked button received focus. WebKit then passed all pathways and the six-stage suite.
