@@ -85,7 +85,7 @@ export function installStudio({snapshot, changed}) {
  }
  function inquiryNotes(){return details(lang()==='es'?'Ideas en desarrollo y juicio profesional':'Emerging ideas and professional judgment',[
   n('p',{text:lang()==='es'?'Una nota breve basta. Es una hipótesis, no una decisión final ni evidencia de mejora. Puedes conservarla, revisarla o descartarla. Una idea principal por ciclo; crea otro ciclo si quieres investigar otra.':'A brief note is enough. This is a hypothesis, not a final decision or evidence of improvement. Retain, revise, explore, or discard it. Keep one main idea per cycle; create another cycle for a separate inquiry.'}),
-  ...['idea','prompted','whyIdea','investigate','outcomes','ideaStatus'].map(field),
+  field('idea'),details(lang()==='es'?'Añadir contexto o estado (opcional)':'Add context or a status (optional)',['prompted','whyIdea','investigate','outcomes','ideaStatus'].map(field)),
   details(lang()==='es'?'Conectar tecnología, materia, pedagogía y contexto':'Connect technology, subject, pedagogy, and context',[
    n('p',{text:lang()==='es'?'Usa solo las preguntas que ayuden. Elegir una herramienta no resuelve estas relaciones.':'Use only the prompts that help. Selecting a tool does not resolve these relationships.'}),...['possible','replace','assumption','alternative','verify'].map(field)]),
   details(lang()==='es'?'Preparar una propuesta para colegas':'Prepare a proposal for colleagues',[field('proposal')])]);}

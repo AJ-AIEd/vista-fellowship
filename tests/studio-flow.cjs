@@ -28,6 +28,7 @@ const saved=p=>p.waitForFunction(()=>document.getElementById('saveIndicator').da
  await page.getByRole('button',{name:'Explore a possibility and return here',exact:true}).click();
  await page.getByText('Emerging ideas and professional judgment',{exact:true}).click();
  await page.locator('#learning-idea').fill('Test a source-selection checkpoint before changing the semester course.');
+ await page.getByText('Add context or a status (optional)',{exact:true}).click();
  await page.locator('#learning-ideaStatus').fill('Explore; not approved or implemented');
  await saved(page);await page.reload();await ready(page);
  assert.match(await page.locator('#learning-idea').inputValue(),/source-selection/);
